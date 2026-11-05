@@ -50,6 +50,12 @@ type VoiceLanguage = "auto" | "en-IN" | "hi-IN";
 
 type SendOptions = { speak?: boolean; handsFree?: boolean };
 
+/**
+ * Spoken replies are on by default and remembered across visits. Only an
+ * explicit tap on the speaker icon turns them off.
+ */
+const SPEAK_PREF_KEY = "innovations.ai.speakReplies";
+
 /** Chrome sometimes reports results with `isFinal` on the result rather than the alternative. */
 function isFinalResult(result: SpeechRecognitionResultLike, alternative: SpeechAlternative) {
   return result.isFinal === true || alternative.isFinal === true;
@@ -138,7 +144,7 @@ export function AIAssistant() {
   const [handsFree, setHandsFree] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState(false);
   const [voiceLanguage, setVoiceLanguage] = useState<VoiceLanguage>("auto");
-  const [speakReplies, setSpeakReplies] = useState(false);
+  const [speakReplies, setSpeakReplies] = useState(true);
   const [speaking, setSpeaking] = useState(false);
   const [voiceBlockedReason, setVoiceBlockedReason] = useState("");
   const [secureContext, setSecureContext] = useState(true);
@@ -198,6 +204,23 @@ export function AIAssistant() {
     return () => {
       if (hasSpeechSynthesis) window.speechSynthesis.removeEventListener("voiceschanged", loadVoices);
     };
+  }, []);
+
+  // Restore the saved spoken-replies preference. Spoken replies stay on unless
+  // the visitor explicitly muted them.
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(SPEAK_PREF_KEY);
+      if (stored === "off") {
+        setSpeakReplies(false);
+        userMutedRef.current = true;
+      } else {
+        setSpeakReplies(true);
+        userMutedRef.current = false;
+      }
+    } catch {
+      // Storage can be blocked in private modes; the in-memory default stands.
+    }
   }, []);
 
   /**
@@ -712,6 +735,9 @@ export function AIAssistant() {
           openRef.current = true;
           setOpen(true);
           setSuggestions(STARTERS);
+          // Unlock speech synthesis inside this tap so typed questions can be
+          // answered out loud without a second interaction.
+          if (speakReplies) primeSpeech();
         }}
         className={cn(
           "fixed right-4 z-[70] flex size-12 items-center justify-center rounded-full border border-brass/40 bg-night text-paper shadow-float transition duration-300 hover:-translate-y-0.5 hover:bg-forest-deep sm:right-6",
@@ -755,6 +781,11 @@ export function AIAssistant() {
                     const next = !speakReplies;
                     setSpeakReplies(next);
                     userMutedRef.current = !next;
+                    try {
+                      window.localStorage.setItem(SPEAK_PREF_KEY, next ? "on" : "off");
+                    } catch {
+                      // Storage can be blocked in private modes.
+                    }
                     if (!next) {
                       stopSpeaking();
                       if (handsFreeRef.current) resumeListening(350);
