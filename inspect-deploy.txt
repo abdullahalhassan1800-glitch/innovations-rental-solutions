@@ -1,0 +1,54 @@
+﻿vercel.cmd : Vercel CLI 65.11.0
+At line:1 char:1
++ vercel.cmd inspect "https://innovations-rental-solutions-q0gqxix5s-sy ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Vercel CLI 65.11.0:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+> Fetched deployment "innovations-rental-solutions-q0gqxix5s-sycn-tree.vercel.app" in sycn-tree [445ms]
+
+  General
+
+    id		dpl_BjpviZkST8Ya5gyPkpBRVCwJ2f8q
+    name	innovations-rental-solutions
+    target	production
+    status	ÔùÅ Ready
+    url		https://innovations-rental-solutions-q0gqxix5s-sycn-tree.vercel.app
+    created	Thu Nov 05 2026 15:45:44 GMT+0530 (India Standard Time) [4m ago]
+
+
+  Build Machine
+
+    requested build machine basic
+    actual assigned cores   2 vCPU (actual assignment)
+    memory                  8192 MiB
+    selection type          fixed
+    selection source        plan-default
+
+
+  Build Cache
+
+    size       172.7 MiB / 1.5 GiB limit
+    file count ~32,163 (approx., paths selected for packing)
+
+
+  Duration
+
+    build duration	1m 32s
+    post-build duration	36s
+    billable duration	3m
+    CPU Minutes Usage	6 minutes (3m x 2vCPU)
+
+
+  Aliases
+
+    ÔòÂ https://innovations-rental-solutions.vercel.app
+    ÔòÂ https://innovations-rental-solutions-sycn-tree.vercel.app
+    
+
+  Builds
+
+    Ôöî .        [0ms]
+    ÔööÔöÇÔöÇ ╬╗ middleware (140.24KB) [bom1, fra1, gru1, iad1, lhr1, sfo1, sin1, syd1]
+    
+

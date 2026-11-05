@@ -1,0 +1,19 @@
+﻿{
+  "id": "prj_hQQQIQ2FLIwpQ8sZ0SCStdUjfqw9",
+  "name": "innovations-rental-solutions",
+  "owner": {
+    "name": "SycnTree",
+    "slug": "sycn-tree"
+  },
+  "createdAt": 1793873692526,
+  "rootDirectory": null,
+  "nodeVersion": "26.x",
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": null,
+  "installCommand": null,
+  "sandbox": {
+    "region": "iad1",
+    "failoverRegions": []
+  }
+}

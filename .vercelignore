@@ -1,0 +1,11 @@
+# Never upload local secrets or development databases to Vercel.
+.env
+.env.local
+.env.*.local
+prisma/dev.db
+prisma/dev.db-journal
+*.log
+*.tsbuildinfo
+playwright-report
+test-results
+coverage
