@@ -6,11 +6,12 @@ import { SITE } from "@/lib/constants";
 /**
  * Brand lockups. `logo-dark.png` is the light-on-navy artwork used on dark
  * surfaces (site header, footer, admin); `logo-light.png` is the
- * navy-on-transparent artwork for light surfaces.
+ * navy-on-transparent artwork for light surfaces. Both are cropped to the
+ * artwork so they line up with the page gutter.
  */
 const LOGOS = {
-  dark: { src: "/images/logo-dark.png", width: 900, height: 572 },
-  light: { src: "/images/logo-light.png", width: 900, height: 300 },
+  dark: { src: "/images/logo-dark.png", width: 1200, height: 744 },
+  light: { src: "/images/logo-light.png", width: 1200, height: 744 },
 } as const;
 
 export function Logo({
