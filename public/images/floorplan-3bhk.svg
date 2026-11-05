@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 620" role="img" aria-label="3 BHK floor plan illustration">
+  <rect width="840" height="620" fill="#f6f3ec"/>
+  <g fill="none" stroke="#12211b" stroke-width="4">
+    <rect x="40" y="40" width="760" height="520"/>
+    <path d="M360 40v520M360 300h180M540 40v520M540 300h260M360 420h180M700 300v260"/>
+  </g>
+  <g fill="none" stroke="#b8894a" stroke-width="2">
+    <path d="M360 220h30M390 220v-40M540 140h40M580 140v60M540 460h30"/>
+  </g>
+  <g font-family="Georgia, serif" font-size="21" fill="#12211b">
+    <text x="75" y="100">LIVING</text>
+    <text x="75" y="128" font-family="Arial, sans-serif" font-size="13" fill="#5b6a62">16'0" × 20'0"</text>
+    <text x="75" y="380">DINING</text>
+    <text x="75" y="408" font-family="Arial, sans-serif" font-size="13" fill="#5b6a62">12'0" × 13'0"</text>
+    <text x="75" y="510">KITCHEN</text>
+    <text x="400" y="100">BEDROOM 1</text>
+    <text x="400" y="128" font-family="Arial, sans-serif" font-size="13" fill="#5b6a62">15'0" × 13'0"</text>
+    <text x="400" y="380">BEDROOM 2</text>
+    <text x="400" y="408" font-family="Arial, sans-serif" font-size="13" fill="#5b6a62">12'0" × 12'0"</text>
+    <text x="400" y="510">BEDROOM 3</text>
+    <text x="580" y="100">BALCONY</text>
+    <text x="580" y="260">STUDY</text>
+    <text x="735" y="260">BATH</text>
+    <text x="735" y="380">BATH</text>
+  </g>
+  <g fill="none" stroke="#12211b" stroke-width="1.5" stroke-dasharray="4 4">
+    <path d="M40 595h760M40 580v30M800 580v30"/>
+  </g>
+  <text x="420" y="614" font-family="Arial, sans-serif" font-size="12" fill="#5b6a62" text-anchor="middle">40'0"</text>
+</svg>

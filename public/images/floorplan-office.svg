@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" role="img" aria-label="Office suite floor plan illustration">
+  <rect width="800" height="560" fill="#f6f3ec"/>
+  <g fill="none" stroke="#12211b" stroke-width="4">
+    <rect x="40" y="40" width="720" height="460"/>
+    <path d="M300 40v460M300 250h200M500 40v210M500 250h260M500 340h260M640 250v210"/>
+  </g>
+  <g font-family="Georgia, serif" font-size="21" fill="#12211b">
+    <text x="75" y="100">OPEN WORKSPACE</text>
+    <text x="75" y="128" font-family="Arial, sans-serif" font-size="13" fill="#5b6a62">36 workstations</text>
+    <text x="75" y="390">MEETING ROOM</text>
+    <text x="340" y="100">CABINS</text>
+    <text x="340" y="380">PANTRY</text>
+    <text x="540" y="100">RECEPTION</text>
+    <text x="540" y="300">LOUNGE</text>
+    <text x="540" y="470">SERVICES</text>
+  </g>
+  <g fill="#b8894a">
+    <circle cx="210" cy="300" r="6"/><circle cx="240" cy="300" r="6"/><circle cx="270" cy="300" r="6"/>
+    <circle cx="210" cy="330" r="6"/><circle cx="240" cy="330" r="6"/><circle cx="270" cy="330" r="6"/>
+  </g>
+  <g fill="none" stroke="#12211b" stroke-width="1.5" stroke-dasharray="4 4">
+    <path d="M40 535h720M40 520v30M760 520v30"/>
+  </g>
+</svg>

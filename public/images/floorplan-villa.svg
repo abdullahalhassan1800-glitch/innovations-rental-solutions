@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Villa floor plan illustration">
+  <rect width="900" height="620" fill="#f6f3ec"/>
+  <g fill="none" stroke="#12211b" stroke-width="4">
+    <rect x="40" y="40" width="820" height="520"/>
+    <path d="M320 40v360M320 400h280M600 40v520M600 300h260M600 440h260"/>
+    <path d="M40 400h280"/>
+  </g>
+  <g fill="none" stroke="#b8894a" stroke-width="2">
+    <path d="M110 400h40v-50M180 400h40v-50M500 400v-40h50"/>
+  </g>
+  <g font-family="Georgia, serif" font-size="21" fill="#12211b">
+    <text x="75" y="100">LIVING</text>
+    <text x="75" y="128" font-family="Arial, sans-serif" font-size="13" fill="#5b6a62">20'0" × 22'0"</text>
+    <text x="75" y="330">DINING</text>
+    <text x="75" y="500">PRIVATE GARDEN</text>
+    <text x="360" y="100">KITCHEN</text>
+    <text x="360" y="300">GUEST BEDROOM</text>
+    <text x="640" y="100">MASTER SUITE</text>
+    <text x="640" y="360">BEDROOM 2</text>
+    <text x="640" y="380" font-family="Arial, sans-serif" font-size="13" fill="#5b6a62">15'0" × 13'0"</text>
+    <text x="640" y="500">BEDROOM 3</text>
+  </g>
+  <g fill="none" stroke="#12211b" stroke-width="1.5" stroke-dasharray="4 4">
+    <path d="M40 595h820M40 580v30M860 580v30"/>
+  </g>
+</svg>

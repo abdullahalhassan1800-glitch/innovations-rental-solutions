@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="2 BHK floor plan illustration">
+  <rect width="800" height="600" fill="#f6f3ec"/>
+  <g fill="none" stroke="#12211b" stroke-width="4">
+    <rect x="50" y="50" width="700" height="500"/>
+    <path d="M390 50v500M50 330h340M530 50v280M530 330h220M530 390h220M650 330v60"/>
+    <path d="M50 480h340"/>
+  </g>
+  <g fill="none" stroke="#b8894a" stroke-width="2">
+    <path d="M390 280h30M420 280v-40M530 120h40M570 120v60"/>
+  </g>
+  <g font-family="Georgia, serif" font-size="22" fill="#12211b">
+    <text x="90" y="120">LIVING</text>
+    <text x="90" y="150" font-family="Arial, sans-serif" font-size="14" fill="#5b6a62">15'0" × 18'0"</text>
+    <text x="90" y="410">DINING</text>
+    <text x="90" y="440" font-family="Arial, sans-serif" font-size="14" fill="#5b6a62">12'0" × 14'0"</text>
+    <text x="440" y="120">KITCHEN</text>
+    <text x="440" y="150" font-family="Arial, sans-serif" font-size="14" fill="#5b6a62">10'0" × 12'0"</text>
+    <text x="440" y="410">BEDROOM 1</text>
+    <text x="440" y="440" font-family="Arial, sans-serif" font-size="14" fill="#5b6a62">14'0" × 12'0"</text>
+    <text x="580" y="250">BEDROOM 2</text>
+    <text x="580" y="280" font-family="Arial, sans-serif" font-size="14" fill="#5b6a62">12'0" × 11'0"</text>
+    <text x="580" y="510">BALCONY</text>
+  </g>
+  <g fill="none" stroke="#12211b" stroke-width="1.5" stroke-dasharray="4 4">
+    <path d="M50 575h700M50 560v30M750 560v30"/>
+  </g>
+  <text x="380" y="592" font-family="Arial, sans-serif" font-size="12" fill="#5b6a62" text-anchor="middle">32'0"</text>
+  <text x="16" y="315" font-family="Arial, sans-serif" font-size="12" fill="#5b6a62" transform="rotate(-90 16 315)" text-anchor="middle">48'0"</text>
+</svg>

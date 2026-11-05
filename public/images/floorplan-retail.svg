@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" role="img" aria-label="Retail and SCO floor plan illustration">
+  <rect width="800" height="560" fill="#f6f3ec"/>
+  <g fill="none" stroke="#12211b" stroke-width="4">
+    <rect x="40" y="40" width="720" height="460"/>
+    <path d="M40 330h720M300 330v170M520 330v170M300 40v290M520 40v290"/>
+  </g>
+  <g font-family="Georgia, serif" font-size="21" fill="#12211b">
+    <text x="75" y="100">DOUBLE-HEIGHT</text>
+    <text x="75" y="130">FRONTAGE</text>
+    <text x="75" y="158" font-family="Arial, sans-serif" font-size="13" fill="#5b6a62">24'0" clear height</text>
+    <text x="340" y="100">MAIN RETAIL</text>
+    <text x="560" y="100">SCO UNIT</text>
+    <text x="75" y="390">STOCK ROOM</text>
+    <text x="340" y="390">WASHROOM</text>
+    <text x="560" y="390">SERVICE</text>
+  </g>
+  <g fill="none" stroke="#b8894a" stroke-width="3">
+    <path d="M120 480v-70h50v70M300 480v-70h50v70"/>
+  </g>
+  <g fill="none" stroke="#12211b" stroke-width="1.5" stroke-dasharray="4 4">
+    <path d="M40 535h720M40 520v30M760 520v30"/>
+  </g>
+</svg>

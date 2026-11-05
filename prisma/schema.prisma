@@ -1,0 +1,254 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// NOTE: SQLite is used for zero-config local development. To use PostgreSQL,
+// change provider to "postgresql" above and point DATABASE_URL at your server
+// (see README). String status fields are validated in application code so the
+// schema stays portable across both providers.
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  phone         String?
+  passwordHash  String
+  role          String         @default("USER") // USER | AGENT | ADMIN
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  savedProjects SavedProject[]
+  siteVisits    SiteVisit[]
+  inquiries     Inquiry[]      @relation("AssignedLeads")
+  notes         LeadNote[]
+}
+
+model Developer {
+  id             String    @id @default(cuid())
+  name           String    @unique
+  slug           String    @unique
+  description    String?
+  establishedYear Int?
+  website        String?
+  logoUrl        String?
+  isDemo         Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  projects       Project[]
+}
+
+model Location {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  city        String
+  state       String    @default("Uttar Pradesh")
+  description String?
+  imageUrl    String?
+  highlights  String? // JSON array of strings
+  sortOrder   Int       @default(0)
+  projects    Project[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Project {
+  id             String           @id @default(cuid())
+  name           String
+  slug           String           @unique
+  tagline        String?
+  developerId    String
+  locationId     String
+  address        String
+  propertyType   String           // RESIDENTIAL | COMMERCIAL
+  category       String           // Apartment | Villa | Plot | Office | Retail | Studio
+  startingPrice  Int              // INR
+  maxPrice       Int?
+  bhkConfigs     String           // JSON array, e.g. ["2","3","4"]
+  status         String           // NEW_LAUNCH | UNDER_CONSTRUCTION | READY_TO_MOVE | UPCOMING
+  possessionDate DateTime?
+  reraNumber     String?
+  reraVerified   Boolean          @default(false)
+  description    String
+  highlights     String?          // JSON array of strings
+  amenityNotes   String?
+  mapEmbedUrl    String?
+  mapLat         Float?
+  mapLng         Float?
+  nearbyPlaces   String?          // JSON array of {name, distance}
+  brochureUrl    String?
+  heroImage      String?
+  featured       Boolean          @default(false)
+  published      Boolean          @default(true)
+  archived       Boolean          @default(false)
+  isDemo         Boolean          @default(true)
+  views          Int              @default(0)
+  metaTitle      String?
+  metaDescription String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  developer   Developer        @relation(fields: [developerId], references: [id])
+  location    Location         @relation(fields: [locationId], references: [id])
+  images      ProjectImage[]
+  amenities   ProjectAmenity[]
+  floorPlans  FloorPlan[]
+  brochures   Brochure[]
+  inquiries   Inquiry[]
+  siteVisits  SiteVisit[]
+  savedBy     SavedProject[]
+
+  @@index([locationId])
+  @@index([developerId])
+  @@index([propertyType, status])
+  @@index([startingPrice])
+}
+
+model ProjectImage {
+  id        String  @id @default(cuid())
+  projectId String
+  url       String
+  alt       String?
+  sortOrder Int     @default(0)
+  isCover   Boolean @default(false)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model Amenity {
+  id       String           @id @default(cuid())
+  name     String           @unique
+  icon     String?
+  projects ProjectAmenity[]
+}
+
+model ProjectAmenity {
+  projectId String
+  amenityId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  amenity   Amenity @relation(fields: [amenityId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, amenityId])
+}
+
+model FloorPlan {
+  id         String  @id @default(cuid())
+  projectId  String
+  name       String
+  bhk        String?
+  areaSqft   Int?
+  price      Int?
+  imageUrl   String?
+  sortOrder  Int     @default(0)
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model Brochure {
+  id        String   @id @default(cuid())
+  projectId String
+  title     String
+  fileUrl   String
+  fileSize  Int?
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model Inquiry {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String
+  email        String?
+  projectId    String?
+  projectName  String? // snapshot for general inquiries
+  inquiryType  String   // CALLBACK | SITE_VISIT | BROCHURE | CONTACT | GENERAL | AI
+  message      String?
+  source       String?  // website page / ai
+  status       String   @default("NEW") // NEW | CONTACTED | QUALIFIED | CLOSED | SPAM
+  assignedToId String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  project      Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  assignedTo   User?    @relation("AssignedLeads", fields: [assignedToId], references: [id], onDelete: SetNull)
+  notes        LeadNote[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([projectId])
+}
+
+model SiteVisit {
+  id            String   @id @default(cuid())
+  userId        String?
+  projectId     String?
+  name          String
+  phone         String
+  email         String?
+  preferredDate DateTime
+  preferredTime String
+  message       String?
+  status        String   @default("PENDING") // PENDING | CONFIRMED | COMPLETED | CANCELLED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  project       Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([projectId])
+}
+
+model SavedProject {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@index([userId])
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  category  String   @default("General")
+  sortOrder Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String?
+  quote     String
+  rating    Int      @default(5)
+  avatarUrl String?
+  published Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model LeadNote {
+  id        String   @id @default(cuid())
+  inquiryId String
+  authorId  String?
+  note      String
+  createdAt DateTime @default(now())
+  inquiry   Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  @@index([inquiryId])
+}
