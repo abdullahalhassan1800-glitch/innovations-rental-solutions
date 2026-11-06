@@ -18,7 +18,7 @@ test("Hinglish replies no longer repeat sentence fragments", async () => {
   assert.doesNotMatch(response.reply, /\bhoon hoon\b/i);
   assert.doesNotMatch(response.reply, /\bmein mein\b/i);
   assert.match(response.reply, /dhoondh raha hoon\./);
-  assert.match(response.reply, /Database mein \d+ projects? mil[ae]/);
+  assert.match(response.reply, /\d+ projects? mil[ae]/);
   assert.ok(response.projects.length > 0);
 });
 

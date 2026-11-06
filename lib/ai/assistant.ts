@@ -20,19 +20,19 @@ type AssistantProject = ProjectCardData;
 const LANG_COPY = {
   en: {
     greeting:
-      "Hello! I'm Innovations AI. Tell me a location, budget, BHK or property type and I'll search our live project database.",
+      "Hello! I'm Innovations AI. Tell me a location, budget, BHK or property type and I'll find matching projects for you.",
     results: (n: number) =>
       n === 1
         ? "I found 1 project that matches your brief."
         : `I found ${n} projects that match your brief.`,
-    noExact: "I couldn't find an exact match, so here are the closest options from our database.",
+    noExact: "I couldn't find an exact match, so here are the closest options.",
     noResults:
       "I couldn't find a project for that combination. Try a wider budget or another location — inventory changes often.",
     cheapestFirst: "Sorted by the lowest starting price.",
     newestFirst: "Newest projects first.",
     expensiveFirst: "Sorted by the highest starting price.",
     soonestFirst: "Sorted by the earliest possession.",
-    compare: "Here's a side-by-side comparison from our database.",
+    compare: "Here's a side-by-side comparison.",
     compareNeedTwo: "Pick two or three projects to compare. These matches are a good start.",
     siteVisit: `You can schedule a site visit from any project page, or call ${SITE.phone} — the sales team will confirm your slot.`,
     visitOnly: `Site visits are arranged by our sales team. Call ${SITE.phone} or message us on WhatsApp and we'll confirm a slot. You can also open any project page and tap "Book a site visit".`,
@@ -41,7 +41,7 @@ const LANG_COPY = {
     booking: `The team handles booking end to end — shortlist, site visit, documents and the payment schedule. Call ${SITE.phone} or email ${SITE.email} to start.`,
     documents: `The sales team shares the exact document checklist for the project you choose. Call ${SITE.phone} and they'll send it across.`,
     loan: `Home-loan support is available through our sales team. Call ${SITE.phone} and they'll walk you through the lender options.`,
-    options: "Here are some featured projects from our database.",
+    options: "Here are some featured projects.",
     suggestions: {
       compare: "Compare these projects",
       visit: "Book a site visit",
@@ -52,19 +52,19 @@ const LANG_COPY = {
   },
   hinglish: {
     greeting:
-      "Namaste! Main Innovations AI hoon. Aap location, budget, BHK ya property type batayiye — main live database se matching projects dhoondh kar dikhaunga.",
+      "Namaste! Main Innovations AI hoon. Aap location, budget, BHK ya property type batayiye — main matching projects dhoondh kar dikhaunga.",
     results: (n: number) =>
       n === 1
-        ? "Database mein 1 project mila jo aapki requirement se match karta hai."
-        : `Database mein ${n} projects mile jo aapki requirement se match karte hain.`,
-    noExact: "Exact match nahi mila, lekin yeh closest options hain jo database mein available hain.",
+        ? "1 project mila jo aapki requirement se match karta hai."
+        : `${n} projects mile jo aapki requirement se match karte hain.`,
+    noExact: "Exact match nahi mila, lekin yeh closest options hain jo available hain.",
     noResults:
       "Is combination ke liye koi project nahi mila. Budget thoda badha kar ya doosri location try kariye — inventory update hoti rehti hai.",
     cheapestFirst: "Matches sabse kam starting price ke hisaab se sort kiye hain.",
     newestFirst: "Matches mein sabse naye projects pehle dikhaye hain.",
     expensiveFirst: "Matches sabse zyada starting price ke hisaab se sort kiye hain.",
     soonestFirst: "Matches mein sabse jaldi possession wale projects pehle hain.",
-    compare: "Yahan aapke chune hue projects ka database-based comparison hai.",
+    compare: "Yahan aapke chune hue projects ka comparison hai.",
     compareNeedTwo: "Comparison ke liye do ya teen projects chuniye. Shuruaat ke liye yeh matches hain:",
     siteVisit: `Kisi bhi project page se site visit schedule kar sakte hain, ya ${SITE.phone} par call kariye — sales team aapka slot confirm karegi.`,
     visitOnly: `Site visit sales team arrange karti hai. ${SITE.phone} par call kariye ya WhatsApp par message kariye, hum slot confirm kar denge. Kisi bhi project page par "Book a site visit" bhi hai.`,
@@ -73,7 +73,7 @@ const LANG_COPY = {
     booking: `Booking ka poora process team handle karti hai — shortlist, site visit, documents aur payment schedule. Shuru karne ke liye ${SITE.phone} par call kariye ya ${SITE.email} par email kariye.`,
     documents: `Aapke chune hue project ka exact document checklist sales team share karti hai. ${SITE.phone} par call kariye aur wo aapko bhej degi.`,
     loan: `Home-loan support sales team ke through milta hai. ${SITE.phone} par call kariye aur wo lender options samjha dengi.`,
-    options: "Yeh database ke kuch featured projects hain.",
+    options: "Yeh kuch featured projects hain.",
     suggestions: {
       compare: "In projects ko compare karein",
       visit: "Site visit book karein",
@@ -84,19 +84,19 @@ const LANG_COPY = {
   },
   hi: {
     greeting:
-      "नमस्ते! मैं Innovations AI हूँ। अपनी लोकेशन, बजट, BHK या प्रॉपर्टी टाइप बताइए — मैं लाइव डेटाबेस से मिलते-जुलते प्रोजेक्ट दिखाऊँगा।",
+      "नमस्ते! मैं Innovations AI हूँ। अपनी लोकेशन, बजट, BHK या प्रॉपर्टी टाइप बताइए — मैं मिलते-जुलते प्रोजेक्ट दिखाऊँगा।",
     results: (n: number) =>
       n === 1
-        ? "डेटाबेस में 1 प्रोजेक्ट मिला जो आपकी ज़रूरत से मेल खाता है।"
-        : `डेटाबेस में ${n} प्रोजेक्ट मिले जो आपकी ज़रूरत से मेल खाते हैं।`,
-    noExact: "सटीक मैच नहीं मिला, लेकिन ये डेटाबेस के सबसे नज़दीकी विकल्प हैं।",
+        ? "1 प्रोजेक्ट मिला जो आपकी ज़रूरत से मेल खाता है।"
+        : `${n} प्रोजेक्ट मिले जो आपकी ज़रूरत से मेल खाते हैं।`,
+    noExact: "सटीक मैच नहीं मिला, लेकिन ये सबसे नज़दीकी विकल्प हैं।",
     noResults:
       "इस संयोजन के लिए कोई प्रोजेक्ट नहीं मिला। बजट थोड़ा बढ़ाकर या दूसरी लोकेशन आज़माइए — उपलब्धता बदलती रहती है।",
     cheapestFirst: "मैचों को सबसे कम शुरुआती कीमत के हिसाब से क्रमबद्ध किया है।",
     newestFirst: "मैचों में सबसे नए प्रोजेक्ट पहले दिखाए गए हैं।",
     expensiveFirst: "मैचों को सबसे ज़्यादा शुरुआती कीमत के हिसाब से क्रमबद्ध किया है।",
     soonestFirst: "मैचों में सबसे जल्दी पज़ेशन वाले प्रोजेक्ट पहले हैं।",
-    compare: "यहाँ आपके चुने हुए प्रोजेक्ट्स की डेटाबेस-आधारित तुलना है।",
+    compare: "यहाँ आपके चुने हुए प्रोजेक्ट्स की तुलना है।",
     compareNeedTwo: "तुलना के लिए दो या तीन प्रोजेक्ट चुनिए। शुरुआत के लिए ये मैच हैं:",
     siteVisit: `किसी भी प्रोजेक्ट पेज से साइट विज़िट शेड्यूल कर सकते हैं, या ${SITE.phone} पर कॉल कीजिए — सेल्स टीम आपका स्लॉट कन्फर्म करेगी।`,
     visitOnly: `साइट विज़िट सेल्स टीम तय करती है। ${SITE.phone} पर कॉल कीजिए या WhatsApp पर मैसेज कीजिए, हम स्लॉट कन्फर्म कर देंगे। किसी भी प्रोजेक्ट पेज पर "Book a site visit" भी है।`,
@@ -105,7 +105,7 @@ const LANG_COPY = {
     booking: `बुकिंग का पूरा काम टीम संभालती है — शॉर्टलिस्ट, साइट विज़िट, दस्तावेज़ और भुगतान योजना। शुरू करने के लिए ${SITE.phone} पर कॉल कीजिए या ${SITE.email} पर ईमेल कीजिए।`,
     documents: `आपके चुने हुए प्रोजेक्ट की सटीक दस्तावेज़ सूची सेल्स टीम भेजती है। ${SITE.phone} पर कॉल कीजिए और वो आपको भेज देगी।`,
     loan: `होम-लोन सहायता सेल्स टीम के ज़रिए मिलती है। ${SITE.phone} पर कॉल कीजिए और वो लेंडर विकल्प समझा देगी।`,
-    options: "ये डेटाबेस के कुछ फ़ीचर्ड प्रोजेक्ट हैं।",
+    options: "ये कुछ फ़ीचर्ड प्रोजेक्ट हैं।",
     suggestions: {
       compare: "इन प्रोजेक्ट्स की तुलना करें",
       visit: "साइट विज़िट बुक करें",
