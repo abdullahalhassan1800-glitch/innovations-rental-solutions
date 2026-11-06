@@ -82,7 +82,8 @@ test("booking, fees and site-visit questions get a real answer", async () => {
   assert.match(fees.reply, /written breakup|92059 08398/);
 
   const visit = await getAssistantResponse({ message: "site visit book karna hai" });
-  assert.match(visit.reply, /sales team|सेल्स टीम/i);
+  assert.match(visit.reply, /aapka pura naam|full name|mobile number/);
+  assert.match(visit.reply, /date|time|project/);
   assert.equal(visit.projects.length, 0);
 });
 
@@ -97,4 +98,44 @@ test("contact answers include the new office address", async () => {
   const response = await getAssistantResponse({ message: "office address kya hai" });
 
   assert.match(response.reply, /S-11, 1101, 1st Floor, Urbtech Trade Center/);
+});
+
+test("booking without details asks for required fields", async () => {
+  const hinglish = await getAssistantResponse({ message: "mere liye site visit book karo" });
+  assert.match(hinglish.reply, /aapka pura naam|mobile number|date|time|project/);
+
+  const english = await getAssistantResponse({ message: "book a site visit for me" });
+  assert.match(english.reply, /full name|mobile number|date|time|project/);
+});
+
+test("booking with all details books a site visit", async () => {
+  const response = await getAssistantResponse({
+    message: "mere liye site visit book karo, mera naam Rahul hai, phone 9205908398, date 2026-12-25, time 14:00-16:00, project Meridian Edge",
+  });
+
+  assert.match(response.reply, /book ho gayi hai|booked/);
+  assert.match(response.reply, /Meridian Edge/);
+  assert.match(response.reply, /9205908398/);
+});
+
+test("english booking with all details", async () => {
+  const response = await getAssistantResponse({
+    message: "book a site visit, my name is Sarah, phone 9876543210, date 2026-12-26, time 10:00-12:00, project Aurelia Grove",
+  });
+
+  assert.match(response.reply, /booked for Aurelia Grove/);
+  assert.match(response.reply, /9876543210/);
+});
+
+test("booking kaise kare returns contact info not booking ask", async () => {
+  const response = await getAssistantResponse({ message: "booking kaise kare" });
+  assert.match(response.reply, /92059 08398/);
+  assert.doesNotMatch(response.reply, /aapka pura naam|full name/);
+});
+
+test("invalid phone number is rejected in booking flow", async () => {
+  const response = await getAssistantResponse({
+    message: "mere liye site visit book karo, mera naam Rahul hai, phone 123, date 2026-12-25, time 14:00-16:00, project Meridian Edge",
+  });
+  assert.match(response.reply, /mobile number/);
 });

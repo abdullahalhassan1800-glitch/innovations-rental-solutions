@@ -42,6 +42,12 @@ const LANG_COPY = {
     documents: `The sales team shares the exact document checklist for the project you choose. Call ${SITE.phone} and they'll send it across.`,
     loan: `Home-loan support is available through our sales team. Call ${SITE.phone} and they'll walk you through the lender options.`,
     options: "Here are some featured projects.",
+    bookingAsk: "To book a site visit, please send me all of these in one message: your full name, mobile number, preferred date (YYYY-MM-DD), preferred time slot (e.g. 10:00–12:00), and the project name. Missing: {missing}.",
+    bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
+      `Your site visit is booked for ${d.projectName} on ${d.date} at ${d.time}. Our team will call ${d.phone} to confirm the slot.`,
+    bookingMissing: (d: { missing: string }) =>
+      `I still need these details: ${d.missing}. Please send name, mobile number, date (YYYY-MM-DD), time, and project name in one message.`,
+    bookingInvalidPhone: "That phone number doesn't look valid. Please send a 10-digit Indian mobile number.",
     suggestions: {
       compare: "Compare these projects",
       visit: "Book a site visit",
@@ -74,6 +80,12 @@ const LANG_COPY = {
     documents: `Aapke chune hue project ka exact document checklist sales team share karti hai. ${SITE.phone} par call kariye aur wo aapko bhej degi.`,
     loan: `Home-loan support sales team ke through milta hai. ${SITE.phone} par call kariye aur wo lender options samjha dengi.`,
     options: "Yeh kuch featured projects hain.",
+    bookingAsk: "Site visit book karne ke liye mujhe ye sab ek message mein bhejein: aapka pura naam, mobile number, preferred date (YYYY-MM-DD), preferred time slot (jaise 10:00–12:00), aur project ka naam. Kami: {missing}.",
+    bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
+      `Aapki site visit book ho gayi hai ${d.projectName} ke liye, ${d.date} ko ${d.time} par. Hamari team ${d.phone} par call karke slot confirm karegi.`,
+    bookingMissing: (d: { missing: string }) =>
+      `Mujhe abhi ye chahiye: ${d.missing}. Naam, mobile number, date (YYYY-MM-DD), time, aur project naam ek message mein bhejein.`,
+    bookingInvalidPhone: "Ye phone number valid nahi lag raha. Kripya ek 10-digit Indian mobile number bhejein.",
     suggestions: {
       compare: "In projects ko compare karein",
       visit: "Site visit book karein",
@@ -106,6 +118,12 @@ const LANG_COPY = {
     documents: `आपके चुने हुए प्रोजेक्ट की सटीक दस्तावेज़ सूची सेल्स टीम भेजती है। ${SITE.phone} पर कॉल कीजिए और वो आपको भेज देगी।`,
     loan: `होम-लोन सहायता सेल्स टीम के ज़रिए मिलती है। ${SITE.phone} पर कॉल कीजिए और वो लेंडर विकल्प समझा देगी।`,
     options: "ये कुछ फ़ीचर्ड प्रोजेक्ट हैं।",
+    bookingAsk: "साइट विज़िट बुक करने के लिए कृपया ये सब एक संदेश में भेजें: आपका पूरा नाम, मोबाइल नंबर, पसंदीदा तारीख (YYYY-MM-DD), पसंदीदा समय स्लॉट (उदाहरण 10:00–12:00), और प्रोजेक्ट का नाम। गायब: {missing}.",
+    bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
+      `आपकी साइट विज़िट ${d.projectName} के लिए ${d.date} को ${d.time} पर बुक कर दी गई है। हमारी टीम ${d.phone} पर कॉल करके स्लॉट कन्फर्म करेगी।`,
+    bookingMissing: (d: { missing: string }) =>
+      `मुझे अभी ये चाहिए: ${d.missing}. कृपया नाम, मोबाइल नंबर, तारीख (YYYY-MM-DD), समय, और प्रोजेक्ट का नाम एक संदेश में भेजें।`,
+    bookingInvalidPhone: "यह फोन नंबर वैध नहीं लग रहा। कृपया एक 10-अंकों का भारतीय मोबाइल नंबर भेजें।",
     suggestions: {
       compare: "इन प्रोजेक्ट्स की तुलना करें",
       visit: "साइट विज़िट बुक करें",
@@ -348,6 +366,193 @@ function isFollowUp(message: string) {
   );
 }
 
+/** ---------- Site-visit / call / appointment booking via AI ---------- */
+
+const BOOKING_KEYWORDS = [
+  "site visit", "site visit book", "book a site visit", "site visit booking",
+  "appointment", "अपॉइंटमेंट", "बुक कर", "book kar", "book karna",
+  "बुकिंग", "booking", "schedule", "स्लॉट", "slot", "call me", "कॉल कर",
+  "call karo", "bolao", "बुलाओ", "mere liye", "for me",
+];
+
+const BOOKING_QUESTION_PATTERNS = [
+  /kaise\s*book/, /how\s+(do\s+)?(i\s+)?book/, /booking\s+kaise/, /how\s+to\s+book/,
+  /kaise\s*appointment/, /appointment\s+kaise/,
+];
+
+function detectBookingIntent(message: string): boolean {
+  const m = message.toLowerCase();
+  // "How do I book..." is a question, not a booking request
+  if (BOOKING_QUESTION_PATTERNS.some((p) => p.test(m))) return false;
+  return BOOKING_KEYWORDS.some((k) => m.includes(k.toLowerCase()));
+}
+
+interface BookingDetails {
+  name?: string;
+  phone?: string;
+  email?: string;
+  preferredDate?: string; // YYYY-MM-DD
+  preferredTime?: string;
+}
+
+function parseBookingDetails(message: string): BookingDetails {
+  const details: BookingDetails = {};
+
+  // Phone: 10 digits starting with 6–9, optionally prefixed with +91 / 91
+  const phoneMatch = message.match(/(?:\+91|91)?[6-9]\d{9}/);
+  if (phoneMatch) details.phone = phoneMatch[0];
+
+  // Date: YYYY-MM-DD, or DD-MM-YYYY / DD/MM/YYYY → normalise to YYYY-MM-DD
+  const isoMatch = message.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+  const dmyMatch = message.match(/\b(\d{2})[-/](\d{2})[-/](\d{4})\b/);
+  if (isoMatch) {
+    details.preferredDate = isoMatch[0];
+  } else if (dmyMatch) {
+    const [, d, m, y] = dmyMatch;
+    details.preferredDate = `${y}-${m}-${d}`;
+  }
+
+  // Time slot: "10:00–12:00", "14:00-16:00", etc.
+  const timeMatch = message.match(/\b(\d{1,2}):(\d{2})\s*[-–]\s*(\d{1,2}):(\d{2})\b/);
+  if (timeMatch) details.preferredTime = timeMatch[0];
+
+  // Name: "mera naam X hai", "naam X hai", "my name is X", "i am X"
+  const nameMatch = message.match(
+    /(?:mera\s+naam|naam|my\s+name\s+is|i\s+am)\s+([a-zA-Z][a-zA-Z\s]{1,40})/i,
+  );
+  if (nameMatch) details.name = nameMatch[1].trim();
+
+  return details;
+}
+
+const BOOKING_FIELD_LABELS: Record<ChatLanguage, Record<string, string>> = {
+  en: {
+    name: "full name",
+    phone: "mobile number",
+    date: "date (YYYY-MM-DD)",
+    time: "time slot",
+    project: "project name",
+  },
+  hinglish: {
+    name: "aapka pura naam",
+    phone: "mobile number",
+    date: "date (YYYY-MM-DD)",
+    time: "time slot",
+    project: "project naam",
+  },
+  hi: {
+    name: "aapka pura naam",
+    phone: "mobile number",
+    date: "tarikh (YYYY-MM-DD)",
+    time: "samay slot",
+    project: "project ka naam",
+  },
+};
+
+function missingFieldsLabel(details: BookingDetails, hasProject: boolean, language: ChatLanguage): string {
+  const labels = BOOKING_FIELD_LABELS[language];
+  const missing: string[] = [];
+  if (!details.name) missing.push(labels.name);
+  if (!details.phone) missing.push(labels.phone);
+  if (!details.preferredDate) missing.push(labels.date);
+  if (!details.preferredTime) missing.push(labels.time);
+  if (!hasProject) missing.push(labels.project);
+  return missing.join(", ");
+}
+
+async function resolveProject(message: string, contextIds: string[]): Promise<AssistantProject | null> {
+  if (contextIds.length > 0) {
+    const found = await db.project.findFirst({
+      where: { id: contextIds[0], published: true, archived: false },
+      include: projectCardInclude,
+    });
+    if (found) return found;
+  }
+  const mentioned = await findMentionedProjects(message);
+  return mentioned.length > 0 ? mentioned[0] : null;
+}
+
+type CompleteBookingDetails = BookingDetails & {
+  name: string;
+  phone: string;
+  preferredDate: string;
+  preferredTime: string;
+  projectId: string;
+  projectName: string;
+};
+
+async function bookSiteVisit(
+  details: CompleteBookingDetails,
+  language: ChatLanguage,
+): Promise<{ success: boolean; reply: string }> {
+  const copy = LANG_COPY[language];
+
+  // Validate phone
+  const phoneRegex = /^(\+91)?[6-9]\d{9}$/;
+  if (!phoneRegex.test(details.phone)) {
+    return { success: false, reply: copy.bookingInvalidPhone };
+  }
+
+  // Validate date is today or later
+  const visitDate = new Date(`${details.preferredDate}T00:00:00.000Z`);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (isNaN(visitDate.getTime()) || visitDate < today) {
+    return { success: false, reply: "Please choose a date from today onwards." };
+  }
+
+  try {
+    await db.$transaction(async (tx) => {
+      const created = await tx.siteVisit.create({
+        data: {
+          projectId: details.projectId,
+          name: details.name,
+          phone: details.phone,
+          email: details.email ?? null,
+          preferredDate: visitDate,
+          preferredTime: details.preferredTime,
+          message: `Site visit booked via Innovations AI assistant.`,
+          status: "PENDING",
+        },
+        select: { id: true },
+      });
+
+      await tx.inquiry.create({
+        data: {
+          name: details.name,
+          phone: details.phone,
+          email: details.email ?? null,
+          projectId: details.projectId,
+          projectName: details.projectName,
+          inquiryType: "SITE_VISIT",
+          message: `Site visit requested for ${details.preferredDate} (${details.preferredTime}) via AI assistant.`,
+          source: "ai-assistant",
+          status: "NEW",
+        },
+      });
+
+      return created;
+    });
+
+    return {
+      success: true,
+      reply: copy.bookingSuccess({
+        projectName: details.projectName,
+        date: details.preferredDate,
+        time: details.preferredTime,
+        phone: details.phone,
+      }),
+    };
+  } catch {
+    return {
+      success: false,
+      reply: "Booking failed. Please try again or call us directly.",
+    };
+  }
+}
+
+/** ---------- End booking ---------- */
+
 async function queryProjects(intent: SearchIntent, take = 4) {
   const result = await searchProjects(
     {
@@ -454,6 +659,50 @@ export async function getAssistantResponse(input: {
       meta: { total: 1, relaxed: false, provider: providerResult.provider },
     };
   };
+
+  // ---------- Booking flow: site visit / call / appointment via AI ----------
+  if (detectBookingIntent(message)) {
+    const details = parseBookingDetails(message);
+    const project = await resolveProject(message, contextIds);
+    const hasProject = Boolean(project);
+    const missing = missingFieldsLabel(details, hasProject, language);
+
+    if (missing) {
+      const reply = copy.bookingAsk.replace("{missing}", missing);
+      return {
+        reply,
+        speech: reply,
+        language,
+        intent: publicIntent(intent),
+        projects: [],
+        suggestions: [copy.suggestions.noida, copy.suggestions.ready],
+        meta: { total: 0, relaxed: false, provider: providerResult.provider },
+      };
+    }
+
+    const result = await bookSiteVisit(
+      {
+        name: details.name!,
+        phone: details.phone!,
+        email: details.email ?? "",
+        projectId: project!.id,
+        projectName: project!.name,
+        preferredDate: details.preferredDate!,
+        preferredTime: details.preferredTime!,
+      } as CompleteBookingDetails,
+      language,
+    );
+
+    return {
+      reply: result.reply,
+      speech: result.reply,
+      language,
+      intent: publicIntent(intent),
+      projects: project ? [toCard(project)] : [],
+      suggestions: [copy.suggestions.visit, copy.suggestions.ready],
+      meta: { total: 0, relaxed: false, provider: providerResult.provider },
+    };
+  }
 
   if (intent.compare) {
     const mentioned = await findMentionedProjects(message);
