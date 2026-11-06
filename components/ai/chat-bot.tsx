@@ -53,7 +53,7 @@ export function ChatBot() {
   if (open && step === "success") {
     return (
       <div className="fixed bottom-6 right-6 z-50">
-        <div className="surface rounded-[20px] border border-line p-8 shadow-2xl w-[420px]">
+        <div className="surface rounded-[20px] border border-line p-8 shadow-2xl w-[480px] md:w-[520px] max-w-[90vw]">
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-semibold text-base">Message Sent</h3>
             <button
@@ -92,7 +92,7 @@ export function ChatBot() {
         </button>
 
         {open && step !== "success" && (
-          <div role="dialog" aria-label="Innovations Support" className="surface rounded-[20px] border border-line p-0 shadow-2xl w-[420px] mt-4 flex flex-col">
+          <div role="dialog" aria-label="Innovations Support" className="surface rounded-[20px] border border-line p-0 shadow-2xl w-[480px] md:w-[560px] max-w-[92vw] mt-4 flex flex-col">
             <div className="bg-brass text-night rounded-t-[20px] px-6 py-4 flex items-center justify-between">
               <h3 className="font-semibold text-base">Innovations Support</h3>
               <button
@@ -103,7 +103,7 @@ export function ChatBot() {
                 <X className="size-5" />
               </button>
             </div>
-            <div className="p-6 text-ink-soft text-base leading-relaxed h-[420px] overflow-y-auto space-y-4">
+            <div className="p-6 text-ink-soft text-base leading-relaxed h-[520px] overflow-y-auto space-y-4">
               <p className="text-sm">
                 Hi! I&rsquo;m here to help. Share your details and I&rsquo;ll forward them to our sales team.
               </p>
