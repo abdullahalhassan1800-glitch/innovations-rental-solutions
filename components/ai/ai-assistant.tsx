@@ -662,11 +662,20 @@ export function AIAssistant() {
       .slice(-8)
       .map((message) => ({ role: message.role, content: message.content }));
 
+    // Keep the previous answer's projects as context so follow-up questions such
+    // as "iski possession kab hai?" can answer without repeating the project name.
+    const lastAnswerProjects = [...messages]
+      .reverse()
+      .flatMap((message) => (message.role === "assistant" ? (message.data?.projects ?? []) : []))
+      .slice(0, 3)
+      .map((project) => project.id);
+    const context = contextIds ?? (selected.length ? selected : lastAnswerProjects);
+
     try {
       const response = await fetch("/api/ai/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed, history, contextProjectIds: contextIds ?? selected }),
+        body: JSON.stringify({ message: trimmed, history, contextProjectIds: context }),
       });
       const data = (await response.json()) as AssistantResponse & { error?: string };
       if (!response.ok) throw new Error(data.error || "The assistant could not respond");

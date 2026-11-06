@@ -8,7 +8,7 @@ export const SITE = {
   phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 92059 08398",
   email: process.env.NEXT_PUBLIC_SALES_EMAIL || "oliverking9205@gmail.com",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919205908398",
-  address: "Urbtech Tower, 11th Floor, Unit 1, Sector 132, Noida, Uttar Pradesh 201304",
+  address: "S-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida - 201304",
   hours: "Mon–Sat, 9:30am – 7:00pm IST",
   demoDisclaimer:
     "Innovations Rental Solutions is a demonstration platform. All projects, developers, prices, images and RERA references shown are sample data for illustration only and are not verified listings or offers.",

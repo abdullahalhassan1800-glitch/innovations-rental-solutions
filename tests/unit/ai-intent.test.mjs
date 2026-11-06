@@ -102,6 +102,30 @@ test("parseIntent recognises spoken comparison and readiness language", () => {
   assert.equal(detectLanguage("Bhai noida mein ghar kitne ka hai"), "hinglish");
 });
 
+test("parseIntent rejects browsing words as site visits", () => {
+  // "dikhao" means "show me", not "take me to the site". It used to set
+  // siteVisit and make the assistant add an unrelated site-visit line.
+  assert.equal(parseIntent("options dikhao").siteVisit, false);
+  assert.equal(parseIntent("sasta dikhao").siteVisit, false);
+  assert.equal(parseIntent("ghar dekhna hai").siteVisit, false);
+  assert.equal(parseIntent("site visit book karna hai").siteVisit, true);
+  assert.equal(parseIntent("साइट विज़िट बुक करनी है").siteVisit, true);
+});
+
+test("parseIntent reads Devanagari sort words", () => {
+  // JavaScript's \b is ASCII-only, so Devanagari alternatives need their own
+  // Unicode-aware match.
+  assert.equal(parseIntent("नोएडा में सस्ता 2 बीएचके दिखाओ").sort, "price-asc");
+  assert.equal(parseIntent("बजट में सस्ती फ्लैट दिखाओ").sort, "price-asc");
+  assert.equal(parseIntent("premium projects dikhao").sort, "price-desc");
+});
+
+test("detectLanguage follows conversational Hinglish verbs", () => {
+  assert.equal(detectLanguage("booking kaise kare"), "hinglish");
+  assert.equal(detectLanguage("possession kab hoga"), "hinglish");
+  assert.equal(detectLanguage("Docs kab tak milenge"), "en");
+});
+
 test("mergeIntents combines criteria and de-duplicates amenities", () => {
   const merged = mergeIntents(
     { location: "noida", amenities: ["Gymnasium"] },

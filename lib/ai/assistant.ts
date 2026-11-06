@@ -1,6 +1,6 @@
 import { db } from "../db";
 import { projectCardInclude, searchProjects, type ProjectCardData } from "../queries";
-import { STATUS_LABELS } from "../constants";
+import { SITE, STATUS_LABELS } from "../constants";
 import { formatMonthYear, formatPriceShort, parseBhk } from "../utils";
 import {
   detectLanguage,
@@ -20,18 +20,28 @@ type AssistantProject = ProjectCardData;
 const LANG_COPY = {
   en: {
     greeting:
-      "Hello! I'm Innovations AI. Tell me a location, budget, BHK or property type — I'll search our live project database and show you real matches.",
-    searching: "Searching",
+      "Hello! I'm Innovations AI. Tell me a location, budget, BHK or property type and I'll search our live project database.",
     results: (n: number) =>
-      `I found ${n} ${n === 1 ? "project" : "projects"} in our database that match your brief.`,
+      n === 1
+        ? "I found 1 project that matches your brief."
+        : `I found ${n} projects that match your brief.`,
     noExact: "I couldn't find an exact match, so here are the closest options from our database.",
     noResults:
-      "I couldn't find a project for that combination. Try widening the budget or choosing another location — inventory changes often.",
-    cheapestFirst: "I've sorted the matches by lowest starting price.",
-    newestFirst: "I've sorted the matches with the newest additions first.",
-    compare: "Here's a side-by-side comparison of the projects you selected, based on our database.",
-    compareNeedTwo: "Choose two or three projects to compare. Here are some matches to start with:",
-    siteVisit: "You can schedule a site visit from any project page — the sales team will confirm your slot.",
+      "I couldn't find a project for that combination. Try a wider budget or another location — inventory changes often.",
+    cheapestFirst: "Sorted by the lowest starting price.",
+    newestFirst: "Newest projects first.",
+    expensiveFirst: "Sorted by the highest starting price.",
+    soonestFirst: "Sorted by the earliest possession.",
+    compare: "Here's a side-by-side comparison from our database.",
+    compareNeedTwo: "Pick two or three projects to compare. These matches are a good start.",
+    siteVisit: `You can schedule a site visit from any project page, or call ${SITE.phone} — the sales team will confirm your slot.`,
+    visitOnly: `Site visits are arranged by our sales team. Call ${SITE.phone} or message us on WhatsApp and we'll confirm a slot. You can also open any project page and tap "Book a site visit".`,
+    contact: `You can reach the sales team on ${SITE.phone} or at ${SITE.email}. Office: ${SITE.address}. Hours: ${SITE.hours}.`,
+    fees: `Exact charges depend on the project and the deal, so the team shares a written breakup before booking. Call ${SITE.phone} for the current figures.`,
+    booking: `The team handles booking end to end — shortlist, site visit, documents and the payment schedule. Call ${SITE.phone} or email ${SITE.email} to start.`,
+    documents: `The sales team shares the exact document checklist for the project you choose. Call ${SITE.phone} and they'll send it across.`,
+    loan: `Home-loan support is available through our sales team. Call ${SITE.phone} and they'll walk you through the lender options.`,
+    options: "Here are some featured projects from our database.",
     suggestions: {
       compare: "Compare these projects",
       visit: "Book a site visit",
@@ -39,29 +49,31 @@ const LANG_COPY = {
       cheap: "Show options under ₹75 L",
       noida: "Projects in Noida",
     },
-    anywhere: "across Delhi NCR",
-    under: "under",
-    above: "above",
-    between: "between",
-    and: "and",
-    bhk: "BHK",
-    commercial: "commercial",
-    amenity: "with",
-    possession: "possession",
   },
   hinglish: {
     greeting:
       "Namaste! Main Innovations AI hoon. Aap location, budget, BHK ya property type batayiye — main live database se matching projects dhoondh kar dikhaunga.",
-    searching: "Search kar raha hoon",
-    results: (n: number) => `Database mein ${n} projects mile jo aapki requirement se match karte hain.`,
+    results: (n: number) =>
+      n === 1
+        ? "Database mein 1 project mila jo aapki requirement se match karta hai."
+        : `Database mein ${n} projects mile jo aapki requirement se match karte hain.`,
     noExact: "Exact match nahi mila, lekin yeh closest options hain jo database mein available hain.",
     noResults:
-      "Is combination ke liye koi project nahi mila. Budget thoda badha kar ya doosri location try karke dekhein — inventory update hoti rehti hai.",
-    cheapestFirst: "Matches ko sabse kam starting price ke hisaab se sort kiya hai.",
+      "Is combination ke liye koi project nahi mila. Budget thoda badha kar ya doosri location try kariye — inventory update hoti rehti hai.",
+    cheapestFirst: "Matches sabse kam starting price ke hisaab se sort kiye hain.",
     newestFirst: "Matches mein sabse naye projects pehle dikhaye hain.",
+    expensiveFirst: "Matches sabse zyada starting price ke hisaab se sort kiye hain.",
+    soonestFirst: "Matches mein sabse jaldi possession wale projects pehle hain.",
     compare: "Yahan aapke chune hue projects ka database-based comparison hai.",
     compareNeedTwo: "Comparison ke liye do ya teen projects chuniye. Shuruaat ke liye yeh matches hain:",
-    siteVisit: "Kisi bhi project page se site visit schedule kar sakte hain — sales team aapka slot confirm karegi.",
+    siteVisit: `Kisi bhi project page se site visit schedule kar sakte hain, ya ${SITE.phone} par call kariye — sales team aapka slot confirm karegi.`,
+    visitOnly: `Site visit sales team arrange karti hai. ${SITE.phone} par call kariye ya WhatsApp par message kariye, hum slot confirm kar denge. Kisi bhi project page par "Book a site visit" bhi hai.`,
+    contact: `Sales team se ${SITE.phone} par ya ${SITE.email} par baat kar sakte hain. Office: ${SITE.address}. Office hours ${SITE.hours}.`,
+    fees: `Exact charges project aur deal par depend karte hain, isliye team booking se pehle written breakup deti hai. Current figures ke liye ${SITE.phone} par call kariye.`,
+    booking: `Booking ka poora process team handle karti hai — shortlist, site visit, documents aur payment schedule. Shuru karne ke liye ${SITE.phone} par call kariye ya ${SITE.email} par email kariye.`,
+    documents: `Aapke chune hue project ka exact document checklist sales team share karti hai. ${SITE.phone} par call kariye aur wo aapko bhej degi.`,
+    loan: `Home-loan support sales team ke through milta hai. ${SITE.phone} par call kariye aur wo lender options samjha dengi.`,
+    options: "Yeh database ke kuch featured projects hain.",
     suggestions: {
       compare: "In projects ko compare karein",
       visit: "Site visit book karein",
@@ -69,29 +81,31 @@ const LANG_COPY = {
       cheap: "₹75 L se kam options dikhayein",
       noida: "Noida ke projects",
     },
-    anywhere: "Delhi NCR mein",
-    under: "se kam",
-    above: "se zyada",
-    between: "ke beech",
-    and: "aur",
-    bhk: "BHK",
-    commercial: "commercial",
-    amenity: "ke saath",
-    possession: "possession",
   },
   hi: {
     greeting:
       "नमस्ते! मैं Innovations AI हूँ। अपनी लोकेशन, बजट, BHK या प्रॉपर्टी टाइप बताइए — मैं लाइव डेटाबेस से मिलते-जुलते प्रोजेक्ट दिखाऊँगा।",
-    searching: "खोज रहा हूँ",
-    results: (n: number) => `डेटाबेस में ${n} प्रोजेक्ट मिले जो आपकी ज़रूरत से मेल खाते हैं।`,
+    results: (n: number) =>
+      n === 1
+        ? "डेटाबेस में 1 प्रोजेक्ट मिला जो आपकी ज़रूरत से मेल खाता है।"
+        : `डेटाबेस में ${n} प्रोजेक्ट मिले जो आपकी ज़रूरत से मेल खाते हैं।`,
     noExact: "सटीक मैच नहीं मिला, लेकिन ये डेटाबेस के सबसे नज़दीकी विकल्प हैं।",
     noResults:
       "इस संयोजन के लिए कोई प्रोजेक्ट नहीं मिला। बजट थोड़ा बढ़ाकर या दूसरी लोकेशन आज़माइए — उपलब्धता बदलती रहती है।",
     cheapestFirst: "मैचों को सबसे कम शुरुआती कीमत के हिसाब से क्रमबद्ध किया है।",
     newestFirst: "मैचों में सबसे नए प्रोजेक्ट पहले दिखाए गए हैं।",
+    expensiveFirst: "मैचों को सबसे ज़्यादा शुरुआती कीमत के हिसाब से क्रमबद्ध किया है।",
+    soonestFirst: "मैचों में सबसे जल्दी पज़ेशन वाले प्रोजेक्ट पहले हैं।",
     compare: "यहाँ आपके चुने हुए प्रोजेक्ट्स की डेटाबेस-आधारित तुलना है।",
     compareNeedTwo: "तुलना के लिए दो या तीन प्रोजेक्ट चुनिए। शुरुआत के लिए ये मैच हैं:",
-    siteVisit: "किसी भी प्रोजेक्ट पेज से साइट विज़िट शेड्यूल कर सकते हैं — सेल्स टीम आपका स्लॉट कन्फर्म करेगी।",
+    siteVisit: `किसी भी प्रोजेक्ट पेज से साइट विज़िट शेड्यूल कर सकते हैं, या ${SITE.phone} पर कॉल कीजिए — सेल्स टीम आपका स्लॉट कन्फर्म करेगी।`,
+    visitOnly: `साइट विज़िट सेल्स टीम तय करती है। ${SITE.phone} पर कॉल कीजिए या WhatsApp पर मैसेज कीजिए, हम स्लॉट कन्फर्म कर देंगे। किसी भी प्रोजेक्ट पेज पर "Book a site visit" भी है।`,
+    contact: `सेल्स टीम से ${SITE.phone} पर या ${SITE.email} पर संपर्क कर सकते हैं। ऑफिस: ${SITE.address}। समय: ${SITE.hours}।`,
+    fees: `सटीक शुल्क प्रोजेक्ट और डील पर निर्भर करते हैं, इसलिए टीम बुकिंग से पहले लिखित ब्रेकअप देती है। मौजूदा आँकड़ों के लिए ${SITE.phone} पर कॉल कीजिए।`,
+    booking: `बुकिंग का पूरा काम टीम संभालती है — शॉर्टलिस्ट, साइट विज़िट, दस्तावेज़ और भुगतान योजना। शुरू करने के लिए ${SITE.phone} पर कॉल कीजिए या ${SITE.email} पर ईमेल कीजिए।`,
+    documents: `आपके चुने हुए प्रोजेक्ट की सटीक दस्तावेज़ सूची सेल्स टीम भेजती है। ${SITE.phone} पर कॉल कीजिए और वो आपको भेज देगी।`,
+    loan: `होम-लोन सहायता सेल्स टीम के ज़रिए मिलती है। ${SITE.phone} पर कॉल कीजिए और वो लेंडर विकल्प समझा देगी।`,
+    options: "ये डेटाबेस के कुछ फ़ीचर्ड प्रोजेक्ट हैं।",
     suggestions: {
       compare: "इन प्रोजेक्ट्स की तुलना करें",
       visit: "साइट विज़िट बुक करें",
@@ -99,53 +113,79 @@ const LANG_COPY = {
       cheap: "₹75 लाख से कम विकल्प",
       noida: "नोएडा के प्रोजेक्ट",
     },
-    anywhere: "दिल्ली NCR में",
-    under: "से कम",
-    above: "से ज़्यादा",
-    between: "के बीच",
-    and: "और",
-    bhk: "BHK",
-    commercial: "कमर्शियल",
-    amenity: "के साथ",
-    possession: "पज़ेशन",
   },
 } as const;
 
-function budgetPhrase(intent: SearchIntent, lang: ChatLanguage) {
-  const copy = LANG_COPY[lang];
-  if (intent.minPrice && intent.maxPrice) {
-    return `${copy.between} ${formatPriceShort(intent.minPrice)} ${copy.and} ${formatPriceShort(intent.maxPrice)}`;
+function joinList(items: string[], lang: ChatLanguage) {
+  if (items.length <= 1) return items.join("");
+  const and = lang === "hi" ? "और" : "and";
+  return `${items.slice(0, -1).join(", ")} ${and} ${items[items.length - 1]}`;
+}
+
+function textPrice(value: number, lang: ChatLanguage) {
+  if (lang !== "hi") return formatPriceShort(value);
+  if (value >= 10_000_000) {
+    const crore = value / 10_000_000;
+    return `₹${Number.isInteger(crore) ? crore : crore.toFixed(2).replace(/\.?0+$/, "")} करोड़`;
   }
-  if (lang === "en") {
-    if (intent.maxPrice) return `${copy.under} ${formatPriceShort(intent.maxPrice)}`;
-    if (intent.minPrice) return `${copy.above} ${formatPriceShort(intent.minPrice)}`;
-  } else {
-    if (intent.maxPrice) return `${formatPriceShort(intent.maxPrice)} ${copy.under}`;
-    if (intent.minPrice) return `${formatPriceShort(intent.minPrice)} ${copy.above}`;
+  if (value >= 100_000) {
+    const lakh = value / 100_000;
+    return `₹${Number.isInteger(lakh) ? lakh : lakh.toFixed(2).replace(/\.?0+$/, "")} लाख`;
+  }
+  return formatPriceShort(value);
+}
+
+function configPhrase(configs: string[], lang: ChatLanguage) {
+  if (!configs.length) return "";
+  return `${joinList(configs, lang)} BHK`;
+}
+
+function budgetPhrase(intent: SearchIntent, lang: ChatLanguage) {
+  const price = (value: number) => textPrice(value, lang);
+  if (intent.minPrice && intent.maxPrice) {
+    if (lang === "en") return `between ${price(intent.minPrice)} and ${price(intent.maxPrice)}`;
+    if (lang === "hi") return `${price(intent.minPrice)} से ${price(intent.maxPrice)} के बीच`;
+    return `${price(intent.minPrice)} se ${price(intent.maxPrice)} ke beech`;
+  }
+  if (intent.maxPrice) {
+    if (lang === "en") return `under ${price(intent.maxPrice)}`;
+    if (lang === "hi") return `${price(intent.maxPrice)} से कम`;
+    return `${price(intent.maxPrice)} se kam`;
+  }
+  if (intent.minPrice) {
+    if (lang === "en") return `above ${price(intent.minPrice)}`;
+    if (lang === "hi") return `${price(intent.minPrice)} से ज़्यादा`;
+    return `${price(intent.minPrice)} se zyada`;
   }
   return "";
 }
 
 function searchSentence(intent: SearchIntent, lang: ChatLanguage) {
-  const copy = LANG_COPY[lang];
-  const where = intent.location ? locationLabel(intent.location) : copy.anywhere;
+  const where = locationLabel(intent.location);
   const budget = budgetPhrase(intent, lang);
-  const bhk = intent.bhk ? `${intent.bhk} ${copy.bhk}` : "";
+  const bhk = intent.bhk ? `${intent.bhk} BHK` : "";
   const type =
-    intent.propertyType === "COMMERCIAL"
-      ? copy.commercial
-      : intent.category
-        ? intent.category.toLowerCase()
-        : "";
-  const amenity = intent.amenities.length ? `${copy.amenity} ${intent.amenities.slice(0, 2).join(", ")}` : "";
+    intent.propertyType === "COMMERCIAL" ? intent.category ?? "commercial" : intent.category ?? "";
+  const what = [bhk, type].filter(Boolean).join(" ");
+  const amenityNames = intent.amenities.slice(0, 2);
+  const amenity = amenityNames.length
+    ? lang === "en"
+      ? `with ${joinList(amenityNames, "en")}`
+      : lang === "hi"
+        ? `${joinList(amenityNames, "hi")} के साथ`
+        : `${joinList(amenityNames, "hinglish")} ke saath`
+    : "";
 
   if (lang === "en") {
-    const parts = [bhk, type, intent.amenities.length ? amenity : "", budget].filter(Boolean);
-    return `Searching ${where} for ${parts.join(" ")} projects.`.replace(/\s+/g, " ");
+    const parts = [what ? `${what} projects` : "projects", amenity, budget].filter(Boolean);
+    return `Searching ${where} for ${parts.join(" ")}.`;
   }
-  const parts = [budget, bhk, type, amenity].filter(Boolean);
-  if (lang === "hi") return `${where} में ${parts.join(" ")} प्रोजेक्ट ${copy.searching}।`;
-  return `${where} mein ${parts.join(" ")} projects ${copy.searching} hoon.`;
+  if (lang === "hi") {
+    const parts = [budget, what ? `${what} प्रोजेक्ट` : "प्रोजेक्ट", amenity].filter(Boolean);
+    return `${where} में ${parts.join(" ")} खोज रहा हूँ।`;
+  }
+  const parts = [budget, what ? `${what} ke projects` : "projects", amenity].filter(Boolean);
+  return `${where} mein ${parts.join(" ")} dhoondh raha hoon.`;
 }
 
 function toCard(project: AssistantProject): ChatCard {
@@ -186,16 +226,126 @@ function spokenPrice(value: number, language: ChatLanguage) {
   return String(value);
 }
 
-/** Short speech script: the full text answer plus the top two result names. */
+function spokenConfig(label: string, language: ChatLanguage) {
+  const match = label.match(/^([\d+\s,]+)\s*BHK$/i);
+  if (!match) return label === "—" ? "" : label;
+  const units = match[1]
+    .split(",")
+    .map((unit) => unit.trim())
+    .filter(Boolean);
+  if (units.length < 2) return label;
+  return `${joinList(units, language)} BHK`;
+}
+
+/** Short speech script: the key written sentences plus the top matches. */
 function speechForReply(reply: string, cards: ChatCard[], language: ChatLanguage) {
   if (!cards.length) return reply;
-  const from =
-    language === "hi" ? "से शुरू" : language === "hinglish" ? "se shuru" : "onwards";
+  const from = language === "hi" ? "से शुरू" : language === "hinglish" ? "se shuru" : "onwards";
   const top = cards
     .slice(0, 2)
-    .map((card) => `${card.name}, ${card.configLabel}, ${spokenPrice(card.startingPrice, language)} ${from}`)
+    .map((card) => {
+      const config = spokenConfig(card.configLabel, language);
+      return `${card.name}${config ? `, ${config}` : ""}, ${spokenPrice(card.startingPrice, language)} ${from}`;
+    })
     .join(". ");
-  return `${reply} ${top}.`;
+  const lead = reply.split(/(?<=[.!?।])\s+/).slice(0, 2).join(" ");
+  return `${lead} ${top}.`;
+}
+
+const STATUS_WORDS: Record<ChatLanguage, Record<string, string>> = {
+  en: {
+    NEW_LAUNCH: "new launch",
+    UNDER_CONSTRUCTION: "under construction",
+    READY_TO_MOVE: "ready to move",
+    UPCOMING: "upcoming",
+  },
+  hinglish: {
+    NEW_LAUNCH: "new launch",
+    UNDER_CONSTRUCTION: "under construction",
+    READY_TO_MOVE: "ready-to-move",
+    UPCOMING: "upcoming",
+  },
+  hi: {
+    NEW_LAUNCH: "नया लॉन्च",
+    UNDER_CONSTRUCTION: "निर्माणाधीन",
+    READY_TO_MOVE: "रेडी-टू-मूव",
+    UPCOMING: "आगामी",
+  },
+};
+
+function statusWord(status: string, language: ChatLanguage) {
+  return STATUS_WORDS[language][status] ?? (STATUS_LABELS[status] ?? status).toLowerCase();
+}
+
+function projectDetailReply(project: AssistantProject, language: ChatLanguage) {
+  const config = configPhrase(parseBhk(project.bhkConfigs), language);
+  const price = textPrice(project.startingPrice, language);
+  const possession = formatMonthYear(project.possessionDate);
+  const possessionLine = possession === "—" ? "" : possession;
+  const type = project.category.toLowerCase();
+  const status = statusWord(project.status, language);
+
+  if (language === "hi") {
+    return `${project.name}, ${project.location.name} में ${project.developer.name} का ${status} ${type} प्रोजेक्ट है। ${config ? `${config} ` : ""}कीमत ${price} से शुरू होती है${possessionLine ? ` और पज़ेशन ${possessionLine} है` : ""}।`;
+  }
+  if (language === "hinglish") {
+    return `${project.name}, ${project.location.name} mein ${project.developer.name} ka ${status} ${type} project hai. ${config ? `${config} ` : ""}ki keemat ${price} se shuru hoti hai${possessionLine ? ` aur possession ${possessionLine} hai` : ""}.`;
+  }
+  return `${project.name} is a ${status} ${type} project by ${project.developer.name} in ${project.location.name}. ${config ? `${config} units start at ${price}` : `Units start at ${price}`}${possessionLine ? `, with possession in ${possessionLine}` : ""}.`;
+}
+
+type FaqTopic = "siteVisit" | "contact" | "fees" | "booking" | "documents" | "loan";
+
+function detectFaqTopic(message: string): FaqTopic | null {
+  if (/(?:site\s*visit|visit|tour|dekhne\s+aana|साइट\s*विज़िट|साइट\s*विजिट|विज़िट|देखने\s+आना)/iu.test(message)) {
+    return "siteVisit";
+  }
+  if (/(?:fees?|charges?|brokerage|commission|शुल्क|फीस|चार्ज|ब्रोकरेज|कमीशन)/iu.test(message)) return "fees";
+  if (/(?:documents?|paperwork|kagaz|registry|agreement|दस्तावेज़|कागज|रजिस्ट्री)/iu.test(message)) {
+    return "documents";
+  }
+  if (/(?:home\s*loan|loan|emi|finance|लोन|फाइनेंस|ईएमआई)/iu.test(message)) return "loan";
+  if (/(?:booking|book\s+(?:a|kar|karna)|बुकिंग|बुक\s*कर)/iu.test(message)) return "booking";
+  if (/(?:contact|phone|call|whatsapp|email|number|sales\s*team|office\s+address|address|संपर्क|फोन|ईमेल|नंबर|पता|ऑफिस\s*का\s*पता)/iu.test(message)) {
+    return "contact";
+  }
+  return null;
+}
+
+function faqReply(topic: FaqTopic, language: ChatLanguage) {
+  const copy = LANG_COPY[language];
+  switch (topic) {
+    case "siteVisit":
+      return copy.visitOnly;
+    case "contact":
+      return copy.contact;
+    case "fees":
+      return copy.fees;
+    case "booking":
+      return copy.booking;
+    case "documents":
+      return copy.documents;
+    case "loan":
+      return copy.loan;
+  }
+}
+
+function wantsOptions(message: string) {
+  return /(?:^|\s)(?:options?|choices?|what\s+do\s+you\s+have|show\s+me\s+(?:some\s+)?(?:projects?|options?)|(?:projects?|options?)\s+dikha\w*|kya\s+kya\s+hai|विकल्प|दिखाइए|दिखाओ)(?:\s|[?.!,]|$)/iu.test(
+    message,
+  );
+}
+
+function isQuestion(message: string) {
+  return /(?:\?|kya|kaise|kab|kitna|kitne|kitni|price|possession|status|detail|about|batao|bataiye|jankari|baare|क्या|कैसे|कब|कीमत|पज़ेशन|जानकारी|बारे)/iu.test(
+    message,
+  );
+}
+
+function isFollowUp(message: string) {
+  return /(?:^|\s)(?:iski|iska|iske|uski|uska|uske|this\s+project|that\s+project|is\s+project|us\s+project|इसका|इसकी|इसके|उसका|उसकी|उसके)(?:\s|[?.!,]|$)/iu.test(
+    message,
+  );
 }
 
 async function queryProjects(intent: SearchIntent, take = 4) {
@@ -292,6 +442,19 @@ export async function getAssistantResponse(input: {
 
   const contextIds = Array.from(new Set(input.contextProjectIds ?? [])).filter(Boolean).slice(0, 3);
 
+  const detailResponse = (project: AssistantProject): AssistantResponse => {
+    const reply = projectDetailReply(project, language);
+    return {
+      reply,
+      speech: reply,
+      language,
+      intent: publicIntent(intent),
+      projects: [toCard(project)],
+      suggestions: [copy.suggestions.visit, copy.suggestions.compare, copy.suggestions.ready],
+      meta: { total: 1, relaxed: false, provider: providerResult.provider },
+    };
+  };
+
   if (intent.compare) {
     const mentioned = await findMentionedProjects(message);
     if (mentioned.length >= 2) {
@@ -332,6 +495,19 @@ export async function getAssistantResponse(input: {
     }
   }
 
+  const mentioned = await findMentionedProjects(message);
+  if (mentioned.length === 1 && (!hasSearchCriteria(intent) || isQuestion(message))) {
+    return detailResponse(mentioned[0]);
+  }
+
+  if (!hasSearchCriteria(intent) && isFollowUp(message) && contextIds.length) {
+    const project = await db.project.findFirst({
+      where: { id: contextIds[0], published: true, archived: false },
+      include: projectCardInclude,
+    });
+    if (project) return detailResponse(project);
+  }
+
   if (intent.greeting && !hasSearchCriteria(intent)) {
     return {
       reply: copy.greeting,
@@ -345,6 +521,39 @@ export async function getAssistantResponse(input: {
         "Ready-to-move projects",
       ],
       meta: { total: 0, relaxed: false, provider: providerResult.provider },
+    };
+  }
+
+  const faqTopic = detectFaqTopic(message);
+  if (faqTopic && (faqTopic === "contact" || !hasSearchCriteria(intent))) {
+    const reply = faqReply(faqTopic, language);
+    return {
+      reply,
+      speech: reply,
+      language,
+      intent: publicIntent(intent),
+      projects: [],
+      suggestions: [copy.suggestions.noida, copy.suggestions.ready, copy.suggestions.cheap],
+      meta: { total: 0, relaxed: false, provider: providerResult.provider },
+    };
+  }
+
+  if (!hasSearchCriteria(intent) && wantsOptions(message)) {
+    const featured = await db.project.findMany({
+      where: { published: true, archived: false },
+      include: projectCardInclude,
+      orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
+      take: 3,
+    });
+    const cards = featured.map(toCard);
+    return {
+      reply: copy.options,
+      speech: speechForReply(copy.options, cards, language),
+      language,
+      intent: publicIntent(intent),
+      projects: cards,
+      suggestions: [copy.suggestions.compare, copy.suggestions.visit, copy.suggestions.ready],
+      meta: { total: cards.length, relaxed: false, provider: providerResult.provider },
     };
   }
 
@@ -389,7 +598,9 @@ export async function getAssistantResponse(input: {
   }
 
   if (projects.length > 0 && intent.sort === "price-asc") lines.push(copy.cheapestFirst);
+  if (projects.length > 0 && intent.sort === "price-desc") lines.push(copy.expensiveFirst);
   if (projects.length > 0 && intent.sort === "newest") lines.push(copy.newestFirst);
+  if (projects.length > 0 && intent.sort === "possession") lines.push(copy.soonestFirst);
   if (intent.siteVisit) lines.push(copy.siteVisit);
   if (intent.compare && contextIds.length < 2 && projects.length >= 2) {
     lines.push(copy.compareNeedTwo);

@@ -32,11 +32,12 @@ export const EMPTY_INTENT: SearchIntent = {
 
 const HINGLISH_MARKERS = [
   "chahiye", "chaiye", "mein", "main", "ke andar", "andar", "kitna", "kitne", "kya", "kaunsa",
-  "kaunsi", "batao", "bataiye", "bata", "dikhao", "dikhaiye", "dikha", "mujhe", "ghar", "kamre",
-  "zameen", "dukaan", "paas", "ke paas", "se kam", "se zyada", "budget mein", "dekhna", "dekhni",
-  "dekhan", "hai", "hain", "kar", "karo", "karna", "milega", "milegi", "options", "achha", "accha",
-  "sasta", "sasti", "paisa", "kitne ka", "kahan", "wala", "wali", "lena", "dena", "chahiye tha",
-  "bhai", "yaar", "turant", "jaldi", "paas mein", "ke aas paas", "farak", "fark", "antar", "tulna",
+  "kaunsi", "kaun", "kaise", "batao", "bataiye", "bata", "dikhao", "dikhaiye", "dikha", "mujhe",
+  "ghar", "kamre", "zameen", "dukaan", "paas", "ke paas", "se kam", "se zyada", "budget mein",
+  "dekhna", "dekhni", "dekhan", "hai", "hain", "hoga", "hogi", "kar", "karo", "kare", "karna",
+  "milega", "milegi", "options", "achha", "accha", "sasta", "sasti", "paisa", "kitne ka", "kahan",
+  "wala", "wali", "lena", "dena", "chahiye tha", "bhai", "yaar", "turant", "jaldi", "paas mein",
+  "ke aas paas", "farak", "fark", "antar", "tulna", "lagega", "padega", "dijiye",
 ];
 
 const LOCATIONS: { slug: string; label: string; pattern: RegExp }[] = [
@@ -310,9 +311,10 @@ export function parseIntent(message: string): SearchIntent {
       text,
     );
   const siteVisit =
-    /\b(site\s*visit|visit|tour|dekhna|dekhni|dekhan|dikhana|dikhao|milne aana|dekhne aana|property dekhni|site dekhni)\b/i.test(
+    /\b(site\s*visit|site\s*dekh\w*|visit|tour|dekhne\s+aana|property\s+dekh\w*)\b/i.test(
       text,
-    );
+    ) ||
+    /(?:साइट\s*विज़िट|साइट\s*विजिट|विज़िट|देखने\s+आना|प्रॉपर्टी\s+देखनी)/u.test(text);
 
   return {
     location,
@@ -332,14 +334,33 @@ export function parseIntent(message: string): SearchIntent {
 }
 
 function extractSort(message: string): SearchSort | undefined {
-  if (
-    /\b(cheap(est)?|affordable|budget[-\s]?friendly|lowest price|low price|sasta|sasti|kam budget|कम बजट|सस्ता|सस्ती)\b/i.test(
+  // `\b` is ASCII-only in JavaScript, so Devanagari words such as "सस्ता"
+  // never matched. Use Unicode-aware boundaries for the Latin alternatives and
+  // plain matches for the Devanagari ones.
+  const cheapest =
+    /(?:^|[^\p{L}])(?:cheap(?:est)?|affordable|budget[-\s]?friendly|lowest\s*price|low\s*price|sasta|sasti)(?:[^\p{L}]|$)/iu.test(
       message,
-    )
+    ) || /(?:कम\s*बजट|सस्ता|सस्ती|किफायती)/u.test(message);
+  if (cheapest) return "price-asc";
+
+  const expensive =
+    /(?:^|[^\p{L}])(?:luxur(?:y|ious)|premium|high[-\s]?end|expensive|mehnga|mehangi)(?:[^\p{L}]|$)/iu.test(
+      message,
+    ) || /(?:लक्ज़री|लक्जरी|प्रीमियम|महंगा|महँगा|महंगी)/u.test(message);
+  if (expensive) return "price-desc";
+
+  const newest =
+    /(?:^|[^\p{L}])(?:latest|newest|naye\s+projects?)(?:[^\p{L}]|$)/iu.test(message) ||
+    /(?:नए\s*प्रोजेक्ट्स?|नई\s*लॉन्चिंग)/u.test(message);
+  if (newest) return "newest";
+
+  if (
+    /(?:earliest|soonest|jaldi(?:se)?)\s+possession/i.test(message) ||
+    /possession\s+(?:soon|earliest|jaldi)/i.test(message) ||
+    /(?:जल्दी|जल्द\s*से)\s*पज़ेशन|पज़ेशन\s*(?:जल्दी|जल्द)/u.test(message)
   ) {
-    return "price-asc";
+    return "possession";
   }
-  if (/\b(latest|newest|naye projects|नए प्रोजेक्ट्स?)\b/i.test(message)) return "newest";
   return undefined;
 }
 
