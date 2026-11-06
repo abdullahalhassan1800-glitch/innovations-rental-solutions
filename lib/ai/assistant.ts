@@ -369,10 +369,22 @@ function isFollowUp(message: string) {
 /** ---------- Site-visit / call / appointment booking via AI ---------- */
 
 const BOOKING_KEYWORDS = [
+  // English
   "site visit", "site visit book", "book a site visit", "site visit booking",
-  "appointment", "अपॉइंटमेंट", "बुक कर", "book kar", "book karna",
-  "बुकिंग", "booking", "schedule", "स्लॉट", "slot", "call me", "कॉल कर",
-  "call karo", "bolao", "बुलाओ", "mere liye", "for me",
+  "appointment", "booking", "schedule", "slot", "slot book", "slot booking",
+  "call me", "call karo", "call karna", "call karna hai", "bolao", "bolna hai",
+  "time fix", "time fix karna", "mere liye book", "book for me",
+  // Hinglish / Hindi
+  "अपॉइंटमेंट", "अपॉइंटमेंट लें", "अपॉइंटमेंट लेंना", "बुक कर", "book kar",
+  "book karna", "book karna hai", "बुकिंग", "बुकिंग कर", "बुकिंग करना",
+  "स्लॉट", "स्लॉट बुक", "स्लॉट बुक करना", "टाइम फिक्स", "टाइम फिक्स करना",
+  "site visit karna", "site visit karna hai", "site visit book karna",
+  "site visit book karna hai", "mere liye site visit", "site visit ke liye",
+  "mujhe site visit", "appointment lena", "appointment lena hai",
+  "appointment book karna", "appointment book karna hai",
+  "mere liye appointment", "mere liye call", "mere liye bolao",
+  "ghar dekhna", "flat dekhna", "project dekhna", "site dekhna",
+  "visit karna", "visit karna hai", "dekhne aana", "dekhne aana hai",
 ];
 
 const BOOKING_QUESTION_PATTERNS = [
