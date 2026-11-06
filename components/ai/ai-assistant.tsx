@@ -67,30 +67,33 @@ function pickVoice(voices: SpeechSynthesisVoice[], language: string) {
   const normalise = (value: string) => value.replace("_", "-").toLowerCase();
   const nameNormalise = (value: string) => value.toLowerCase();
 
-  // Prefer natural-sounding voices (Google/Microsoft/Azure "Natural" voices)
-  // so the assistant doesn't sound like a basic robotic TTS engine.
-  const preferredNames = ["natural", "google", "azure", "microsoft", "female", "male"];
+  // Female-sounding voices first, then natural/microsoft/google/azure names.
+  const femaleNames = ["female", "woman", "girl", "samantha", "ava", "aria", "sana", "kavya", "lekha"];
+  const naturalNames = ["natural", "google", "azure", "microsoft"];
 
   const findVoice = (pred: (v: SpeechSynthesisVoice) => boolean) =>
     voices.find(pred) ?? null;
 
+  const exactFemale = () =>
+    findVoice((v) => normalise(v.lang) === exact.toLowerCase() && femaleNames.some((p) => nameNormalise(v.name).includes(p)));
+  const exactNatural = () =>
+    findVoice((v) => normalise(v.lang) === exact.toLowerCase() && naturalNames.some((p) => nameNormalise(v.name).includes(p)));
+  const exactAny = () => findVoice((v) => normalise(v.lang) === exact.toLowerCase());
+  const prefixFemale = () =>
+    findVoice((v) => normalise(v.lang).startsWith(prefix) && femaleNames.some((p) => nameNormalise(v.name).includes(p)));
+  const prefixNatural = () =>
+    findVoice((v) => normalise(v.lang).startsWith(prefix) && naturalNames.some((p) => nameNormalise(v.name).includes(p)));
+  const prefixAny = () => findVoice((v) => normalise(v.lang).startsWith(prefix));
+  const defaultVoice = () => findVoice((v) => v.default);
+
   return (
-    // 1. Exact language match with a "natural" name
-    findVoice((v) =>
-      normalise(v.lang) === exact.toLowerCase() &&
-      preferredNames.some((p) => nameNormalise(v.name).includes(p)),
-    ) ??
-    // 2. Exact language match, any name
-    findVoice((v) => normalise(v.lang) === exact.toLowerCase()) ??
-    // 3. Language prefix match with a "natural" name
-    findVoice((v) =>
-      normalise(v.lang).startsWith(prefix) &&
-      preferredNames.some((p) => nameNormalise(v.name).includes(p)),
-    ) ??
-    // 4. Language prefix match, any name
-    findVoice((v) => normalise(v.lang).startsWith(prefix)) ??
-    // 5. Default voice
-    findVoice((v) => v.default) ??
+    exactFemale() ??
+    exactNatural() ??
+    exactAny() ??
+    prefixFemale() ??
+    prefixNatural() ??
+    prefixAny() ??
+    defaultVoice() ??
     null
   );
 }
