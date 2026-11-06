@@ -178,7 +178,7 @@ export default async function HomePage() {
       {/* Cinematic hero */}
       <section
         data-ai-avoid
-        className="relative flex min-h-[92svh] flex-col justify-end overflow-hidden bg-night text-paper"
+        className="relative flex min-h-[80svh] md:min-h-[92svh] flex-col justify-end overflow-hidden bg-night text-paper"
       >
         <HeroMedia />
 
