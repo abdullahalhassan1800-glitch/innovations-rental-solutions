@@ -123,7 +123,7 @@ const SPOKEN_NUMBERS: Record<string, number> = {
   seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, thirty: 30, forty: 40, fifty: 50,
   sixty: 60, seventy: 70, eighty: 80, ninety: 90, hundred: 100,
   ek: 1, do: 2, teen: 3, char: 4, chaar: 4, panch: 5, paanch: 5, chhe: 6, che: 6, saat: 7,
-  aath: 8, nau: 9, das: 10, bees: 20, tees: 30, chalees: 40, pachas: 50, pachaas: 50,
+  aath: 8, nau: 9, das: 10, bees: 20, tees: 30, chalees: 40, chalis: 40, pachas: 50, pachaas: 50,
   saath: 60, sattar: 70, assi: 80, nabbe: 90, sau: 100,
   pachees: 25, pachchis: 25, paintees: 35, paintalis: 45, pachpan: 55, painsath: 65,
   pachattar: 75, pachasi: 85, panchanbe: 95,
@@ -139,7 +139,7 @@ const SPOKEN_FRACTIONS: Record<string, number> = {
   aadha: 0.5, "आधा": 0.5,
 };
 
-function parseSpokenNumberPhrase(phrase: string): number | null {
+export function parseSpokenNumberPhrase(phrase: string): number | null {
   const tokens = phrase
     .toLowerCase()
     // Keep \p{M}: Devanagari vowel signs are combining marks, and stripping

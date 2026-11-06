@@ -8,6 +8,7 @@ import {
   locationLabel,
   mergeIntents,
   parseIntent,
+  parseSpokenNumberPhrase,
   type ChatLanguage,
   type SearchIntent,
 } from "./intent";
@@ -727,37 +728,41 @@ function parseBhkAnswer(message: string): string | undefined {
 }
 
 function parseBudgetAnswer(message: string): { minPrice?: number; maxPrice?: number } {
-  const m = message.toLowerCase();
-  const croreMatch = m.match(/(\d+(?:\.\d+)?)\s*(crore|cr|\u0915\u0930\u094b\u092e)/);
-  const lakhMatch = m.match(/(\d+(?:\.\d+)?)\s*(lakh|lac|lacs|\u0932\u093e\u0926\u094d\u0930\u0947)/);
-  const numberMatch = m.match(/(\d{5,})/);
+  const m = message.toLowerCase().replace(/,/g, "");
 
-  if (croreMatch) {
-    const val = Math.round(Number(croreMatch[1]) * 10_000_000);
-    if (m.includes("under") || m.includes("se kam") || m.includes("ke andar") || m.includes("tak")) {
-      return { maxPrice: val };
-    }
-    if (m.includes("above") || m.includes("se zyada") || m.includes("se upar") || m.includes("minimum")) {
-      return { minPrice: val };
-    }
+  function decide(minOrMax: "min" | "max", val: number) {
+    const isMax = /under|se kam|ke andar|tak|below|less than/i.test(m);
+    const isMin = /above|se zyada|se upar|minimum|starting|more than/i.test(m);
+    if (isMax) return { maxPrice: val };
+    if (isMin) return { minPrice: val };
     return { minPrice: val, maxPrice: val };
   }
-  if (lakhMatch) {
-    const val = Math.round(Number(lakhMatch[1]) * 100_000);
-    if (m.includes("under") || m.includes("se kam") || m.includes("ke andar") || m.includes("tak")) {
-      return { maxPrice: val };
-    }
-    if (m.includes("above") || m.includes("se zyada") || m.includes("se upar") || m.includes("minimum")) {
-      return { minPrice: val };
-    }
-    return { minPrice: val, maxPrice: val };
+
+  // Digit-based: "40 lakh", "2 crore", "1.5 crore"
+  const croreMatch = m.match(/(\d+(?:\.\d+)?)\s*(crore|cr|\u0915\u0930\u094b\u092e)/);
+  const lakhMatch = m.match(/(\d+(?:\.\d+)?)\s*(lakh|lakhs|lac|lacs|laakh|laakhs|\u0932\u093e\u0926\u094d\u0930\u0947)/);
+  if (croreMatch) return decide("max", Math.round(Number(croreMatch[1]) * 10_000_000));
+  if (lakhMatch) return decide("max", Math.round(Number(lakhMatch[1]) * 100_000));
+
+  // Spoken word-based: "chalis laakh", "do crore", "पचहत्तर लाख"
+  const spokenLakh = m.match(/([a-z\u0900-\u097f]+)\s*(lakh|lakhs|lac|lacs|laakh|laakhs|\u0932\u093e\u0926\u094d\u0930\u0947)/i);
+  const spokenCrore = m.match(/([a-z\u0900-\u097f]+)\s*(crore|cr|\u0915\u0930\u094b\u092e)/i);
+  if (spokenLakh) {
+    const v = parseSpokenNumberPhrase(spokenLakh[1]);
+    if (v) return decide("max", v * 100_000);
   }
+  if (spokenCrore) {
+    const v = parseSpokenNumberPhrase(spokenCrore[1]);
+    if (v) return decide("max", v * 10_000_000);
+  }
+
+  // Plain digit number: "4000000"
+  const numberMatch = m.match(/\b(\d{5,})\b/);
   if (numberMatch) {
     const val = Number(numberMatch[1]);
-    if (val >= 100_000) {
-      return { maxPrice: val };
-    }
+    if (val >= 100_000) return decide("max", val);
   }
+
   return {};
 }
 
@@ -772,7 +777,7 @@ function parseSiteVisitAnswer(message: string): boolean | undefined {
   return undefined;
 }
 
-function qualificationQuestion(step: QualificationStep, language: ChatLanguage, collected: QualificationCollected): string {
+function qualificationQuestion(step: QualificationStep, language: ChatLanguage): string {
   const copy = LANG_COPY[language];
 
   // Add conversational acknowledgment before each question
@@ -885,7 +890,7 @@ export async function getAssistantResponse(input: {
       Object.assign(intent, qualifiedIntent);
     } else {
       // Still waiting for more answers — ask the next question
-      const nextQuestion = qualificationQuestion(inputQualState.step, language, inputQualState.collected);
+      const nextQuestion = qualificationQuestion(inputQualState.step, language);
       const where = collected.location ? locationLabel(collected.location) : "";
       let reply: string;
       if (language === "en") {
