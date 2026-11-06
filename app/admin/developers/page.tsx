@@ -16,7 +16,7 @@ export default async function AdminDevelopersPage() {
         <p className="eyebrow">Directory</p>
         <h1 className="mt-3 font-display text-3xl">Developers.</h1>
         <p className="mt-2 max-w-2xl text-sm text-ink-muted">
-          Manage the developer profiles linked to projects. Demo data only — never publish claims about
+          Manage the developer profiles linked to projects. Sample data only — never publish claims about
           real companies without written authorization.
         </p>
       </div>
@@ -24,3 +24,4 @@ export default async function AdminDevelopersPage() {
     </>
   );
 }
+

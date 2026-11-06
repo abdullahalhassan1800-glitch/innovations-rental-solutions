@@ -25,7 +25,7 @@ export default async function InquiriesPage() {
           <h1 className="mt-3 font-display text-3xl">Your inquiries.</h1>
           <p className="mt-2 max-w-xl text-sm text-ink-muted">
             Requests you have sent while signed in with this email or mobile number. Status is updated by
-            the Innovations team in the demo workspace.
+            the Innovations team in the sample workspace.
           </p>
         </div>
         <DemoBadge />
@@ -81,3 +81,4 @@ export default async function InquiriesPage() {
     </>
   );
 }
+

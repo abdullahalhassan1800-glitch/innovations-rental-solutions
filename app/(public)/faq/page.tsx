@@ -8,7 +8,7 @@ import { SITE } from "@/lib/constants";
 export const metadata = {
   title: "Frequently asked questions",
   description:
-    "Answers about Innovations's demo projects, pricing, RERA verification, site visits, saved projects, the AI assistant and privacy.",
+    "Answers about Innovations's sample projects, pricing, RERA verification, site visits, saved projects, the AI assistant and privacy.",
   alternates: { canonical: "/faq" },
 };
 
@@ -113,3 +113,4 @@ export default async function FaqPage() {
     </>
   );
 }
+

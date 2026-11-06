@@ -28,7 +28,7 @@ export default async function VisitsPage() {
           <p className="eyebrow">Appointments</p>
           <h1 className="mt-3 font-display text-3xl">Site visits.</h1>
           <p className="mt-2 max-w-xl text-sm text-ink-muted">
-            Demo requests are stored locally and reviewed in the admin workspace. No real appointment is
+            Sample requests are stored locally and reviewed in the admin workspace. No real appointment is
             created.
           </p>
         </div>
@@ -96,3 +96,4 @@ export default async function VisitsPage() {
     </>
   );
 }
+

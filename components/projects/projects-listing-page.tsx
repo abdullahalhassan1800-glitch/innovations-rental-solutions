@@ -123,7 +123,7 @@ export async function ProjectsListingPage({
                 <p className="lede mt-4 max-w-xl pretty">{description}</p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <Badge tone="brass">{result.total} demo {result.total === 1 ? "project" : "projects"}</Badge>
+                <Badge tone="brass">{result.total} sample {result.total === 1 ? "project" : "projects"}</Badge>
                 <Badge>Sample inventory</Badge>
               </div>
             </div>
@@ -215,7 +215,7 @@ export async function ProjectsListingPage({
             {result.projects.length === 0 ? (
               <EmptyState
                 title="No projects match those filters"
-                description="Try widening the budget, removing an amenity, or exploring another location. The inventory on this demo is intentionally limited."
+                description="Try widening the budget, removing an amenity, or exploring another location. The inventory on this sample is intentionally limited."
                 action={
                   <ButtonLink href={basePath} variant="primary" size="sm">
                     Reset filters
@@ -263,3 +263,4 @@ export async function ProjectsListingPage({
     </>
   );
 }
+

@@ -54,7 +54,7 @@ export function SiteFooter() {
               ].map(({ icon: Icon, label }) => (
                 <span
                   key={label}
-                  title={`${label} — demo link`}
+                  title={`${label} — sample link`}
                   className="flex size-9 items-center justify-center rounded-full border border-paper/15 text-paper/60 transition hover:border-brass/40 hover:text-brass-soft"
                 >
                   <Icon className="size-4" />
@@ -121,3 +121,4 @@ function FooterColumn({ title, links }: { title: string; links: readonly { label
     </div>
   );
 }
+

@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
                 <ShieldCheck className="size-4" /> The short version
               </p>
               <p className="mt-2 text-sm leading-relaxed text-night/75">
-                This is a demo. Account details, saved projects, inquiries and site visits are stored in
+                This is a sample. Account details, saved projects, inquiries and site visits are stored in
                 a local development database and are not shared with a real sales team.
               </p>
             </div>
@@ -56,7 +56,7 @@ export default function PrivacyPolicyPage() {
           </p>
 
           <h2>2. Information we collect</h2>
-          <p>When you use the demo, we may store the following categories of information:</p>
+          <p>When you use the sample, we may store the following categories of information:</p>
           <ul>
             <li>
               <strong>Account information:</strong> your name, email address, optional mobile number and
@@ -90,7 +90,7 @@ export default function PrivacyPolicyPage() {
           </ul>
           <p>
             We do not sell personal information, run advertising profiles, or share your details with
-            third-party brokers as part of this demo.
+            third-party brokers as part of this sample.
           </p>
 
           <h2>4. Cookies and sessions</h2>
@@ -103,7 +103,7 @@ export default function PrivacyPolicyPage() {
 
           <h2>5. Where data is stored</h2>
           <p>
-            The demo uses a local SQLite database by default. If you deploy it, the database location is
+            The sample uses a local SQLite database by default. If you deploy it, the database location is
             controlled by the <code>DATABASE_URL</code> environment variable. Uploaded images may be
             stored locally or in an S3-compatible bucket, depending on configuration. AI provider keys,
             when configured, remain server-side and are never sent to the browser.
@@ -130,7 +130,7 @@ export default function PrivacyPolicyPage() {
             <li>You can update your name and phone number from the dashboard profile page.</li>
             <li>You can change your password from the dashboard.</li>
             <li>You can remove saved projects at any time.</li>
-            <li>You can request deletion of your account and associated demo data.</li>
+            <li>You can request deletion of your account and associated sample data.</li>
           </ul>
 
           <h2>9. Security</h2>
@@ -164,3 +164,4 @@ export default function PrivacyPolicyPage() {
     </>
   );
 }
+

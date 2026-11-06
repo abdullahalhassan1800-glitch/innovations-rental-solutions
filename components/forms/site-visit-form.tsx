@@ -141,7 +141,7 @@ export function SiteVisitForm({
 
       <label className="mt-4 flex cursor-pointer items-start gap-2.5 text-[0.76rem] leading-relaxed text-ink-muted">
         <input type="checkbox" name="consent" required className="mt-0.5 size-3.5 accent-forest" />
-        <span>I agree to be contacted about this site visit. This is a demo booking, not a real appointment.</span>
+        <span>I agree to be contacted about this site visit. This is a sample booking, not a real appointment.</span>
       </label>
       {fieldErrors.consent && <p className="field-error">{fieldErrors.consent}</p>}
 
@@ -158,3 +158,4 @@ export function SiteVisitForm({
     </form>
   );
 }
+

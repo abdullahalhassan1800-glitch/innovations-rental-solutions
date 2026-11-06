@@ -42,7 +42,7 @@ export function ProfileForm({ user }: { user: { name: string; email: string; pho
       <div>
         <label htmlFor="profile-email" className="field-label">Email</label>
         <input id="profile-email" value={user.email} readOnly disabled className="field" />
-        <p className="mt-1 text-[0.68rem] text-ink-muted">Email changes are disabled in this demo.</p>
+        <p className="mt-1 text-[0.68rem] text-ink-muted">Email changes are disabled in this sample.</p>
       </div>
       <div>
         <label htmlFor="profile-phone" className="field-label">Mobile</label>
@@ -104,3 +104,4 @@ export function PasswordForm() {
     </form>
   );
 }
+

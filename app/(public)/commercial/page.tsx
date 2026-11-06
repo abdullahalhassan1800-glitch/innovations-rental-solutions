@@ -3,7 +3,7 @@ import { ProjectsListingPage } from "@/components/projects/projects-listing-page
 export const metadata = {
   title: "Commercial property in Noida & Greater Noida",
   description:
-    "Explore demo offices, retail spaces and SCO addresses across Noida, Greater Noida, Noida Extension and Delhi NCR.",
+    "Explore sample offices, retail spaces and SCO addresses across Noida, Greater Noida, Noida Extension and Delhi NCR.",
   alternates: { canonical: "/commercial" },
 };
 
@@ -24,3 +24,4 @@ export default async function CommercialPage({
     />
   );
 }
+

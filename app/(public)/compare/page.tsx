@@ -98,7 +98,7 @@ export default async function ComparePage({ searchParams }: PageProps) {
             </div>
             <div className="rounded-[14px] border border-brass/30 bg-brass-pale/60 p-4">
               <p className="flex items-center gap-1.5 text-[0.64rem] font-semibold uppercase tracking-[0.12em] text-brass-soft">
-                <Scale className="size-3.5" /> Demo comparison
+                <Scale className="size-3.5" /> Sample comparison
               </p>
               <p className="mt-1.5 max-w-[15rem] text-[0.74rem] leading-relaxed text-ink-soft">
                 Sample data only. Always verify prices, approvals and possession independently.
@@ -127,7 +127,7 @@ export default async function ComparePage({ searchParams }: PageProps) {
           <div className="mt-8">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
               <p className="text-[0.74rem] text-ink-muted">
-                Comparing {projects.length} {projects.length === 1 ? "project" : "projects"} from the demo database.
+                Comparing {projects.length} {projects.length === 1 ? "project" : "projects"} from the sample database.
               </p>
               <Link href="/compare" className="text-[0.72rem] font-semibold text-forest hover:text-brass">
                 Start over
@@ -204,7 +204,7 @@ export default async function ComparePage({ searchParams }: PageProps) {
                   <CompareRow
                     label="RERA"
                     values={projects.map((p) =>
-                      p.reraVerified && p.reraNumber ? p.reraNumber : "Not verified — demo",
+                      p.reraVerified && p.reraNumber ? p.reraNumber : "Not verified — sample",
                     )}
                   />
                   <CompareRow
@@ -283,3 +283,4 @@ function CompareRow({ label, values }: { label: string; values: string[] }) {
     </tr>
   );
 }
+

@@ -85,7 +85,7 @@ export async function createProject(input: ProjectInput) {
             brochures: {
               create: [
                 {
-                  title: `${input.name} — demo brochure`,
+                  title: `${input.name} — sample brochure`,
                   fileUrl: input.brochureUrl,
                 },
               ],
@@ -140,7 +140,7 @@ export async function updateProject(id: string, input: ProjectInput) {
               brochures: {
                 create: [
                   {
-                    title: `${input.name} — demo brochure`,
+                    title: `${input.name} — sample brochure`,
                     fileUrl: input.brochureUrl,
                   },
                 ],
@@ -152,3 +152,4 @@ export async function updateProject(id: string, input: ProjectInput) {
     });
   });
 }
+

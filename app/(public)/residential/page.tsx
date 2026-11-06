@@ -3,7 +3,7 @@ import { ProjectsListingPage } from "@/components/projects/projects-listing-page
 export const metadata = {
   title: "Residential projects in Noida & Greater Noida",
   description:
-    "Explore demo apartments, villas, penthouses and studio residences across Noida, Greater Noida, Noida Extension and Delhi NCR.",
+    "Explore sample apartments, villas, penthouses and studio residences across Noida, Greater Noida, Noida Extension and Delhi NCR.",
   alternates: { canonical: "/residential" },
 };
 
@@ -24,3 +24,4 @@ export default async function ResidentialPage({
     />
   );
 }
+

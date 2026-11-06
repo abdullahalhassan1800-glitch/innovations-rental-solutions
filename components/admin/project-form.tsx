@@ -904,10 +904,10 @@ export function ProjectForm({
                 name="brochureUrl"
                 defaultValue={str(project?.brochureUrl)}
                 className="field"
-                placeholder="Leave blank to use the generated demo PDF"
+                placeholder="Leave blank to use the generated sample PDF"
               />
               <p className="mt-1 text-[0.68rem] text-ink-muted">
-                Public download links always fall back to a generated demo brochure when this is blank.
+                Public download links always fall back to a generated sample brochure when this is blank.
               </p>
               {errorFor("brochureUrl") && <p className="field-error">{errorFor("brochureUrl")}</p>}
             </div>
@@ -1269,8 +1269,8 @@ export function ProjectForm({
                   className="mt-0.5 size-4 accent-forest"
                 />
                 <span>
-                  <span className="font-semibold">Demo record</span>
-                  <span className="block text-[0.68rem] text-ink-muted">Shows the demo badge on the listing.</span>
+                  <span className="font-semibold">Sample record</span>
+                  <span className="block text-[0.68rem] text-ink-muted">Shows the sample badge on the listing.</span>
                 </span>
               </label>
             </div>
@@ -1289,7 +1289,7 @@ export function ProjectForm({
               <Save className="size-4" /> {project ? "Save changes" : "Create project"}
             </Button>
             <p className="mt-2 text-center text-[0.64rem] text-ink-muted">
-              Demo data only. Verify every claim before publishing.
+              Sample data only. Verify every claim before publishing.
             </p>
           </div>
 
@@ -1298,7 +1298,7 @@ export function ProjectForm({
             <ul className="mt-1.5 list-disc space-y-1 pl-3.5">
               <li>Confirm prices and configurations against source documents.</li>
               <li>Add RERA details only after portal verification.</li>
-              <li>Use your own imagery; demo photography is illustrative.</li>
+              <li>Use your own imagery; sample photography is illustrative.</li>
               <li>Remove sample data before any real launch.</li>
             </ul>
           </div>
@@ -1307,3 +1307,4 @@ export function ProjectForm({
     </form>
   );
 }
+

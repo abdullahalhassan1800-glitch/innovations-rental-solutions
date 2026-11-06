@@ -157,7 +157,7 @@ export function TestimonialManager({ testimonials }: { testimonials: Testimonial
           )}
         </div>
         <p className="mt-1 text-[0.7rem] text-ink-muted">
-          Demo testimonials must be clearly fictional. Never present invented quotes as real client reviews.
+          Sample testimonials must be clearly fictional. Never present invented quotes as real client reviews.
         </p>
 
         <form key={`${editing?.id ?? "new"}-${formKey}`} onSubmit={onSubmit} className="mt-4 space-y-3">
@@ -212,3 +212,4 @@ export function TestimonialManager({ testimonials }: { testimonials: Testimonial
     </div>
   );
 }
+

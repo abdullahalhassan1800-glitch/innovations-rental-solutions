@@ -3,7 +3,7 @@ import { ProjectsListingPage } from "@/components/projects/projects-listing-page
 export const metadata = {
   title: "Projects in Noida, Greater Noida & Noida Extension",
   description:
-    "Browse demo residential and commercial projects across Delhi NCR. Filter by location, budget, configuration, status, possession, amenities and developer.",
+    "Browse sample residential and commercial projects across Delhi NCR. Filter by location, budget, configuration, status, possession, amenities and developer.",
   alternates: { canonical: "/projects" },
 };
 
@@ -23,3 +23,4 @@ export default async function ProjectsPage({
     />
   );
 }
+

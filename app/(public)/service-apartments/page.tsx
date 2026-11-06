@@ -3,7 +3,7 @@ import { ProjectsListingPage } from "@/components/projects/projects-listing-page
 export const metadata = {
   title: "Service apartments in Noida & Greater Noida",
   description:
-    "Explore demo serviced apartments and furnished managed stays across Noida, Greater Noida, Noida Extension and Delhi NCR. All inventory is sample data.",
+    "Explore sample serviced apartments and furnished managed stays across Noida, Greater Noida, Noida Extension and Delhi NCR. All inventory is sample data.",
   alternates: { canonical: "/service-apartments" },
 };
 
@@ -25,3 +25,4 @@ export default async function ServiceApartmentsPage({
     />
   );
 }
+

@@ -9,7 +9,7 @@ import { safeNextPath } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Create an account",
-  description: "Create a free Innovations demo account to save projects, track inquiries and request site visits.",
+  description: "Create a free Innovations sample account to save projects, track inquiries and request site visits.",
   alternates: { canonical: "/register" },
   robots: { index: false, follow: false },
 };
@@ -33,7 +33,7 @@ export default async function RegisterPage({ searchParams }: PageProps) {
             <p className="eyebrow">Create an account</p>
             <h1 className="mt-3 font-display text-3xl">A private shortlist,<br />kept in one place.</h1>
             <p className="mt-2 text-sm text-ink-muted">
-              Free, demo-only and takes under a minute. No real sales team is attached.
+              Free, sample-only and takes under a minute. No real sales team is attached.
             </p>
           </div>
 
@@ -75,3 +75,4 @@ export default async function RegisterPage({ searchParams }: PageProps) {
     </section>
   );
 }
+

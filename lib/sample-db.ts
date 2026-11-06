@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 /**
  * Vercel's deployment filesystem is read-only, but `/tmp` is writable. The
- * repository ships a seeded SQLite snapshot for the public demo, so copy it to
+ * repository ships a seeded SQLite snapshot for the public sample, so copy it to
  * `/tmp` once per serverless instance before Prisma opens the database.
  *
  * PostgreSQL deployments are unaffected: this only runs on Vercel when the
@@ -15,8 +15,8 @@ export function prepareDemoDatabase() {
   const configured = process.env.DATABASE_URL ?? "";
   if (configured && !configured.startsWith("file:")) return;
 
-  const target = "/tmp/innovations-demo.db";
-  const source = join(process.cwd(), "prisma", "demo.db");
+  const target = "/tmp/innovations-sample.db";
+  const source = join(process.cwd(), "prisma", "sample.db");
 
   try {
     if (!existsSync(target) && existsSync(source)) {
@@ -26,6 +26,7 @@ export function prepareDemoDatabase() {
       process.env.DATABASE_URL = `file:${target}`;
     }
   } catch (error) {
-    console.error("Unable to prepare the writable demo database", error);
+    console.error("Unable to prepare the writable sample database", error);
   }
 }
+

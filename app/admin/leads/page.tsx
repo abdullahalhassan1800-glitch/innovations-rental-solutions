@@ -248,8 +248,9 @@ export default async function AdminLeadsPage({
 
       <p className="mt-5 rounded border border-line bg-cream/60 px-4 py-3 text-[0.68rem] leading-relaxed text-ink-muted">
         Lead data is visible to signed-in administrators only. Do not export, screenshot or share customer
-        contact details outside the workspace. All leads in this demo database are fictitious samples.
+        contact details outside the workspace. All leads in this sample database are fictitious samples.
       </p>
     </>
   );
 }
+

@@ -54,7 +54,7 @@ export function HeroHeading() {
     <h1 className="hero-display mt-5 text-paper sm:mt-6">
       <span className="sr-only">
         Addresses with ambition. Resort housing, serviced stays, commercial and residential
-        addresses across Delhi NCR, Jaipur and Katra.
+        addresses across Delhi NCR and NOIDA.
       </span>
       <span aria-hidden>
         {lineOne}

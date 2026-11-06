@@ -165,7 +165,7 @@ export function LeadForm({
       <label className="mt-4 flex cursor-pointer items-start gap-2.5 text-[0.76rem] leading-relaxed text-ink-muted">
         <input type="checkbox" name="consent" required className="mt-0.5 size-3.5 accent-forest" />
         <span>
-          I agree to be contacted about this inquiry. Demo data only — this form is not connected to a real sales team.
+          I agree to be contacted about this inquiry. Sample data only — this form is not connected to a real sales team.
         </span>
       </label>
       {fieldErrors.consent && <p className="field-error">{fieldErrors.consent}</p>}
@@ -191,3 +191,4 @@ export function LeadForm({
     </form>
   );
 }
+

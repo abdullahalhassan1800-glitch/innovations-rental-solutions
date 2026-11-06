@@ -45,7 +45,7 @@ export default async function ContactPage() {
                   <Mail className="mt-0.5 size-4 text-brass" />
                   <span><span className="block text-[0.65rem] uppercase tracking-[0.1em] text-ink-muted">Email</span>{SITE.email}</span>
                 </a>
-                <a href={whatsappLink("Hi Innovations, I have a question about the demo platform.")} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-forest">
+                <a href={whatsappLink("Hi Innovations, I have a question about the sample platform.")} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-forest">
                   <MessageCircle className="mt-0.5 size-4 text-brass" />
                   <span><span className="block text-[0.65rem] uppercase tracking-[0.1em] text-ink-muted">WhatsApp</span>Start a chat</span>
                 </a>
@@ -84,7 +84,7 @@ export default async function ContactPage() {
           <div>
             <LeadForm
               heading="Tell us what you're looking for."
-              description="Share a brief, a preferred location or a project you have in mind. The form writes to the local demo database."
+              description="Share a brief, a preferred location or a project you have in mind. The form writes to the local sample database."
               defaultType="CONTACT"
               source="contact-page"
               defaults={{ name: user?.name, email: user?.email, phone: user?.phone ?? undefined }}
@@ -102,3 +102,4 @@ export default async function ContactPage() {
     </>
   );
 }
+

@@ -1,17 +1,17 @@
 export const SITE = {
-  name: "Innovations Rental Solutions",
-  legalName: "Innovations Rental Solutions",
-  tagline: "Addresses with ambition.",
+  name: "Housirentz Innovations",
+  legalName: "Housirentz Innovations Pvt. Ltd.",
+  tagline: "High-Yield Rental Real Estate, Reimagined.",
   description:
-    "Explore resort housing, commercial spaces, service apartments and residential properties across Delhi NCR and select Indian destinations. Clear detail, honest comparison and a team that answers.",
+    "Housirentz Innovations Pvt. Ltd. is a premier real estate innovation firm specializing in the high-yield rental sector across India. We bridge the gap between property ownership and consistent wealth generation. Unlike traditional real estate firms, we don't just offer leisure homes — we deliver professionally managed rental solutions designed to generate steady income.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
-  phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 92059 08398",
-  email: process.env.NEXT_PUBLIC_SALES_EMAIL || "oliverking9205@gmail.com",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919205908398",
-  address: "S-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida - 201304",
+  phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 9310 688 426",
+  email: process.env.NEXT_PUBLIC_SALES_EMAIL || "info@housirentzinnovations.com",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919310688426",
+  address: "HSR Layout Bangalore, Karnataka - 560102",
   hours: "Mon–Sat, 9:30am – 7:00pm IST",
   demoDisclaimer:
-    "Innovations Rental Solutions is a demonstration platform. All projects, developers, prices, images and RERA references shown are sample data for illustration only and are not verified listings or offers.",
+    "Housirentz Innovations is a demonstration platform. All projects, developers, prices, images and references shown are sample data for illustration only and are not verified listings or offers.",
 } as const;
 
 export type NavChild = { label: string; href: string; blurb?: string };

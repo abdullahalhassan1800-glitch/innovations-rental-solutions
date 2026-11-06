@@ -78,7 +78,7 @@ export default async function AdminOverviewPage() {
         <div>
           <p className="eyebrow">Admin</p>
           <h1 className="mt-3 font-display text-3xl">Workspace overview.</h1>
-          <p className="mt-2 text-sm text-ink-muted">A live snapshot of projects, leads and site visits in the demo database.</p>
+          <p className="mt-2 text-sm text-ink-muted">A live snapshot of projects, leads and site visits in the sample database.</p>
         </div>
         <ButtonLink href="/admin/projects/new" size="sm"><Plus className="size-3.5" /> New project</ButtonLink>
       </div>
@@ -245,3 +245,4 @@ export default async function AdminOverviewPage() {
     </>
   );
 }
+

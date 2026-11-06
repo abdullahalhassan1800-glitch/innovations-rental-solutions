@@ -311,7 +311,7 @@ export function LeadModal({
                           id="modal-city"
                           name="city"
                           className="field"
-                          placeholder="Noida, Delhi, Jaipur…"
+                          placeholder="Noida, Delhi, NOIDA…"
                           value={form.city}
                           onChange={(event) => update("city", event.target.value)}
                         />
@@ -338,7 +338,7 @@ export function LeadModal({
                           className="mt-0.5 size-3.5 accent-brass"
                         />
                         <span>
-                          I agree to be contacted about this enquiry. Demo data only — this form is not connected to a real sales team.
+                          I agree to be contacted about this enquiry. Sample data only — this form is not connected to a real sales team.
                         </span>
                       </label>
                       {errors.consent && <p className="field-error">{errors.consent}</p>}
@@ -373,7 +373,7 @@ export function LeadModal({
                 <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[0.64rem] text-ink-muted">
                   <Lock className="size-3 text-brass" /> Your details stay private.
                   <span className="text-ink-muted/60">·</span>
-                  <ShieldCheck className="size-3 text-brass" /> Demo only
+                  <ShieldCheck className="size-3 text-brass" /> Sample only
                   <span className="text-ink-muted/60">·</span>
                   <Sparkles className="size-3 text-brass" /> No spam
                 </p>
@@ -385,3 +385,4 @@ export function LeadModal({
     </>
   );
 }
+

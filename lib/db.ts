@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { prepareDemoDatabase } from "./demo-db";
+import { prepareDemoDatabase } from "./sample-db";
 
 // Must run before PrismaClient reads DATABASE_URL.
 prepareDemoDatabase();
@@ -13,3 +13,4 @@ export const db =
   });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+

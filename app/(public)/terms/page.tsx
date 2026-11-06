@@ -63,7 +63,7 @@ export default function TermsPage() {
           <h2>3. No verified listings</h2>
           <p>
             We do not present any approval, RERA registration or developer claim as verified unless a
-            project record explicitly marks it verified. In this demo, no RERA number is presented as real.
+            project record explicitly marks it verified. In this sample, no RERA number is presented as real.
             Always verify registration, title, approvals and delivery claims independently with the
             relevant authority and a qualified professional.
           </p>
@@ -105,13 +105,13 @@ export default function TermsPage() {
           <p>
             The Innovations name, interface, code and written content are part of this demonstration
             project. Photography is sourced from Unsplash for demonstration purposes and remains subject to
-            its original licence. You may not represent the demo as a live brokerage or reuse its sample
+            its original licence. You may not represent the sample as a live brokerage or reuse its sample
             data as real listings.
           </p>
 
           <h2>9. Third-party services</h2>
           <p>
-            The demo may link to WhatsApp, maps, Unsplash, an optional AI provider and other third-party
+            The sample may link to WhatsApp, maps, Unsplash, an optional AI provider and other third-party
             services. Those services have their own terms and privacy policies. We are not responsible for
             their content or availability.
           </p>
@@ -120,7 +120,7 @@ export default function TermsPage() {
           <p>
             The platform is provided “as is” and “as available”, without warranties of any kind, express or
             implied, including fitness for a particular purpose, accuracy or non-infringement. Your use of
-            the demo is at your own risk.
+            the sample is at your own risk.
           </p>
 
           <h2>11. Limitation of liability</h2>
@@ -154,3 +154,4 @@ export default function TermsPage() {
     </>
   );
 }
+

@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
  * half-typed phrase. Reduced-motion users get the first phrase immediately.
  */
 const PHRASES = [
-  "Resort housing in Jaipur.",
+  "Resort housing in NOIDA.",
   "Serviced stays across Delhi NCR.",
   "Commercial addresses in Noida.",
   "Residential properties, considered.",

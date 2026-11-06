@@ -28,8 +28,8 @@ export const metadata: Metadata = {
     "Delhi NCR real estate",
     "managed rental assets",
     "Noida property",
-    "Katra service apartments",
-    "Jaipur resort housing",
+    "NOIDA service apartments",
+    "NOIDA resort housing",
   ],
   openGraph: {
     type: "website",

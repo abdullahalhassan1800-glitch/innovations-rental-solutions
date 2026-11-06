@@ -10,7 +10,7 @@ import { Stars } from "@/components/ui/stars";
 export const metadata = {
   title: "About Innovations",
   description:
-    "Innovations is a demonstration real-estate discovery platform for Noida, Greater Noida, Noida Extension and Delhi NCR. Learn how the demo is structured and what is — and is not — verified.",
+    "Innovations is a demonstration real-estate discovery platform for Noida, Greater Noida, Noida Extension and Delhi NCR. Learn how the sample is structured and what is — and is not — verified.",
   alternates: { canonical: "/about" },
 };
 
@@ -23,7 +23,7 @@ const VALUES = [
   {
     icon: ShieldCheck,
     title: "Verification is explicit",
-    copy: "We label demo data, avoid invented approvals and only show RERA details when a project record marks them verified.",
+    copy: "We label sample data, avoid invented approvals and only show RERA details when a project record marks them verified.",
   },
   {
     icon: HeartHandshake,
@@ -35,7 +35,7 @@ const VALUES = [
 const TIMELINE = [
   { year: "2024", title: "A research habit", copy: "The project began as a structured way to compare NCR addresses without relying on listing noise." },
   { year: "2025", title: "A database-first prototype", copy: "Projects, developers, locations, amenities and floor plans were modelled as first-class records." },
-  { year: "2026", title: "A full demonstration", copy: "Search, saved projects, inquiries, site visits, admin workflows and a multilingual assistant came together in this demo." },
+  { year: "2026", title: "A full demonstration", copy: "Search, saved projects, inquiries, site visits, admin workflows and a multilingual assistant came together in this sample." },
 ];
 
 export default async function AboutPage() {
@@ -58,9 +58,9 @@ export default async function AboutPage() {
               <ButtonLink href="/contact" variant="outline">Talk to the team</ButtonLink>
             </div>
             <div className="mt-8 flex flex-wrap gap-2">
-              <Badge tone="brass">{counts.total} demo projects</Badge>
+              <Badge tone="brass">{counts.total} sample projects</Badge>
               <Badge>{counts.locations} locations</Badge>
-              <Badge>{counts.developers} demo developers</Badge>
+              <Badge>{counts.developers} sample developers</Badge>
               <Badge tone="forest">Sample data only</Badge>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default async function AboutPage() {
         <div className="shell grid gap-10 py-14 md:py-20 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
             <p className="eyebrow text-brass-soft">How it came together</p>
-            <h2 className="display-lg mt-4 text-paper">Built in the open,<br />labelled as a demo.</h2>
+            <h2 className="display-lg mt-4 text-paper">Built in the open,<br />labelled as a sample.</h2>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-paper/60">
               This is not a brokerage, a marketplace or a claim of real inventory. It is a carefully
               engineered demonstration of how a modern property platform should behave.
@@ -129,7 +129,7 @@ export default async function AboutPage() {
             <p className="eyebrow">The experience</p>
             <h2 className="display-lg mt-4">What you can actually do here.</h2>
             <p className="lede mt-4">
-              Everything in the demo is connected: the database drives search, the assistant reads only
+              Everything in the sample is connected: the database drives search, the assistant reads only
               from it, and your account keeps a private record of the projects and conversations you care about.
             </p>
             <ul className="mt-6 space-y-3 text-sm text-ink-soft">
@@ -167,7 +167,7 @@ export default async function AboutPage() {
       {testimonials.length > 0 && (
         <section className="border-t border-line bg-sand/35">
           <div className="shell py-14 md:py-20">
-            <SectionHeading eyebrow="Sample voices" title="What the demo is trying to feel like." description="Illustrative testimonials, not real client outcomes." />
+            <SectionHeading eyebrow="Sample voices" title="What the sample is trying to feel like." description="Illustrative testimonials, not real client outcomes." />
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               {testimonials.map((testimonial) => (
                 <figure key={testimonial.id} className="rounded-[14px] border border-line bg-surface p-6">
@@ -187,7 +187,7 @@ export default async function AboutPage() {
       <section className="shell py-12">
         <div className="flex flex-col items-start justify-between gap-5 rounded-[14px] border border-line bg-surface p-7 sm:flex-row sm:items-center">
           <div>
-            <p className="font-display text-2xl">Have a question about the demo?</p>
+            <p className="font-display text-2xl">Have a question about the sample?</p>
             <p className="mt-1 text-sm text-ink-muted">Reach the Innovations team at {SITE.email} or {SITE.phone}.</p>
           </div>
           <div className="flex gap-3">
@@ -199,3 +199,4 @@ export default async function AboutPage() {
     </>
   );
 }
+

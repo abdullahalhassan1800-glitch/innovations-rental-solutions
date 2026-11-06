@@ -59,7 +59,7 @@ const WHY = [
   {
     icon: ShieldCheck,
     title: "Transparent by default",
-    copy: "Prices, possession and configuration are shown exactly as they exist in our database. Demo listings are labelled clearly.",
+    copy: "Prices, possession and configuration are shown exactly as they exist in our database. Sample listings are labelled clearly.",
   },
   {
     icon: TrendingUp,
@@ -232,7 +232,7 @@ export default async function HomePage() {
 
           <div className="mt-5 hidden flex-wrap items-center gap-x-6 gap-y-2 text-[0.66rem] text-paper/45 sm:flex">
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="size-3.5 text-brass-soft" /> Demo data, clearly labelled
+              <CheckCircle2 className="size-3.5 text-brass-soft" /> Sample data, clearly labelled
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="size-3.5 text-brass-soft" /> No yield promises
@@ -254,7 +254,7 @@ export default async function HomePage() {
         </div>
         <div className="-ml-[2%] mt-3 w-[104%] rotate-[1.2deg]">
           <MarqueeRibbon
-            items={["Delhi NCR", "Noida", "Greater Noida", "Noida Extension", "Jaipur", "Katra"]}
+            items={["Delhi NCR", "Noida", "Greater Noida", "Noida Extension", "NOIDA"]}
             reverse
             tone="gold"
           />
@@ -291,7 +291,7 @@ export default async function HomePage() {
                       {project.category}
                     </span>
                     <span className="rounded-full border border-brass/40 bg-brass/15 px-3 py-1 text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-brass-soft backdrop-blur">
-                      Demo
+                      Sample
                     </span>
                   </div>
                   <div>
@@ -353,7 +353,7 @@ export default async function HomePage() {
                       {collection.blurb}
                     </h3>
                     <p className="mt-3 flex items-center gap-2 text-[0.7rem] font-medium text-paper/55">
-                      {collection.count} demo {collection.count === 1 ? "address" : "addresses"}
+                      {collection.count} sample {collection.count === 1 ? "address" : "addresses"}
                       <span className="text-brass">·</span>
                       <span className="inline-flex items-center gap-1 text-paper/75 transition group-hover:text-brass-soft">
                         Explore <ArrowUpRight className="size-3.5 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -381,8 +381,8 @@ export default async function HomePage() {
             <ul className="mt-8 space-y-4">
               {[
                 { icon: TrendingUp, title: "Managed rental assets", copy: "Resort and serviced inventory is presented with its management model." },
-                { icon: MapPin, title: "NCR-wide plus select destinations", copy: "Noida, Greater Noida, Noida Extension, Jaipur and Katra in one database." },
-                { icon: ShieldCheck, title: "Demo data, labelled", copy: "No invented approvals, no yield promises, no unverified RERA claims." },
+                { icon: MapPin, title: "NCR-wide plus select destinations", copy: "Noida, Greater Noida, Noida Extension, NOIDA in one database." },
+                { icon: ShieldCheck, title: "Sample data, labelled", copy: "No invented approvals, no yield promises, no unverified RERA claims." },
               ].map((item) => (
                 <li key={item.title} className="flex gap-3.5">
                   <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-brass/30 bg-brass/10 text-brass">
@@ -407,7 +407,7 @@ export default async function HomePage() {
                 <p className="mt-1 text-sm text-paper/70">Entry price and operating model</p>
               </div>
               <span className="rounded-full border border-paper/15 px-2.5 py-1 text-[0.56rem] font-semibold uppercase tracking-[0.14em] text-paper/45">
-                Demo
+                Sample
               </span>
             </div>
             <div className="overflow-x-auto">
@@ -494,7 +494,7 @@ export default async function HomePage() {
               </div>
             </div>
             <div className="absolute -bottom-6 -left-4 rounded-full border border-brass/40 bg-night px-4 py-2 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-brass-soft shadow-float sm:-left-6">
-              Demo data · not a broker-dealer
+              Sample data · not a broker-dealer
             </div>
           </div>
         </div>
@@ -687,7 +687,7 @@ export default async function HomePage() {
           <div>
             <LeadForm
               heading="Tell us what you're looking for."
-              description="Share a brief and the team will come back with a considered shortlist. This demo form stores requests locally in the project database."
+              description="Share a brief and the team will come back with a considered shortlist. This sample form stores requests locally in the project database."
               defaultType="CONTACT"
               source="homepage"
               defaults={{ name: user?.name, email: user?.email, phone: user?.phone ?? undefined }}
@@ -777,3 +777,5 @@ export default async function HomePage() {
     </>
   );
 }
+
+

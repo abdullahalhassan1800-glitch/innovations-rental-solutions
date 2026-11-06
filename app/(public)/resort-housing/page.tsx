@@ -3,7 +3,7 @@ import { ProjectsListingPage } from "@/components/projects/projects-listing-page
 export const metadata = {
   title: "Resort housing in Noida & Greater Noida",
   description:
-    "Explore demo resort-led residences with a managed rental intent across Noida, Greater Noida, Noida Extension and Delhi NCR. All inventory is sample data.",
+    "Explore sample resort-led residences with a managed rental intent across Noida, Greater Noida, Noida Extension and Delhi NCR. All inventory is sample data.",
   alternates: { canonical: "/resort-housing" },
 };
 
@@ -25,3 +25,4 @@ export default async function ResortHousingPage({
     />
   );
 }
+

@@ -55,7 +55,7 @@ export default async function LoginPage({ searchParams }: PageProps) {
             <p className="eyebrow">Welcome back</p>
             <h1 className="mt-3 font-display text-3xl">Sign in to continue.</h1>
             <p className="mt-2 text-sm text-ink-muted">
-              Use your demo account or create a new one in seconds.
+              Use your sample account or create a new one in seconds.
             </p>
           </div>
 
@@ -66,15 +66,15 @@ export default async function LoginPage({ searchParams }: PageProps) {
           )}
 
           <div className="mt-7">
-            <LoginForm next={params.next} prefill={{ email: "demo@innovations.demo" }} />
+            <LoginForm next={params.next} prefill={{ email: "sample@innovations.sample" }} />
           </div>
 
           <div className="mt-7 grid gap-2 border-t border-line pt-5">
             <p className="flex items-center gap-2 text-[0.7rem] text-ink-muted">
-              <KeyRound className="size-3.5 text-brass" /> Demo buyer: <code className="text-ink">demo@innovations.demo</code> / <code className="text-ink">Demo@12345</code>
+              <KeyRound className="size-3.5 text-brass" /> Sample buyer: <code className="text-ink">sample@innovations.sample</code> / <code className="text-ink">Sample@12345</code>
             </p>
             <p className="flex items-center gap-2 text-[0.7rem] text-ink-muted">
-              <Sparkles className="size-3.5 text-brass" /> Admin: <code className="text-ink">admin@innovations.demo</code> / <code className="text-ink">Admin@12345</code>
+              <Sparkles className="size-3.5 text-brass" /> Admin: <code className="text-ink">admin@innovations.sample</code> / <code className="text-ink">Admin@12345</code>
             </p>
             <p className="flex items-center gap-2 text-[0.7rem] text-ink-muted">
               <ShieldCheck className="size-3.5 text-forest" /> {SITE.demoDisclaimer}
@@ -85,3 +85,4 @@ export default async function LoginPage({ searchParams }: PageProps) {
     </section>
   );
 }
+

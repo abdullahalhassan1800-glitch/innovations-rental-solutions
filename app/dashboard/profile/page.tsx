@@ -40,11 +40,11 @@ export default async function ProfilePage() {
           </div>
           <div className="mt-4 flex flex-wrap gap-2 border-t border-line pt-4">
             <Badge tone="forest"><ShieldCheck className="mr-1 size-3" /> HTTP-only session</Badge>
-            <Badge>Demo account</Badge>
+            <Badge>Sample account</Badge>
           </div>
           <p className="mt-4 text-[0.7rem] leading-relaxed text-ink-muted">
             Email changes are disabled in this demonstration. Contact the maintainers if you need your
-            demo account removed.
+            sample account removed.
           </p>
         </section>
 
@@ -72,3 +72,4 @@ export default async function ProfilePage() {
     </>
   );
 }
+

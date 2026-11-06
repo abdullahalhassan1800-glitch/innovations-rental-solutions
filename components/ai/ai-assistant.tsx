@@ -1087,7 +1087,7 @@ export function AIAssistant() {
               </form>
 
               <div className="mt-2 flex items-center justify-between gap-2 text-[0.6rem] text-ink-muted">
-                <span>Demo data. No invented listings or prices.</span>
+                <span>Sample data. No invented listings or prices.</span>
                 <div className="flex items-center gap-2">
                   {voiceSupported && (
                     <>
@@ -1176,3 +1176,4 @@ export function AIAssistant() {
     </>
   );
 }
+

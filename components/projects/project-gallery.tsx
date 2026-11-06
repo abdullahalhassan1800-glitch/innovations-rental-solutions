@@ -61,7 +61,7 @@ export function ProjectGallery({ images, projectName }: { images: GalleryImage[]
 
         <div className="absolute left-4 top-4 flex items-center gap-2">
           <span className="rounded-full bg-night/55 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-paper backdrop-blur">
-            Demo gallery
+            Sample gallery
           </span>
         </div>
 
@@ -150,3 +150,4 @@ export function ProjectGallery({ images, projectName }: { images: GalleryImage[]
     </div>
   );
 }
+

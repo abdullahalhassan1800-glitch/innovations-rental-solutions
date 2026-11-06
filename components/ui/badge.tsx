@@ -60,7 +60,7 @@ export function DemoBadge({ className, subtle = false }: { className?: string; s
       )}
       title="Sample data for demonstration only"
     >
-      Demo
+      Sample
     </span>
   );
 }
@@ -89,3 +89,4 @@ export function Badge({
     </span>
   );
 }
+

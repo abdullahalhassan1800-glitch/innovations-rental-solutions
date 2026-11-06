@@ -5,7 +5,7 @@ let lastSweep = Date.now();
 
 /**
  * Small in-memory fixed-window rate limiter. Suitable for a single Node
- * instance / demo deployment. For multi-region production, swap this for a
+ * instance / sample deployment. For multi-region production, swap this for a
  * Redis-backed limiter (see README).
  */
 export function rateLimit(key: string, limit: number, windowMs: number) {
@@ -40,3 +40,4 @@ export function rateLimitResponse(retryAfter: number) {
     body: { error: "Too many attempts. Please wait a moment and try again.", retryAfter },
   };
 }
+

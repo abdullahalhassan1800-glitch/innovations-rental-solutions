@@ -103,7 +103,7 @@ export function DeveloperManager({ developers }: { developers: DeveloperRow[] })
                 <div className="min-w-0">
                   <p className="flex flex-wrap items-center gap-2 font-semibold">
                     {developer.name}
-                    {developer.isDemo && <span className="rounded-full border border-line bg-cream px-1.5 py-0.5 text-[0.58rem] uppercase tracking-wide text-ink-muted">Demo</span>}
+                    {developer.isDemo && <span className="rounded-full border border-line bg-cream px-1.5 py-0.5 text-[0.58rem] uppercase tracking-wide text-ink-muted">Sample</span>}
                   </p>
                   <p className="mt-0.5 text-[0.68rem] text-ink-muted">
                     /{developer.slug}
@@ -190,7 +190,7 @@ export function DeveloperManager({ developers }: { developers: DeveloperRow[] })
               />
             </div>
             <div>
-              <label htmlFor="developer-demo" className="field-label">Demo record</label>
+              <label htmlFor="developer-sample" className="field-label">Sample record</label>
               <label className="flex h-[42px] items-center gap-2 rounded border border-line bg-surface px-3 text-[0.78rem]">
                 <input type="checkbox" name="isDemo" defaultChecked={editing?.isDemo ?? true} className="size-3.5 accent-forest" />
                 Sample data
@@ -231,3 +231,4 @@ export function DeveloperManager({ developers }: { developers: DeveloperRow[] })
     </div>
   );
 }
+
