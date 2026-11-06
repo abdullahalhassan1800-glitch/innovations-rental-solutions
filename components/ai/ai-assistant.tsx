@@ -65,10 +65,32 @@ function pickVoice(voices: SpeechSynthesisVoice[], language: string) {
   const exact = language === "hi" ? "hi-IN" : "en-IN";
   const prefix = language === "hi" ? "hi" : "en";
   const normalise = (value: string) => value.replace("_", "-").toLowerCase();
+  const nameNormalise = (value: string) => value.toLowerCase();
+
+  // Prefer natural-sounding voices (Google/Microsoft/Azure "Natural" voices)
+  // so the assistant doesn't sound like a basic robotic TTS engine.
+  const preferredNames = ["natural", "google", "azure", "microsoft", "female", "male"];
+
+  const findVoice = (pred: (v: SpeechSynthesisVoice) => boolean) =>
+    voices.find(pred) ?? null;
+
   return (
-    voices.find((voice) => normalise(voice.lang) === exact.toLowerCase()) ??
-    voices.find((voice) => normalise(voice.lang).startsWith(prefix)) ??
-    voices.find((voice) => voice.default) ??
+    // 1. Exact language match with a "natural" name
+    findVoice((v) =>
+      normalise(v.lang) === exact.toLowerCase() &&
+      preferredNames.some((p) => nameNormalise(v.name).includes(p)),
+    ) ??
+    // 2. Exact language match, any name
+    findVoice((v) => normalise(v.lang) === exact.toLowerCase()) ??
+    // 3. Language prefix match with a "natural" name
+    findVoice((v) =>
+      normalise(v.lang).startsWith(prefix) &&
+      preferredNames.some((p) => nameNormalise(v.name).includes(p)),
+    ) ??
+    // 4. Language prefix match, any name
+    findVoice((v) => normalise(v.lang).startsWith(prefix)) ??
+    // 5. Default voice
+    findVoice((v) => v.default) ??
     null
   );
 }
@@ -144,6 +166,8 @@ export function AIAssistant() {
   const [handsFree, setHandsFree] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState(false);
   const [voiceLanguage, setVoiceLanguage] = useState<VoiceLanguage>("auto");
+  const [selectedVoice, setSelectedVoice] = useState<string | null>(null);
+  const [voiceOptions, setVoiceOptions] = useState<{ name: string; lang: string }[]>([]);
   const [speakReplies, setSpeakReplies] = useState(true);
   const [speaking, setSpeaking] = useState(false);
   const [voiceBlockedReason, setVoiceBlockedReason] = useState("");
@@ -197,6 +221,9 @@ export function AIAssistant() {
       if (!("speechSynthesis" in window)) return;
       const voices = window.speechSynthesis.getVoices();
       if (voices.length) voicesRef.current = voices;
+      setVoiceOptions(
+        voices.map((v) => ({ name: v.name, lang: v.lang })).filter((v, i, a) => a.findIndex((x) => x.name === v.name) === i),
+      );
     }
 
     loadVoices();
@@ -346,9 +373,14 @@ export function AIAssistant() {
       chunks.forEach((chunk) => {
         const utterance = new SpeechSynthesisUtterance(chunk);
         utterance.lang = lang;
-        utterance.rate = language === "hi" ? 0.92 : 1;
+        // Slightly slower than default for a calmer, less robotic delivery.
+        utterance.rate = language === "hi" ? 0.9 : 0.96;
         utterance.pitch = 1;
-        if (preferredVoice) utterance.voice = preferredVoice;
+        utterance.volume = 1;
+        const chosenVoice = selectedVoice
+          ? voicesRef.current.find((v) => v.name === selectedVoice)
+          : preferredVoice;
+        if (chosenVoice) utterance.voice = chosenVoice;
         let settled = false;
         const finish = () => {
           if (settled) return;
@@ -1058,6 +1090,26 @@ export function AIAssistant() {
                         <option value="auto">Auto</option>
                         <option value="en-IN">English</option>
                         <option value="hi-IN">हिंदी</option>
+                      </select>
+                    </>
+                  )}
+                  {voiceSupported && voiceOptions.length > 0 && (
+                    <>
+                      <label htmlFor="ai-voice-select" className="sr-only">
+                        Voice
+                      </label>
+                      <select
+                        id="ai-voice-select"
+                        value={selectedVoice ?? ""}
+                        onChange={(event) => setSelectedVoice(event.target.value || null)}
+                        className="rounded-full border border-line bg-cream px-2 py-0.5 text-[0.6rem] text-ink-soft"
+                      >
+                        <option value="">Default voice</option>
+                        {voiceOptions.map((v) => (
+                          <option key={v.name} value={v.name}>
+                            {v.name} ({v.lang})
+                          </option>
+                        ))}
                       </select>
                     </>
                   )}
