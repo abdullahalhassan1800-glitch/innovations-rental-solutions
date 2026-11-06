@@ -29,11 +29,11 @@ test("English replies use correct plurals and word order", async () => {
   assert.equal(response.language, "en");
   assert.match(response.reply, /^Searching Noida for 2 BHK projects under ₹75 L\./);
   if (response.projects.length === 1) {
-    assert.match(response.reply, /I found 1 project that matches your brief\./);
+    assert.match(response.reply, /Here is my top recommendation based on your brief\./);
   } else {
-    assert.match(response.reply, /I found \d+ projects that match your brief\./);
+    assert.match(response.reply, /Here are my top \d+ recommendations based on your brief\./);
   }
-  assert.doesNotMatch(response.reply, /that match your brief\./);
+  assert.doesNotMatch(response.reply, /I found \d+ projects/);
   assert.doesNotMatch(response.reply, /\s{2,}/);
 });
 
@@ -99,6 +99,27 @@ test("contact answers include the new office address", async () => {
   const response = await getAssistantResponse({ message: "office address kya hai" });
 
   assert.match(response.reply, /S-11, 1101, 1st Floor, Urbtech Trade Center/);
+});
+
+test("consultant gives locality insight in recommendation", async () => {
+  const response = await getAssistantResponse({ message: "2 BHK in Noida under 75 lakh" });
+
+  assert.equal(response.language, "en");
+  assert.match(response.reply, /Noida offers established infrastructure/);
+});
+
+test("consultant greeting uses property consultant tone", async () => {
+  const response = await getAssistantResponse({ message: "hello" });
+
+  assert.match(response.reply, /property consultant/);
+  assert.match(response.reply, /shortlist/);
+});
+
+test("hinglish consultant uses locality insight", async () => {
+  const response = await getAssistantResponse({ message: "नोएडा में 50 लाख के अंदर 2 बीएचके फ्लैट चाहिए" });
+
+  assert.equal(response.language, "hi");
+  assert.match(response.reply, /नोएडा में स्थापित बुनियादी ढांचा/);
 });
 
 test("booking without details asks for required fields", async () => {

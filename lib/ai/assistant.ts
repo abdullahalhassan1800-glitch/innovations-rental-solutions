@@ -20,37 +20,39 @@ type AssistantProject = ProjectCardData;
 const LANG_COPY = {
   en: {
     greeting:
-      "Hello! I'm Innovations AI. Tell me a location, budget, BHK or property type and I'll find matching projects for you.",
+      "Hello! I'm your Innovations property consultant. I can help you find the right home, office or retail space in Delhi NCR. Tell me your location, budget and BHK — I'll shortlist the best matches from our live database.",
     results: (n: number) =>
       n === 1
-        ? "I found 1 project that matches your brief."
-        : `I found ${n} projects that match your brief.`,
-    noExact: "I couldn't find an exact match, so here are the closest options.",
+        ? "Here is my top recommendation based on your brief."
+        : `Here are my top ${n} recommendations based on your brief.`,
+    noExact: "I couldn't find an exact match, but here are the closest alternatives I'd recommend.",
     noResults:
       "I couldn't find a project for that combination. Try a wider budget or another location — inventory changes often.",
-    cheapestFirst: "Sorted by the lowest starting price.",
-    newestFirst: "Newest projects first.",
-    expensiveFirst: "Sorted by the highest starting price.",
-    soonestFirst: "Sorted by the earliest possession.",
-    compare: "Here's a side-by-side comparison.",
-    compareNeedTwo: "Pick two or three projects to compare. These matches are a good start.",
-    siteVisit: `You can schedule a site visit from any project page, or call ${SITE.phone} — the sales team will confirm your slot.`,
-    visitOnly: `Site visits are arranged by our sales team. Call ${SITE.phone} or message us on WhatsApp and we'll confirm a slot. You can also open any project page and tap "Book a site visit".`,
-    contact: `You can reach the sales team on ${SITE.phone} or at ${SITE.email}. Office: ${SITE.address}. Hours: ${SITE.hours}.`,
-    fees: `Exact charges depend on the project and the deal, so the team shares a written breakup before booking. Call ${SITE.phone} for the current figures.`,
-    booking: `The team handles booking end to end — shortlist, site visit, documents and the payment schedule. Call ${SITE.phone} or email ${SITE.email} to start.`,
-    documents: `The sales team shares the exact document checklist for the project you choose. Call ${SITE.phone} and they'll send it across.`,
-    loan: `Home-loan support is available through our sales team. Call ${SITE.phone} and they'll walk you through the lender options.`,
-    options: "Here are some featured projects.",
-    bookingAsk: "To book a site visit, please send me all of these in one message: your full name, mobile number, preferred date (YYYY-MM-DD), preferred time slot (e.g. 10:00–12:00), and the project name. Missing: {missing}.",
+    cheapestFirst: "Shortlisted by lowest starting price — best for budget-focused buyers.",
+    newestFirst: "Newest projects first — ideal if you want a fresh launch.",
+    expensiveFirst: "Shortlisted by highest starting price — premium options first.",
+    soonestFirst: "Shortlisted by earliest possession — best if you want to move in soon.",
+    compare: "Here's my side-by-side comparison to help you decide.",
+    compareNeedTwo: "Pick two or three projects and I'll compare them for you.",
+    siteVisit: `I can schedule a site visit for you. Just call ${SITE.phone} or book from any project page — our team will confirm your slot.`,
+    visitOnly: `Site visits are arranged by our team. Call ${SITE.phone} or message us on WhatsApp and we'll book your appointment. You can also open any project page and tap "Book a site visit".`,
+    contact: `You can reach me and the sales team on ${SITE.phone} or at ${SITE.email}. Office: ${SITE.address}. Hours: ${SITE.hours}.`,
+    fees: `Exact charges depend on the project and deal, so I'll get the team to share a written breakup before you book. Call ${SITE.phone} for current figures.`,
+    booking: `I handle the full booking process — shortlist, site visit, documents and payment schedule. Call ${SITE.phone} or email ${SITE.email} to get started.`,
+    documents: `I'll get you the exact document checklist for your chosen project. Call ${SITE.phone} and I'll send it across.`,
+    loan: `Home-loan support is available through me. Call ${SITE.phone} and I'll walk you through lender options.`,
+    options: "Here are some featured projects I recommend.",
+    bookingAsk: "To book your site visit, please send me all of these in one message: your full name, mobile number, preferred date (YYYY-MM-DD), preferred time slot (e.g. 10:00–12:00), and the project name. Missing: {missing}.",
     bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
-      `Your site visit is booked for ${d.projectName} on ${d.date} at ${d.time}. Our team will call ${d.phone} to confirm the slot.`,
+      `Your site visit is booked for ${d.projectName} on ${d.date} at ${d.time}. I'll have our team call ${d.phone} to confirm the slot.`,
     bookingMissing: (d: { missing: string }) =>
       `I still need these details: ${d.missing}. Please send name, mobile number, date (YYYY-MM-DD), time, and project name in one message.`,
     bookingInvalidPhone: "That phone number doesn't look valid. Please send a 10-digit Indian mobile number.",
     askBudget: "What is your budget range?",
     askBhk: "Which BHK are you looking for?",
-    askSiteVisit: "Would you like to schedule a site visit?",
+    askSiteVisit: "Would you like me to schedule a site visit?",
+    qualificationIntro: "Before I shortlist, let me understand your needs better:",
+    recommendationNote: "Consultant's note:",
     suggestions: {
       compare: "Compare these projects",
       visit: "Book a site visit",
@@ -61,37 +63,39 @@ const LANG_COPY = {
   },
   hinglish: {
     greeting:
-      "Namaste! Main Innovations AI hoon. Aap location, budget, BHK ya property type batayiye — main matching projects dhoondh kar dikhaunga.",
+      "Namaste! Main aapka Innovations property consultant hoon. Main aapko Delhi NCR mein sahi home, office ya retail space dhoondhne mein madad kar sakta hoon. Aap location, budget aur BHK batayiye — main live database mein se best matches shortlist karunga.",
     results: (n: number) =>
       n === 1
-        ? "1 project mila jo aapki requirement se match karta hai."
-        : `${n} projects mile jo aapki requirement se match karte hain.`,
-    noExact: "Exact match nahi mila, lekin yeh closest options hain jo available hain.",
+        ? "Aapki requirement ke hisaab se meri top recommendation yeh hai."
+        : `Aapki requirement ke hisaab se meri top ${n} recommendations yeh hain.`,
+    noExact: "Exact match nahi mila, lekin main jo closest alternatives recommend karunga woh yeh hain.",
     noResults:
       "Is combination ke liye koi project nahi mila. Budget thoda badha kar ya doosri location try kariye — inventory update hoti rehti hai.",
-    cheapestFirst: "Matches sabse kam starting price ke hisaab se sort kiye hain.",
-    newestFirst: "Matches mein sabse naye projects pehle dikhaye hain.",
-    expensiveFirst: "Matches sabse zyada starting price ke hisaab se sort kiye hain.",
-    soonestFirst: "Matches mein sabse jaldi possession wale projects pehle hain.",
-    compare: "Yahan aapke chune hue projects ka comparison hai.",
-    compareNeedTwo: "Comparison ke liye do ya teen projects chuniye. Shuruaat ke liye yeh matches hain:",
-    siteVisit: `Kisi bhi project page se site visit schedule kar sakte hain, ya ${SITE.phone} par call kariye — sales team aapka slot confirm karegi.`,
-    visitOnly: `Site visit sales team arrange karti hai. ${SITE.phone} par call kariye ya WhatsApp par message kariye, hum slot confirm kar denge. Kisi bhi project page par "Book a site visit" bhi hai.`,
-    contact: `Sales team se ${SITE.phone} par ya ${SITE.email} par baat kar sakte hain. Office: ${SITE.address}. Office hours ${SITE.hours}.`,
-    fees: `Exact charges project aur deal par depend karte hain, isliye team booking se pehle written breakup deti hai. Current figures ke liye ${SITE.phone} par call kariye.`,
-    booking: `Booking ka poora process team handle karti hai — shortlist, site visit, documents aur payment schedule. Shuru karne ke liye ${SITE.phone} par call kariye ya ${SITE.email} par email kariye.`,
-    documents: `Aapke chune hue project ka exact document checklist sales team share karti hai. ${SITE.phone} par call kariye aur wo aapko bhej degi.`,
-    loan: `Home-loan support sales team ke through milta hai. ${SITE.phone} par call kariye aur wo lender options samjha dengi.`,
-    options: "Yeh kuch featured projects hain.",
-    bookingAsk: "Site visit book karne ke liye mujhe ye sab ek message mein bhejein: aapka pura naam, mobile number, preferred date (YYYY-MM-DD), preferred time slot (jaise 10:00–12:00), aur project ka naam. Kami: {missing}.",
+    cheapestFirst: "Sabse kam starting price ke hisaab se shortlist kiye hain — budget-focused buyers ke liye best.",
+    newestFirst: "Sabse naye projects pehle — agar aap fresh launch chahte hain toh ideal hai.",
+    expensiveFirst: "Sabse zyada starting price ke hisaab se shortlist kiye hain — premium options pehle.",
+    soonestFirst: "Sabse jaldi possession wale projects pehle — agar jaldi shift karna hai toh best.",
+    compare: "Yahan meri side-by-side comparison hai jo aapke faisle mein madad karegi.",
+    compareNeedTwo: "Do ya teen projects chuniye, main unki comparison karke batata hoon.",
+    siteVisit: `Main aapke liye site visit schedule kar sakta hoon. Bas ${SITE.phone} par call kariye ya kisi bhi project page se book kariye — hamari team aapka slot confirm karegi.`,
+    visitOnly: `Site visit hamari team arrange karti hai. ${SITE.phone} par call kariye ya WhatsApp par message kariye, hum aapka appointment book karenge. Kisi bhi project page par "Book a site visit" bhi hai.`,
+    contact: `Aap mujhe aur sales team ko ${SITE.phone} par ya ${SITE.email} par contact kar sakte hain. Office: ${SITE.address}. Office hours ${SITE.hours}.`,
+    fees: `Exact charges project aur deal par depend karte hain, isliye main team se likhit breakup ladwaunga booking se pehle. Current figures ke liye ${SITE.phone} par call kariye.`,
+    booking: `Main poora booking process handle karta hoon — shortlist, site visit, documents aur payment schedule. Shuru karne ke liye ${SITE.phone} par call kariye ya ${SITE.email} par email kariye.`,
+    documents: `Main aapke chune hue project ka exact document checklist dunga. ${SITE.phone} par call kariye aur main aapko bhej dunga.`,
+    loan: `Home-loan support mere zariye available hai. ${SITE.phone} par call kariye aur main lender options samjhaunga.`,
+    options: "Yeh kuch featured projects hain jo main recommend karta hoon.",
+    bookingAsk: "Apni site visit book karne ke liye, please ye sab ek message mein bhejein: aapka pura naam, mobile number, preferred date (YYYY-MM-DD), preferred time slot (jaise 10:00–12:00), aur project ka naam. Kami: {missing}.",
     bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
-      `Aapki site visit book ho gayi hai ${d.projectName} ke liye, ${d.date} ko ${d.time} par. Hamari team ${d.phone} par call karke slot confirm karegi.`,
+      `Aapki site visit book ho gayi hai ${d.projectName} ke liye, ${d.date} ko ${d.time} par. Main apni team ko ${d.phone} par call karke slot confirm karwata hoon.`,
     bookingMissing: (d: { missing: string }) =>
       `Mujhe abhi ye chahiye: ${d.missing}. Naam, mobile number, date (YYYY-MM-DD), time, aur project naam ek message mein bhejein.`,
     bookingInvalidPhone: "Ye phone number valid nahi lag raha. Kripya ek 10-digit Indian mobile number bhejein.",
     askBudget: "Aapka budget kya hai?",
     askBhk: "Aap kis BHK ki talash mein hain?",
-    askSiteVisit: "Kya aap site visit schedule karana chahenge?",
+    askSiteVisit: "Kya aap chahte hain main site visit schedule karwaun?",
+    qualificationIntro: "Shortlist karne se pehle, aapki needs samajhne ke liye thoda detail chahiye:",
+    recommendationNote: "Consultant ki raye:",
     suggestions: {
       compare: "In projects ko compare karein",
       visit: "Site visit book karein",
@@ -102,37 +106,39 @@ const LANG_COPY = {
   },
   hi: {
     greeting:
-      "नमस्ते! मैं Innovations AI हूँ। अपनी लोकेशन, बजट, BHK या प्रॉपर्टी टाइप बताइए — मैं मिलते-जुलते प्रोजेक्ट दिखाऊँगा।",
+      "नमस्ते! मैं आपका Innovations प्रॉपर्टी कंसल्टेंट हूँ। मैं आपको दिल्ली NCR में सही घर, ऑफिस या रिटेल स्पेस ढूंढने में मदद कर सकता हूँ। अपनी लोकेशन, बजट और BHK बताइए — मैं लाइव डेटाबेस से बेस्ट मैच शॉर्टलिस्ट करूँगा।",
     results: (n: number) =>
       n === 1
-        ? "1 प्रोजेक्ट मिला जो आपकी ज़रूरत से मेल खाता है।"
-        : `${n} प्रोजेक्ट मिले जो आपकी ज़रूरत से मेल खाते हैं।`,
-    noExact: "सटीक मैच नहीं मिला, लेकिन ये सबसे नज़दीकी विकल्प हैं।",
+        ? "आपकी ज़रूरत के हिसाब से मेरी टॉप सिफारिश यह है।"
+        : `आपकी ज़रूरत के हिसाब से मेरी टॉप ${n} सिफारिशें ये हैं।`,
+    noExact: "सटीक मैच नहीं मिला, लेकिन मैं जिन निकटतम विकल्पों की सिफारिश करूँगा, वे ये हैं।",
     noResults:
       "इस संयोजन के लिए कोई प्रोजेक्ट नहीं मिला। बजट थोड़ा बढ़ाकर या दूसरी लोकेशन आज़माइए — उपलब्धता बदलती रहती है।",
-    cheapestFirst: "मैचों को सबसे कम शुरुआती कीमत के हिसाब से क्रमबद्ध किया है।",
-    newestFirst: "मैचों में सबसे नए प्रोजेक्ट पहले दिखाए गए हैं।",
-    expensiveFirst: "मैचों को सबसे ज़्यादा शुरुआती कीमत के हिसाब से क्रमबद्ध किया है।",
-    soonestFirst: "मैचों में सबसे जल्दी पज़ेशन वाले प्रोजेक्ट पहले हैं।",
-    compare: "यहाँ आपके चुने हुए प्रोजेक्ट्स की तुलना है।",
-    compareNeedTwo: "तुलना के लिए दो या तीन प्रोजेक्ट चुनिए। शुरुआत के लिए ये मैच हैं:",
-    siteVisit: `किसी भी प्रोजेक्ट पेज से साइट विज़िट शेड्यूल कर सकते हैं, या ${SITE.phone} पर कॉल कीजिए — सेल्स टीम आपका स्लॉट कन्फर्म करेगी।`,
-    visitOnly: `साइट विज़िट सेल्स टीम तय करती है। ${SITE.phone} पर कॉल कीजिए या WhatsApp पर मैसेज कीजिए, हम स्लॉट कन्फर्म कर देंगे। किसी भी प्रोजेक्ट पेज पर "Book a site visit" भी है।`,
-    contact: `सेल्स टीम से ${SITE.phone} पर या ${SITE.email} पर संपर्क कर सकते हैं। ऑफिस: ${SITE.address}। समय: ${SITE.hours}।`,
-    fees: `सटीक शुल्क प्रोजेक्ट और डील पर निर्भर करते हैं, इसलिए टीम बुकिंग से पहले लिखित ब्रेकअप देती है। मौजूदा आँकड़ों के लिए ${SITE.phone} पर कॉल कीजिए।`,
-    booking: `बुकिंग का पूरा काम टीम संभालती है — शॉर्टलिस्ट, साइट विज़िट, दस्तावेज़ और भुगतान योजना। शुरू करने के लिए ${SITE.phone} पर कॉल कीजिए या ${SITE.email} पर ईमेल कीजिए।`,
-    documents: `आपके चुने हुए प्रोजेक्ट की सटीक दस्तावेज़ सूची सेल्स टीम भेजती है। ${SITE.phone} पर कॉल कीजिए और वो आपको भेज देगी।`,
-    loan: `होम-लोन सहायता सेल्स टीम के ज़रिए मिलती है। ${SITE.phone} पर कॉल कीजिए और वो लेंडर विकल्प समझा देगी।`,
-    options: "ये कुछ फ़ीचर्ड प्रोजेक्ट हैं।",
-    bookingAsk: "साइट विज़िट बुक करने के लिए कृपया ये सब एक संदेश में भेजें: आपका पूरा नाम, मोबाइल नंबर, पसंदीदा तारीख (YYYY-MM-DD), पसंदीदा समय स्लॉट (उदाहरण 10:00–12:00), और प्रोजेक्ट का नाम। गायब: {missing}.",
+    cheapestFirst: "सबसे कम शुरुआती कीमत के हिसाब से शॉर्टलिस्ट किए गए हैं — बजट-फोकस्ड खरीदारों के लिए सर्वोत्तम।",
+    newestFirst: "सबसे नए प्रोजेक्ट पहले — अगर आप नया लॉन्च चाहते हैं तो आदर्श।",
+    expensiveFirst: "सबसे ज़्यादा शुरुआती कीमत के हिसाब से शॉर्टलिस्ट किए गए हैं — प्रीमियम विकल्प पहले।",
+    soonestFirst: "सबसे जल्दी कब्ज़े वाले प्रोजेक्ट पहले — अगर जल्दी शिफ्ट करना है तो सर्वोत्तम।",
+    compare: "यहाँ मेरी साइड-बाय-साइड तुलना है जो आपके निर्णय में मदद करेगी।",
+    compareNeedTwo: "दो या तीन प्रोजेक्ट चुनिए, मैं उनकी तुलना करके बताऊंगा।",
+    siteVisit: `मैं आपके लिए साइट विज़िट शेड्यूल कर सकता हूँ। बस ${SITE.phone} पर कॉल कीजिए या किसी भी प्रोजेक्ट पेज से बुक कीजिए — हमारी टीम आपका स्लॉट कन्फर्म करेगी।`,
+    visitOnly: `साइट विज़िट हमारी टीम तय करती है। ${SITE.phone} पर कॉल कीजिए या WhatsApp पर मैसेज कीजिए, हम आपका अपॉइंटमेंट बुक करेंगे। किसी भी प्रोजेक्ट पेज पर "Book a site visit" भी है।`,
+    contact: `आप मुझसे और सेल्स टीम से ${SITE.phone} पर या ${SITE.email} पर संपर्क कर सकते हैं। ऑफिस: ${SITE.address}। समय: ${SITE.hours}।`,
+    fees: `सटीक शुल्क प्रोजेक्ट और डील पर निर्भर करते हैं, इसलिए मैं बुकिंग से पहले टीम से लिखित ब्रेकअप दिलवाऊंगा। मौजूदा आंकड़ों के लिए ${SITE.phone} पर कॉल कीजिए।`,
+    booking: `मैं पूरा बुकिंग प्रोसेस संभालता हूँ — शॉर्टलिस्ट, साइट विज़िट, दस्तावेज़ और भुगतान योजना। शुरू करने के लिए ${SITE.phone} पर कॉल कीजिए या ${SITE.email} पर ईमेल कीजिए।`,
+    documents: `मैं आपके चुने हुए प्रोजेक्ट की सटीक दस्तावेज़ सूची दूंगा। ${SITE.phone} पर कॉल कीजिए और मैं आपको भेज दूंगा।`,
+    loan: `होम-लोन सहायता मेरे ज़रिए उपलब्ध है। ${SITE.phone} पर कॉल कीजिए और मैं लेंडर विकल्प समझाऊंगा।`,
+    options: "ये कुछ फीचर्ड प्रोजेक्ट हैं जिन्हें मैं सिफारिश करता हूँ।",
+    bookingAsk: "अपनी साइट विज़िट बुक करने के लिए, कृपया ये सब एक संदेश में भेजें: आपका पूरा नाम, मोबाइल नंबर, पसंदीदा तारीख (YYYY-MM-DD), पसंदीदा समय स्लॉट (उदाहरण 10:00–12:00), और प्रोजेक्ट का नाम। गायब: {missing}.",
     bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
-      `आपकी साइट विज़िट ${d.projectName} के लिए ${d.date} को ${d.time} पर बुक कर दी गई है। हमारी टीम ${d.phone} पर कॉल करके स्लॉट कन्फर्म करेगी।`,
+      `आपकी साइट विज़िट ${d.projectName} के लिए ${d.date} को ${d.time} पर बुक कर दी गई है। मैं अपनी टीम को ${d.phone} पर कॉल करके स्लॉट कन्फर्म करवाऊंगा।`,
     bookingMissing: (d: { missing: string }) =>
       `मुझे अभी ये चाहिए: ${d.missing}. कृपया नाम, मोबाइल नंबर, तारीख (YYYY-MM-DD), समय, और प्रोजेक्ट का नाम एक संदेश में भेजें।`,
     bookingInvalidPhone: "यह फोन नंबर वैध नहीं लग रहा। कृपया एक 10-अंकों का भारतीय मोबाइल नंबर भेजें।",
     askBudget: "आपका बजट क्या है?",
     askBhk: "आप किस BHK की तलाश में हैं?",
-    askSiteVisit: "क्या आप साइट विज़िट निर्धारित करना चाहेंगे?",
+    askSiteVisit: "क्या आप चाहते हैं मैं साइट विज़िट निर्धारित कराऊं?",
+    qualificationIntro: "शॉर्टलिस्ट करने से पहले, आपकी ज़रूरतें समझने के लिए थोड़ा विवरण चाहिए:",
+    recommendationNote: "कंसल्टेंट की राय:",
     suggestions: {
       compare: "इन प्रोजेक्ट्स की तुलना करें",
       visit: "साइट विज़िट बुक करें",
@@ -374,6 +380,59 @@ function isFollowUp(message: string) {
     message,
   );
 }
+
+/** ---------- Consultant recommendation notes ---------- */
+
+const LOCALITY_INSIGHTS: Record<ChatLanguage, Record<string, string>> = {
+  en: {
+    noida: "Noida offers established infrastructure and quick connectivity to Delhi — great for end-users.",
+    "noida-extension":
+      "Noida Extension (Greater Noida West) gives you more space per rupee — ideal for first-time buyers and investors.",
+    "greater-noida":
+      "Greater Noida is perfect for bigger plots and upcoming commercial hubs near the expressway.",
+    "delhi-ncr": "Delhi NCR covers the wider capital corridor — good for those who want central connectivity.",
+  },
+  hinglish: {
+    noida: "Noida mein infrastructure achha hai aur Delhi se connectivity quick hai — end-users ke liye great hai.",
+    "noida-extension":
+      "Noida Extension (Greater Noida West) mein kam paise mein zyada space milta hai — first-time buyers aur investors ke liye ideal hai.",
+    "greater-noida":
+      "Greater Noida bade plots aur expressway ke paas commercial hubs ke liye perfect hai.",
+    "delhi-ncr": "Delhi NCR capital region ka wider corridor hai — central connectivity chahne walon ke liye achha.",
+  },
+  hi: {
+    noida: "नोएडा में स्थापित बुनियादी ढांचा और दिल्ली से तेज कनेक्टिविटी है — अंतिम उपयोगकर्ताओं के लिए बेहतरीन।",
+    "noida-extension":
+      "नोएडा एक्सटेंशन (ग्रेटर नोएडा वेस्ट) में कम रुपये में अधिक स्थान मिलता है — पहली बार खरीदने वालों और निवेशकों के लिए आदर्श।",
+    "greater-noida":
+      "ग्रेटर नोएडा बड़े भूखंडों और एक्सप्रेसवे के पास आगामी वाणिज्यिक केंद्रों के लिए आदर्श है।",
+    "delhi-ncr": "दिल्ली एनसीआर व्यापक राजधानी गलियारा है — केंद्रीय कनेक्टिविटी चाहने वालों के लिए अच्छा।",
+  },
+};
+
+function buildConsultantNote(
+  intent: SearchIntent,
+  cards: { name: string; startingPrice: number; location: string; statusLabel: string }[],
+  language: ChatLanguage,
+): string | null {
+  const insights = LOCALITY_INSIGHTS[language];
+  const loc = intent.location ? insights[intent.location] : null;
+
+  if (loc) return loc;
+
+  if (intent.sort === "price-asc" && cards.length > 0) {
+    const cheapest = cards[0];
+    if (language === "en")
+      return `If budget is your priority, ${cheapest.name} starts at ₹${Math.round(cheapest.startingPrice / 100000)} L — great value.`;
+    if (language === "hi")
+      return `अगर बजट आपकी प्राथमिकता है, तो ${cheapest.name} की शुरुआत ₹${Math.round(cheapest.startingPrice / 100000)} L से होती है — बढ़िया वैल्यू है।`;
+    return `Agar budget aapki priority hai, toh ${cheapest.name} ki shuruat ₹${Math.round(cheapest.startingPrice / 100000)} L se hoti hai — badhiya value hai.`;
+  }
+
+  return null;
+}
+
+/** ---------- End consultant notes ---------- */
 
 /** ---------- Site-visit / call / appointment booking via AI ---------- */
 
@@ -910,6 +969,11 @@ export async function getAssistantResponse(input: {
   if (projects.length > 0 && intent.sort === "price-desc") lines.push(copy.expensiveFirst);
   if (projects.length > 0 && intent.sort === "newest") lines.push(copy.newestFirst);
   if (projects.length > 0 && intent.sort === "possession") lines.push(copy.soonestFirst);
+
+  // ---------- Consultant recommendation note ----------
+  const consultantNote = buildConsultantNote(intent, cards, language);
+  if (consultantNote) lines.push(copy.recommendationNote + " " + consultantNote);
+
   if (intent.siteVisit) lines.push(copy.siteVisit);
   if (intent.compare && contextIds.length < 2 && projects.length >= 2) {
     lines.push(copy.compareNeedTwo);
