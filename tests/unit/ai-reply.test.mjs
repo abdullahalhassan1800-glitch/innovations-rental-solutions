@@ -17,9 +17,10 @@ test("Hinglish replies no longer repeat sentence fragments", async () => {
   assert.equal(response.language, "hinglish");
   assert.doesNotMatch(response.reply, /\bhoon hoon\b/i);
   assert.doesNotMatch(response.reply, /\bmein mein\b/i);
-  assert.match(response.reply, /dhoondh raha hoon\./);
-  assert.match(response.reply, /\d+ projects? mil[ae]/);
-  assert.ok(response.projects.length > 0);
+  // Missing budget triggers clarification instead of immediate search
+  assert.match(response.reply, /budget kya hai/);
+  assert.match(response.reply, /site visit/);
+  assert.equal(response.projects.length, 0);
 });
 
 test("English replies use correct plurals and word order", async () => {

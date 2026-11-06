@@ -48,6 +48,9 @@ const LANG_COPY = {
     bookingMissing: (d: { missing: string }) =>
       `I still need these details: ${d.missing}. Please send name, mobile number, date (YYYY-MM-DD), time, and project name in one message.`,
     bookingInvalidPhone: "That phone number doesn't look valid. Please send a 10-digit Indian mobile number.",
+    askBudget: "What is your budget range?",
+    askBhk: "Which BHK are you looking for?",
+    askSiteVisit: "Would you like to schedule a site visit?",
     suggestions: {
       compare: "Compare these projects",
       visit: "Book a site visit",
@@ -86,6 +89,9 @@ const LANG_COPY = {
     bookingMissing: (d: { missing: string }) =>
       `Mujhe abhi ye chahiye: ${d.missing}. Naam, mobile number, date (YYYY-MM-DD), time, aur project naam ek message mein bhejein.`,
     bookingInvalidPhone: "Ye phone number valid nahi lag raha. Kripya ek 10-digit Indian mobile number bhejein.",
+    askBudget: "Aapka budget kya hai?",
+    askBhk: "Aap kis BHK ki talash mein hain?",
+    askSiteVisit: "Kya aap site visit schedule karana chahenge?",
     suggestions: {
       compare: "In projects ko compare karein",
       visit: "Site visit book karein",
@@ -124,6 +130,9 @@ const LANG_COPY = {
     bookingMissing: (d: { missing: string }) =>
       `मुझे अभी ये चाहिए: ${d.missing}. कृपया नाम, मोबाइल नंबर, तारीख (YYYY-MM-DD), समय, और प्रोजेक्ट का नाम एक संदेश में भेजें।`,
     bookingInvalidPhone: "यह फोन नंबर वैध नहीं लग रहा। कृपया एक 10-अंकों का भारतीय मोबाइल नंबर भेजें।",
+    askBudget: "आपका बजट क्या है?",
+    askBhk: "आप किस BHK की तलाश में हैं?",
+    askSiteVisit: "क्या आप साइट विज़िट निर्धारित करना चाहेंगे?",
     suggestions: {
       compare: "इन प्रोजेक्ट्स की तुलना करें",
       visit: "साइट विज़िट बुक करें",
@@ -383,8 +392,6 @@ const BOOKING_KEYWORDS = [
   "mujhe site visit", "appointment lena", "appointment lena hai",
   "appointment book karna", "appointment book karna hai",
   "mere liye appointment", "mere liye call", "mere liye bolao",
-  "ghar dekhna", "flat dekhna", "project dekhna", "site dekhna",
-  "visit karna", "visit karna hai", "dekhne aana", "dekhne aana hai",
 ];
 
 const BOOKING_QUESTION_PATTERNS = [
@@ -836,6 +843,47 @@ export async function getAssistantResponse(input: {
         "Projects in Greater Noida",
         "Commercial property in Noida Extension",
       ],
+      meta: { total: 0, relaxed: false, provider: providerResult.provider },
+    };
+  }
+
+  // ---------- Clarification: ask for missing key criteria before searching ----------
+  if (intent.location && (!intent.bhk || (!intent.minPrice && !intent.maxPrice))) {
+    const copy = LANG_COPY[language];
+    const where = locationLabel(intent.location);
+    const missing: string[] = [];
+    if (!intent.bhk) missing.push(copy.askBhk);
+    if (!intent.minPrice && !intent.maxPrice) missing.push(copy.askBudget);
+
+    if (language === "en") {
+      return {
+        reply: `I can help you find a property in ${where}. ${missing.join(" ")} ${copy.askSiteVisit}`,
+        speech: `I can help you find a property in ${where}. ${missing.join(" ")} ${copy.askSiteVisit}`,
+        language,
+        intent: publicIntent(intent),
+        projects: [],
+        suggestions: [copy.suggestions.noida, copy.suggestions.ready, copy.suggestions.cheap],
+        meta: { total: 0, relaxed: false, provider: providerResult.provider },
+      };
+    }
+    if (language === "hi") {
+      return {
+        reply: `मैं आपकी ${where} में प्रॉपर्टी खोजने में मदद कर सकता हूँ। ${missing.join(" ")} ${copy.askSiteVisit}`,
+        speech: `मैं आपकी ${where} में प्रॉपर्टी खोजने में मदद कर सकता हूँ। ${missing.join(" ")} ${copy.askSiteVisit}`,
+        language,
+        intent: publicIntent(intent),
+        projects: [],
+        suggestions: [copy.suggestions.noida, copy.suggestions.ready, copy.suggestions.cheap],
+        meta: { total: 0, relaxed: false, provider: providerResult.provider },
+      };
+    }
+    return {
+      reply: `Main aapko ${where} mein property dhoondhne mein madad kar sakta hoon. ${missing.join(" ")} ${copy.askSiteVisit}`,
+      speech: `Main aapko ${where} mein property dhoondhne mein madad kar sakta hoon. ${missing.join(" ")} ${copy.askSiteVisit}`,
+      language,
+      intent: publicIntent(intent),
+      projects: [],
+      suggestions: [copy.suggestions.noida, copy.suggestions.ready, copy.suggestions.cheap],
       meta: { total: 0, relaxed: false, provider: providerResult.provider },
     };
   }
