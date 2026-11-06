@@ -16,6 +16,18 @@ const chatSchema = z.object({
     .max(10)
     .optional(),
   contextProjectIds: z.array(z.string().max(60)).max(5).optional(),
+  qualificationState: z
+    .object({
+      step: z.enum(["idle", "awaiting_bhk", "awaiting_budget", "awaiting_site_visit"]),
+      collected: z.object({
+        location: z.string().optional(),
+        bhk: z.string().optional(),
+        minPrice: z.number().optional(),
+        maxPrice: z.number().optional(),
+        siteVisit: z.boolean().optional(),
+      }),
+    })
+    .optional(),
 });
 
 export async function POST(request: Request) {

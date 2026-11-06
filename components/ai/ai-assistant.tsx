@@ -193,6 +193,7 @@ export function AIAssistant() {
   const restartTimerRef = useRef<number | null>(null);
   const noSpeechRetriesRef = useRef(0);
   const beginTurnRef = useRef<(() => void) | null>(null);
+  const qualificationStateRef = useRef<{ step: string; collected: Record<string, unknown> } | null>(null);
   const sendRef = useRef<
     ((text: string, contextIds?: string[], options?: SendOptions) => Promise<void>) | null
   >(null);
@@ -710,10 +711,20 @@ export function AIAssistant() {
       const response = await fetch("/api/ai/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed, history, contextProjectIds: context }),
+        body: JSON.stringify({
+          message: trimmed,
+          history,
+          contextProjectIds: context,
+          qualificationState: qualificationStateRef.current ?? undefined,
+        }),
       });
       const data = (await response.json()) as AssistantResponse & { error?: string };
       if (!response.ok) throw new Error(data.error || "The assistant could not respond");
+      if (data.qualificationState) {
+        qualificationStateRef.current = data.qualificationState;
+      } else {
+        qualificationStateRef.current = null;
+      }
       setMessages((current) => [
         ...current,
         { id: `a-${Date.now()}`, role: "assistant", content: data.reply, data },

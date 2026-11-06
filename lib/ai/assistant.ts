@@ -12,7 +12,7 @@ import {
   type SearchIntent,
 } from "./intent";
 import { extractWithProvider } from "./provider";
-import type { AssistantResponse, ChatCard, ComparisonTable } from "./types";
+import type { AssistantResponse, ChatCard, ComparisonTable, QualificationCollected, QualificationState, QualificationStep } from "./types";
 
 type HistoryMessage = { role: "user" | "assistant"; content: string };
 type AssistantProject = ProjectCardData;
@@ -20,39 +20,41 @@ type AssistantProject = ProjectCardData;
 const LANG_COPY = {
   en: {
     greeting:
-      "Hello! I'm your Innovations property consultant. I can help you find the right home, office or retail space in Delhi NCR. Tell me your location, budget and BHK — I'll shortlist the best matches from our live database.",
+      "Hi there! I'm your personal property consultant at Innovations. I'll help you find the perfect home, office or retail space — just tell me what you're looking for and I'll take care of the rest.",
+    acknowledgment: "Got it!",
+    thinking: "Let me check our database for you...",
     results: (n: number) =>
       n === 1
-        ? "Here is my top recommendation based on your brief."
-        : `Here are my top ${n} recommendations based on your brief.`,
-    noExact: "I couldn't find an exact match, but here are the closest alternatives I'd recommend.",
+        ? "Here's my top pick for you."
+        : `Here are my top ${n} picks that match what you're looking for.`,
+    noExact: "I couldn't find an exact match, but here are the closest options I'd personally recommend.",
     noResults:
-      "I couldn't find a project for that combination. Try a wider budget or another location — inventory changes often.",
-    cheapestFirst: "Shortlisted by lowest starting price — best for budget-focused buyers.",
-    newestFirst: "Newest projects first — ideal if you want a fresh launch.",
-    expensiveFirst: "Shortlisted by highest starting price — premium options first.",
-    soonestFirst: "Shortlisted by earliest possession — best if you want to move in soon.",
-    compare: "Here's my side-by-side comparison to help you decide.",
-    compareNeedTwo: "Pick two or three projects and I'll compare them for you.",
-    siteVisit: `I can schedule a site visit for you. Just call ${SITE.phone} or book from any project page — our team will confirm your slot.`,
-    visitOnly: `Site visits are arranged by our team. Call ${SITE.phone} or message us on WhatsApp and we'll book your appointment. You can also open any project page and tap "Book a site visit".`,
-    contact: `You can reach me and the sales team on ${SITE.phone} or at ${SITE.email}. Office: ${SITE.address}. Hours: ${SITE.hours}.`,
-    fees: `Exact charges depend on the project and deal, so I'll get the team to share a written breakup before you book. Call ${SITE.phone} for current figures.`,
-    booking: `I handle the full booking process — shortlist, site visit, documents and payment schedule. Call ${SITE.phone} or email ${SITE.email} to get started.`,
-    documents: `I'll get you the exact document checklist for your chosen project. Call ${SITE.phone} and I'll send it across.`,
-    loan: `Home-loan support is available through me. Call ${SITE.phone} and I'll walk you through lender options.`,
-    options: "Here are some featured projects I recommend.",
-    bookingAsk: "To book your site visit, please send me all of these in one message: your full name, mobile number, preferred date (YYYY-MM-DD), preferred time slot (e.g. 10:00–12:00), and the project name. Missing: {missing}.",
+      "Hmm, nothing matches that combination just yet. Want to try a different budget or location?",
+    cheapestFirst: "Starting with the most affordable options first.",
+    newestFirst: "Freshest new launches at the top.",
+    expensiveFirst: "Premium properties first.",
+    soonestFirst: "Earliest possession dates first.",
+    compare: "Here's a side-by-side comparison to help you decide.",
+    compareNeedTwo: "Pick two or three projects and I'll walk you through the differences.",
+    siteVisit: `I can book a site visit for you — just call ${SITE.phone} or tap "Book a site visit" on any project page, and our team will confirm your slot.`,
+    visitOnly: `Our team handles site visits. Give us a call at ${SITE.phone} or message us on WhatsApp and we'll schedule your appointment.`,
+    contact: `You can reach me directly at ${SITE.phone} or ${SITE.email}. Our office is at ${SITE.address}, open ${SITE.hours}.`,
+    fees: `Charges vary by project and deal, so I'll get the team to send you a written cost breakup before anything is finalized. Call ${SITE.phone} for current figures.`,
+    booking: `I'll handle the whole process for you — shortlisting, site visits, paperwork and payment schedule. Call ${SITE.phone} or email ${SITE.email} and we'll get started.`,
+    documents: `I'll send you the exact document checklist for your chosen project. Just call ${SITE.phone} and I'll get it across to you.`,
+    loan: `I can walk you through home-loan options. Call ${SITE.phone} and I'll explain everything step by step.`,
+    options: "Here are some featured projects I'd recommend checking out.",
+    bookingAsk: "To book your site visit, I just need a few details in one message: your full name, mobile number, preferred date (YYYY-MM-DD), time slot (e.g. 10:00–12:00), and which project you'd like to visit. Missing: {missing}.",
     bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
-      `Your site visit is booked for ${d.projectName} on ${d.date} at ${d.time}. I'll have our team call ${d.phone} to confirm the slot.`,
+      `All set! Your site visit for ${d.projectName} is booked on ${d.date} at ${d.time}. Our team will call ${d.phone} shortly to confirm.`,
     bookingMissing: (d: { missing: string }) =>
-      `I still need these details: ${d.missing}. Please send name, mobile number, date (YYYY-MM-DD), time, and project name in one message.`,
-    bookingInvalidPhone: "That phone number doesn't look valid. Please send a 10-digit Indian mobile number.",
-    askBudget: "What is your budget range?",
-    askBhk: "Which BHK are you looking for?",
-    askSiteVisit: "Would you like me to schedule a site visit?",
-    qualificationIntro: "Before I shortlist, let me understand your needs better:",
-    recommendationNote: "Consultant's note:",
+      `I still need: ${d.missing}. Could you send me name, mobile number, date (YYYY-MM-DD), time, and project name in one message?`,
+    bookingInvalidPhone: "That doesn't look like a valid mobile number. Could you send a 10-digit Indian number?",
+    askBudget: "What's your budget range?",
+    askBhk: "Which BHK are you thinking of?",
+    askSiteVisit: "Shall I schedule a site visit for you?",
+    qualificationIntro: "Let me understand your needs a bit better before I shortlist:",
+    recommendationNote: "My honest take:",
     suggestions: {
       compare: "Compare these projects",
       visit: "Book a site visit",
@@ -63,39 +65,41 @@ const LANG_COPY = {
   },
   hinglish: {
     greeting:
-      "Namaste! Main aapka Innovations property consultant hoon. Main aapko Delhi NCR mein sahi home, office ya retail space dhoondhne mein madad kar sakta hoon. Aap location, budget aur BHK batayiye — main live database mein se best matches shortlist karunga.",
+      "Hi there! Main aapka personal property consultant hoon Innovations mein. Main aapko perfect home, office ya retail space dhoondhne mein madad karunga — bas bataiye aapko kya chahiye, baaki main handle kar lunga.",
+    acknowledgment: "Samajh gaya!",
+    thinking: "Chaliye main database check kar leta hoon aapke liye...",
     results: (n: number) =>
       n === 1
-        ? "Aapki requirement ke hisaab se meri top recommendation yeh hai."
-        : `Aapki requirement ke hisaab se meri top ${n} recommendations yeh hain.`,
-    noExact: "Exact match nahi mila, lekin main jo closest alternatives recommend karunga woh yeh hain.",
+        ? "Yeh hai mera top pick aapke liye."
+        : `Yeh hain mere top ${n} picks jo aapki requirement se match karte hain.`,
+    noExact: "Exact match nahi mila, lekin main jo closest options recommend karunga woh yeh hain.",
     noResults:
-      "Is combination ke liye koi project nahi mila. Budget thoda badha kar ya doosri location try kariye — inventory update hoti rehti hai.",
-    cheapestFirst: "Sabse kam starting price ke hisaab se shortlist kiye hain — budget-focused buyers ke liye best.",
-    newestFirst: "Sabse naye projects pehle — agar aap fresh launch chahte hain toh ideal hai.",
-    expensiveFirst: "Sabse zyada starting price ke hisaab se shortlist kiye hain — premium options pehle.",
-    soonestFirst: "Sabse jaldi possession wale projects pehle — agar jaldi shift karna hai toh best.",
-    compare: "Yahan meri side-by-side comparison hai jo aapke faisle mein madad karegi.",
-    compareNeedTwo: "Do ya teen projects chuniye, main unki comparison karke batata hoon.",
-    siteVisit: `Main aapke liye site visit schedule kar sakta hoon. Bas ${SITE.phone} par call kariye ya kisi bhi project page se book kariye — hamari team aapka slot confirm karegi.`,
-    visitOnly: `Site visit hamari team arrange karti hai. ${SITE.phone} par call kariye ya WhatsApp par message kariye, hum aapka appointment book karenge. Kisi bhi project page par "Book a site visit" bhi hai.`,
-    contact: `Aap mujhe aur sales team ko ${SITE.phone} par ya ${SITE.email} par contact kar sakte hain. Office: ${SITE.address}. Office hours ${SITE.hours}.`,
-    fees: `Exact charges project aur deal par depend karte hain, isliye main team se likhit breakup ladwaunga booking se pehle. Current figures ke liye ${SITE.phone} par call kariye.`,
-    booking: `Main poora booking process handle karta hoon — shortlist, site visit, documents aur payment schedule. Shuru karne ke liye ${SITE.phone} par call kariye ya ${SITE.email} par email kariye.`,
-    documents: `Main aapke chune hue project ka exact document checklist dunga. ${SITE.phone} par call kariye aur main aapko bhej dunga.`,
-    loan: `Home-loan support mere zariye available hai. ${SITE.phone} par call kariye aur main lender options samjhaunga.`,
-    options: "Yeh kuch featured projects hain jo main recommend karta hoon.",
-    bookingAsk: "Apni site visit book karne ke liye, please ye sab ek message mein bhejein: aapka pura naam, mobile number, preferred date (YYYY-MM-DD), preferred time slot (jaise 10:00–12:00), aur project ka naam. Kami: {missing}.",
+      "Hmm, is combination ke liye abhi kuch nahi mila. Kya alag budget ya location try karna chahenge?",
+    cheapestFirst: "Sabse affordable options shuruat mein.",
+    newestFirst: "Sabse naye new launches pehle.",
+    expensiveFirst: "Premium properties pehle.",
+    soonestFirst: "Sabse jaldi possession wale pehle.",
+    compare: "Yeh hai side-by-side comparison jo aapke decision mein madad karega.",
+    compareNeedTwo: "Do ya teen projects chuniye, main aapko differences samjhaunga.",
+    siteVisit: `Main aapke liye site visit book kar sakta hoon — bas ${SITE.phone} par call kariye ya kisi bhi project page par "Book a site visit" tap kariye, hamari team confirm kar degi.`,
+    visitOnly: `Site visit hamari team handle karti hai. ${SITE.phone} par call kariye ya WhatsApp par message kariye, hum appointment schedule kar denge.`,
+    contact: `Aap mujhe directly ${SITE.phone} par ya ${SITE.email} par contact kar sakte hain. Office ${SITE.address} pe hai, khula hai ${SITE.hours} tak.`,
+    fees: `Charges project aur deal ke hisaab se vary hote hain, isliye main team se likhit breakup bhejunga booking se pehle. Current figures ke liye ${SITE.phone} par call kariye.`,
+    booking: `Main poora process handle kar lunga aapke liye — shortlisting, site visit, paperwork aur payment schedule. ${SITE.phone} par call kariye ya ${SITE.email} par email kariye, shuru karte hain.`,
+    documents: `Main aapke chune hue project ka exact document checklist bhejunga. Bas ${SITE.phone} par call kariye aur main aapko bhej dunga.`,
+    loan: `Main aapko home-loan options samjha sakta hoon. ${SITE.phone} par call kariye aur main step by step samjhaunga.`,
+    options: "Yeh kuch featured projects hain jo main check karne recommend karunga.",
+    bookingAsk: "Site visit book karne ke liye mujhe ek message mein ye details chahiye: aapka pura naam, mobile number, preferred date (YYYY-MM-DD), time slot (jaise 10:00–12:00), aur kaunsa project visit karna hai. Missing: {missing}.",
     bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
-      `Aapki site visit book ho gayi hai ${d.projectName} ke liye, ${d.date} ko ${d.time} par. Main apni team ko ${d.phone} par call karke slot confirm karwata hoon.`,
+      `All set! ${d.projectName} ke liye aapki site visit book hai ${d.date} ko ${d.time} pe. Hamari team jaldi hi ${d.phone} par call karke confirm karegi.`,
     bookingMissing: (d: { missing: string }) =>
-      `Mujhe abhi ye chahiye: ${d.missing}. Naam, mobile number, date (YYYY-MM-DD), time, aur project naam ek message mein bhejein.`,
-    bookingInvalidPhone: "Ye phone number valid nahi lag raha. Kripya ek 10-digit Indian mobile number bhejein.",
-    askBudget: "Aapka budget kya hai?",
-    askBhk: "Aap kis BHK ki talash mein hain?",
-    askSiteVisit: "Kya aap chahte hain main site visit schedule karwaun?",
-    qualificationIntro: "Shortlist karne se pehle, aapki needs samajhne ke liye thoda detail chahiye:",
-    recommendationNote: "Consultant ki raye:",
+      `Mujhe abhi ye chahiye: ${d.missing}. Name, mobile number, date (YYYY-MM-DD), time, aur project naam ek message mein bhejiye pls.`,
+    bookingInvalidPhone: "Ye valid mobile number nahi lag raha. Kripya 10-digit Indian number bhejiye.",
+    askBudget: "Aapka budget range kya hai?",
+    askBhk: "Kiske BHK ke soch rahe hain?",
+    askSiteVisit: "Main aapke liye site visit schedule karwaun?",
+    qualificationIntro: "Shortlist karne se pehle, thoda aur samajhta hoon aapki needs:",
+    recommendationNote: "Meri honest raye:",
     suggestions: {
       compare: "In projects ko compare karein",
       visit: "Site visit book karein",
@@ -106,44 +110,45 @@ const LANG_COPY = {
   },
   hi: {
     greeting:
-      "नमस्ते! मैं आपका Innovations प्रॉपर्टी कंसल्टेंट हूँ। मैं आपको दिल्ली NCR में सही घर, ऑफिस या रिटेल स्पेस ढूंढने में मदद कर सकता हूँ। अपनी लोकेशन, बजट और BHK बताइए — मैं लाइव डेटाबेस से बेस्ट मैच शॉर्टलिस्ट करूँगा।",
+      "नमस्ते! मैं आपका व्यक्तिगत प्रॉपर्टी कंसल्टेंट हूँ। मैं आपकी मदद करूँगा perfect home, office या retail space ढूंढने में — बस बताइए आपको क्या चाहिए, बाकी मैं देख लूँगा।",
+    acknowledgment: "समझ गया!",
     results: (n: number) =>
       n === 1
-        ? "आपकी ज़रूरत के हिसाब से मेरी टॉप सिफारिश यह है।"
-        : `आपकी ज़रूरत के हिसाब से मेरी टॉप ${n} सिफारिशें ये हैं।`,
-    noExact: "सटीक मैच नहीं मिला, लेकिन मैं जिन निकटतम विकल्पों की सिफारिश करूँगा, वे ये हैं।",
+        ? "यहाँ आपकी ज़रूरत के हिसाब से मेरा शीर्ष सुझाव है।"
+        : `यहाँ मेरे शीर्ष ${n} सुझाव हैं जो आपकी ज़रूरत से मेल खाते हैं।`,
+    noExact: "सटीक मैच नहीं मिला, लेकिन मैं जिन विकल्पों की सिफारिश करूँगा, वे ये हैं।",
     noResults:
-      "इस संयोजन के लिए कोई प्रोजेक्ट नहीं मिला। बजट थोड़ा बढ़ाकर या दूसरी लोकेशन आज़माइए — उपलब्धता बदलती रहती है।",
-    cheapestFirst: "सबसे कम शुरुआती कीमत के हिसाब से शॉर्टलिस्ट किए गए हैं — बजट-फोकस्ड खरीदारों के लिए सर्वोत्तम।",
-    newestFirst: "सबसे नए प्रोजेक्ट पहले — अगर आप नया लॉन्च चाहते हैं तो आदर्श।",
-    expensiveFirst: "सबसे ज़्यादा शुरुआती कीमत के हिसाब से शॉर्टलिस्ट किए गए हैं — प्रीमियम विकल्प पहले।",
-    soonestFirst: "सबसे जल्दी कब्ज़े वाले प्रोजेक्ट पहले — अगर जल्दी शिफ्ट करना है तो सर्वोत्तम।",
-    compare: "यहाँ मेरी साइड-बाय-साइड तुलना है जो आपके निर्णय में मदद करेगी।",
-    compareNeedTwo: "दो या तीन प्रोजेक्ट चुनिए, मैं उनकी तुलना करके बताऊंगा।",
-    siteVisit: `मैं आपके लिए साइट विज़िट शेड्यूल कर सकता हूँ। बस ${SITE.phone} पर कॉल कीजिए या किसी भी प्रोजेक्ट पेज से बुक कीजिए — हमारी टीम आपका स्लॉट कन्फर्म करेगी।`,
-    visitOnly: `साइट विज़िट हमारी टीम तय करती है। ${SITE.phone} पर कॉल कीजिए या WhatsApp पर मैसेज कीजिए, हम आपका अपॉइंटमेंट बुक करेंगे। किसी भी प्रोजेक्ट पेज पर "Book a site visit" भी है।`,
-    contact: `आप मुझसे और सेल्स टीम से ${SITE.phone} पर या ${SITE.email} पर संपर्क कर सकते हैं। ऑफिस: ${SITE.address}। समय: ${SITE.hours}।`,
-    fees: `सटीक शुल्क प्रोजेक्ट और डील पर निर्भर करते हैं, इसलिए मैं बुकिंग से पहले टीम से लिखित ब्रेकअप दिलवाऊंगा। मौजूदा आंकड़ों के लिए ${SITE.phone} पर कॉल कीजिए।`,
-    booking: `मैं पूरा बुकिंग प्रोसेस संभालता हूँ — शॉर्टलिस्ट, साइट विज़िट, दस्तावेज़ और भुगतान योजना। शुरू करने के लिए ${SITE.phone} पर कॉल कीजिए या ${SITE.email} पर ईमेल कीजिए।`,
-    documents: `मैं आपके चुने हुए प्रोजेक्ट की सटीक दस्तावेज़ सूची दूंगा। ${SITE.phone} पर कॉल कीजिए और मैं आपको भेज दूंगा।`,
-    loan: `होम-लोन सहायता मेरे ज़रिए उपलब्ध है। ${SITE.phone} पर कॉल कीजिए और मैं लेंडर विकल्प समझाऊंगा।`,
-    options: "ये कुछ फीचर्ड प्रोजेक्ट हैं जिन्हें मैं सिफारिश करता हूँ।",
-    bookingAsk: "अपनी साइट विज़िट बुक करने के लिए, कृपया ये सब एक संदेश में भेजें: आपका पूरा नाम, मोबाइल नंबर, पसंदीदा तारीख (YYYY-MM-DD), पसंदीदा समय स्लॉट (उदाहरण 10:00–12:00), और प्रोजेक्ट का नाम। गायब: {missing}.",
+      "हम्म, इस संयोजन के लिए अभी कुछ नहीं मिला। क्या आप अलग बजट या स्थान आज़माना चाहेंगे?",
+    cheapestFirst: "सबसे किफायती विकल्प पहले।",
+    newestFirst: "नवीनतम परियोजनाएँ पहले।",
+    expensiveFirst: "प्रीमियम गुणवत्तापूर्ण संपत्तियाँ पहले।",
+    soonestFirst: "सबसे जल्द कब्ज़ा उपलब्ध पहले।",
+    compare: "यहाँ आपकी निर्णय लेने में मदद के लिए तुलनात्मक विवरण है।",
+    compareNeedTwo: "दो या तीन परियोजनाएँ चुनें, मैं आपको अंतर समझाऊंगा।",
+    siteVisit: `मैं आपके लिए साइट विज़िट बुक कर सकता हूँ — बस ${SITE.phone} पर कॉल करें या किसी भी प्रोजेक्ट पेज पर "साइट विज़िट बुक करें" पर क्लिक करें — हमारी टीम आपका स्लॉट कन्फर्म करेगी।`,
+    visitOnly: `साइट विज़िट हमारी टीम तय करती है। ${SITE.phone} पर कॉल करें या व्हाट्सएप पर संदेश भेजें, हम आपका अपॉइंटमेंट तय कर देंगे।`,
+    contact: `आप मुझसे सीधे ${SITE.phone} पर या ${SITE.email} पर संपर्क कर सकते हैं। हमारा कार्यालय ${SITE.address} पर है, खुला रहता है ${SITE.hours} तक।`,
+    fees: `शुल्क परियोजना और सौदे के अनुसार भिन्न होते हैं, इसलिए मैं बुकिंग से पहले टीम से लिखित लागत विवरण भेजूंगा। वर्तमान आंकड़ों के लिए ${SITE.phone} पर कॉल करें।`,
+    booking: `मैं पूरी प्रक्रिया आपकी मदद से पूरा करूँगा — शॉर्टलिस्टिंग, साइट विज़िट, दस्तावेज़ और भुगतान समय सारणी। ${SITE.phone} पर कॉल करें या ${SITE.email} पर ईमेल करें और हम शुरू करेंगे।`,
+    documents: `मैं आपके चुने हुए प्रोजेक्ट की सटीक दस्तावेज़ सूची भेजूँगा। बस ${SITE.phone} पर कॉल करें और मैं आपको भेज दूँगा।`,
+    loan: `मैं आपको होम-लोन विकल्पों के बारे में समझा सकता हूँ। ${SITE.phone} पर कॉल करें और मैं चरण-दर-चरण समझाऊंगा।`,
+    options: "ये कुछ विशेष परियोजनाएँ हैं जिन्हें मैं देखना सुझाऊंगा।",
+    bookingAsk: "अपनी साइट विज़िट बुक करने के लिए, कृपया एक संदेश में ये विवरण भेजें: आपका पूरा नाम, मोबाइल नंबर, पसंदीदा तारीख (YYYY-MM-DD), पसंदीदा समय स्लॉट (उदाहरण 10:00–12:00), और कौन सी परियोजना देखना चाहते हैं। गायब: {missing}.",
     bookingSuccess: (d: { projectName: string; date: string; time: string; phone: string }) =>
-      `आपकी साइट विज़िट ${d.projectName} के लिए ${d.date} को ${d.time} पर बुक कर दी गई है। मैं अपनी टीम को ${d.phone} पर कॉल करके स्लॉट कन्फर्म करवाऊंगा।`,
+      `सब सेट है! ${d.projectName} के लिए आपकी साइट विज़िट ${d.date} को ${d.time} पर बुक कर दी गई है। हमारी टीम जल्द ही ${d.phone} पर कॉल करके पुष्टि करेगी।`,
     bookingMissing: (d: { missing: string }) =>
-      `मुझे अभी ये चाहिए: ${d.missing}. कृपया नाम, मोबाइल नंबर, तारीख (YYYY-MM-DD), समय, और प्रोजेक्ट का नाम एक संदेश में भेजें।`,
-    bookingInvalidPhone: "यह फोन नंबर वैध नहीं लग रहा। कृपया एक 10-अंकों का भारतीय मोबाइल नंबर भेजें।",
-    askBudget: "आपका बजट क्या है?",
-    askBhk: "आप किस BHK की तलाश में हैं?",
-    askSiteVisit: "क्या आप चाहते हैं मैं साइट विज़िट निर्धारित कराऊं?",
-    qualificationIntro: "शॉर्टलिस्ट करने से पहले, आपकी ज़रूरतें समझने के लिए थोड़ा विवरण चाहिए:",
-    recommendationNote: "कंसल्टेंट की राय:",
+      `मुझे अभी भी चाहिए: ${d.missing}. कृपया नाम, मोबाइल नंबर, तारीख (YYYY-MM-DD), समय और परियोजना का नाम एक संदेश में भेजें।`,
+    bookingInvalidPhone: "यह एक वैध मोबाइल नंबर नहीं दिखता है। कृपया 10-अंकों वाला भारतीय मोबाइल नंबर भेजें।",
+    askBudget: "आपका बजट सीमा क्या है?",
+    askBhk: "आप कितने बीएचके के बारे में सोच रहे हैं?",
+    askSiteVisit: "क्या आप चाहते हैं मैं आपके लिए साइट विज़िट तय करूँ?",
+    qualificationIntro: "शॉर्टलिस्ट करने से पहले, मुझे आपकी ज़रूरतें थोड़ा बेहतर समझने दें:",
+    recommendationNote: "मेरा ईमानदार सुझाव:",
     suggestions: {
-      compare: "इन प्रोजेक्ट्स की तुलना करें",
+      compare: "प्रोजेक्ट्स की तुलना करें",
       visit: "साइट विज़िट बुक करें",
-      ready: "रेडी-टू-मूव विकल्प दिखाएँ",
-      cheap: "₹75 लाख से कम विकल्प",
+      ready: "तुरंत रहने योग्य विकल्प दिखाएँ",
+      cheap: "₹75 लाख से कम विकल्प दिखाएँ",
       noida: "नोएडा के प्रोजेक्ट",
     },
   },
@@ -707,10 +712,101 @@ async function findMentionedProjects(message: string) {
     .slice(0, 3);
 }
 
+/** ---------- Qualification state machine (one question at a time) ---------- */
+
+function parseBhkAnswer(message: string): string | undefined {
+  const m = message.toLowerCase().trim();
+  const direct = m.match(/\b([1-5])\s*bhk\b/) ?? m.match(/\b([1-5])\b/);
+  if (direct) return direct[1] === "5" ? "5+" : direct[1];
+  if (/(one|ek|1)\s*bhk/i.test(m)) return "1";
+  if (/(two|do|2)\s*bhk/i.test(m)) return "2";
+  if (/(three|teen|3)\s*bhk/i.test(m)) return "3";
+  if (/(four|char|4)\s*bhk/i.test(m)) return "4";
+  if (/(five|paanch|5\+?)\s*bhk/i.test(m)) return "5+";
+  return undefined;
+}
+
+function parseBudgetAnswer(message: string): { minPrice?: number; maxPrice?: number } {
+  const m = message.toLowerCase();
+  const croreMatch = m.match(/(\d+(?:\.\d+)?)\s*(crore|cr|\u0915\u0930\u094b\u092e)/);
+  const lakhMatch = m.match(/(\d+(?:\.\d+)?)\s*(lakh|lac|lacs|\u0932\u093e\u0926\u094d\u0930\u0947)/);
+  const numberMatch = m.match(/(\d{5,})/);
+
+  if (croreMatch) {
+    const val = Math.round(Number(croreMatch[1]) * 10_000_000);
+    if (m.includes("under") || m.includes("se kam") || m.includes("ke andar") || m.includes("tak")) {
+      return { maxPrice: val };
+    }
+    if (m.includes("above") || m.includes("se zyada") || m.includes("se upar") || m.includes("minimum")) {
+      return { minPrice: val };
+    }
+    return { minPrice: val, maxPrice: val };
+  }
+  if (lakhMatch) {
+    const val = Math.round(Number(lakhMatch[1]) * 100_000);
+    if (m.includes("under") || m.includes("se kam") || m.includes("ke andar") || m.includes("tak")) {
+      return { maxPrice: val };
+    }
+    if (m.includes("above") || m.includes("se zyada") || m.includes("se upar") || m.includes("minimum")) {
+      return { minPrice: val };
+    }
+    return { minPrice: val, maxPrice: val };
+  }
+  if (numberMatch) {
+    const val = Number(numberMatch[1]);
+    if (val >= 100_000) {
+      return { maxPrice: val };
+    }
+  }
+  return {};
+}
+
+function parseSiteVisitAnswer(message: string): boolean | undefined {
+  const m = message.toLowerCase().trim();
+  if (/^(yes|y|haan|han|ha|sure|ok|okay|theek hai|thik hai|book|book kar|site visit|karna|karna hai|confirm)/.test(m)) {
+    return true;
+  }
+  if (/^(no|n|nahi|na|nahin|mat|don.t|dont|nahi karna|mat karna|cancel)/.test(m)) {
+    return false;
+  }
+  return undefined;
+}
+
+function qualificationQuestion(step: QualificationStep, language: ChatLanguage, collected: QualificationCollected): string {
+  const copy = LANG_COPY[language];
+
+  // Add conversational acknowledgment before each question
+  const ack = language === "en" ? copy.acknowledgment + ". " : language === "hi" ? copy.acknowledgment + ". " : copy.acknowledgment + ". ";
+
+  if (step === "awaiting_bhk") {
+    return `${ack}${copy.askBhk}`;
+  }
+  if (step === "awaiting_budget") {
+    return `${ack}${copy.askBudget}`;
+  }
+  if (step === "awaiting_site_visit") {
+    return `${ack}${copy.askSiteVisit}`;
+  }
+  return "";
+}
+
+function buildQualificationIntent(collected: QualificationCollected): Partial<SearchIntent> {
+  const intent: Partial<SearchIntent> = {};
+  if (collected.location) intent.location = collected.location;
+  if (collected.bhk) intent.bhk = collected.bhk;
+  if (collected.minPrice != null) intent.minPrice = collected.minPrice;
+  if (collected.maxPrice != null) intent.maxPrice = collected.maxPrice;
+  if (collected.siteVisit != null) intent.siteVisit = collected.siteVisit;
+  return intent;
+}
+
+/** ---------- End qualification state machine ---------- */
+
 export async function getAssistantResponse(input: {
   message: string;
   history?: HistoryMessage[];
   contextProjectIds?: string[];
+  qualificationState?: QualificationState;
 }): Promise<AssistantResponse> {
   const message = input.message.slice(0, 600);
   const history = (input.history ?? []).slice(-8);
@@ -720,7 +816,126 @@ export async function getAssistantResponse(input: {
   const providerResult = await extractWithProvider(message);
   const intent = mergeIntents(...previousUserIntents, providerResult.intent);
 
+  const inputQualState = input.qualificationState ?? { step: "idle" as QualificationStep, collected: {} };
   const copy = LANG_COPY[language];
+
+  // ---------- Qualification: one question at a time ----------
+  if (inputQualState.step !== "idle") {
+    const collected = { ...inputQualState.collected };
+
+    // Parse the user's answer based on current step
+    if (inputQualState.step === "awaiting_bhk") {
+      const bhk = parseBhkAnswer(message);
+      if (!bhk) {
+        return {
+          reply: copy.askBhk,
+          speech: copy.askBhk,
+          language,
+          intent: publicIntent(intent),
+          projects: [],
+          qualificationState: { step: "awaiting_bhk", collected },
+          suggestions: [],
+          meta: { total: 0, relaxed: false, provider: providerResult.provider },
+        };
+      }
+      collected.bhk = bhk;
+      inputQualState.step = "awaiting_budget";
+      inputQualState.collected = collected;
+    } else if (inputQualState.step === "awaiting_budget") {
+      const budget = parseBudgetAnswer(message);
+      if (budget.minPrice == null && budget.maxPrice == null) {
+        return {
+          reply: copy.askBudget,
+          speech: copy.askBudget,
+          language,
+          intent: publicIntent(intent),
+          projects: [],
+          qualificationState: { step: "awaiting_budget", collected },
+          suggestions: [],
+          meta: { total: 0, relaxed: false, provider: providerResult.provider },
+        };
+      }
+      collected.minPrice = budget.minPrice ?? collected.minPrice;
+      collected.maxPrice = budget.maxPrice ?? collected.maxPrice;
+      inputQualState.step = "awaiting_site_visit";
+      inputQualState.collected = collected;
+    } else if (inputQualState.step === "awaiting_site_visit") {
+      const siteVisit = parseSiteVisitAnswer(message);
+      if (siteVisit == null) {
+        return {
+          reply: copy.askSiteVisit,
+          speech: copy.askSiteVisit,
+          language,
+          intent: publicIntent(intent),
+          projects: [],
+          qualificationState: { step: "awaiting_site_visit", collected },
+          suggestions: [],
+          meta: { total: 0, relaxed: false, provider: providerResult.provider },
+        };
+      }
+      collected.siteVisit = siteVisit;
+      inputQualState.step = "idle";
+      inputQualState.collected = collected;
+    }
+
+    // If qualification is complete, merge collected data into intent and search
+    if (inputQualState.step === "idle") {
+      const qualifiedIntent = mergeIntents(intent, buildQualificationIntent(collected));
+      // Re-run the normal flow with the qualified intent by setting variables
+      Object.assign(intent, qualifiedIntent);
+    } else {
+      // Still waiting for more answers — ask the next question
+      const nextQuestion = qualificationQuestion(inputQualState.step, language, inputQualState.collected);
+      const where = collected.location ? locationLabel(collected.location) : "";
+      let reply: string;
+      if (language === "en") {
+        reply = where ? `In ${where}, ${nextQuestion}` : nextQuestion;
+      } else if (language === "hi") {
+        reply = where ? `${where} mein, ${nextQuestion}` : nextQuestion;
+      } else {
+        reply = where ? `${where} mein, ${nextQuestion}` : nextQuestion;
+      }
+      return {
+        reply,
+        speech: reply,
+        language,
+        intent: publicIntent(intent),
+        projects: [],
+        qualificationState: inputQualState,
+        suggestions: [],
+        meta: { total: 0, relaxed: false, provider: providerResult.provider },
+      };
+    }
+  } else if (
+    intent.location &&
+    (!intent.bhk || (!intent.minPrice && !intent.maxPrice))
+  ) {
+    // Start qualification: location is known but bhk/budget missing
+    const collected: QualificationCollected = { location: intent.location };
+    inputQualState.step = "awaiting_bhk";
+    inputQualState.collected = collected;
+
+    const where = locationLabel(intent.location);
+    let reply: string;
+    if (language === "en") {
+      reply = `I can help you find a property in ${where}. ${copy.acknowledgment} ${copy.askBhk}`;
+    } else if (language === "hi") {
+      reply = `मैं आपकी ${where} में प्रॉपर्टी खोजने में मदद कर सकता हूँ। ${copy.acknowledgment} ${copy.askBhk}`;
+    } else {
+      reply = `Main aapko ${where} mein property dhoondhne mein madad kar sakta hoon. ${copy.acknowledgment} ${copy.askBhk}`;
+    }
+    return {
+      reply,
+      speech: reply,
+      language,
+      intent: publicIntent(intent),
+      projects: [],
+      qualificationState: inputQualState,
+      suggestions: [],
+      meta: { total: 0, relaxed: false, provider: providerResult.provider },
+    };
+  }
+
   const suggestions: string[] = [];
 
   const contextIds = Array.from(new Set(input.contextProjectIds ?? [])).filter(Boolean).slice(0, 3);
@@ -906,47 +1121,6 @@ export async function getAssistantResponse(input: {
     };
   }
 
-  // ---------- Clarification: ask for missing key criteria before searching ----------
-  if (intent.location && (!intent.bhk || (!intent.minPrice && !intent.maxPrice))) {
-    const copy = LANG_COPY[language];
-    const where = locationLabel(intent.location);
-    const missing: string[] = [];
-    if (!intent.bhk) missing.push(copy.askBhk);
-    if (!intent.minPrice && !intent.maxPrice) missing.push(copy.askBudget);
-
-    if (language === "en") {
-      return {
-        reply: `I can help you find a property in ${where}. ${missing.join(" ")} ${copy.askSiteVisit}`,
-        speech: `I can help you find a property in ${where}. ${missing.join(" ")} ${copy.askSiteVisit}`,
-        language,
-        intent: publicIntent(intent),
-        projects: [],
-        suggestions: [copy.suggestions.noida, copy.suggestions.ready, copy.suggestions.cheap],
-        meta: { total: 0, relaxed: false, provider: providerResult.provider },
-      };
-    }
-    if (language === "hi") {
-      return {
-        reply: `मैं आपकी ${where} में प्रॉपर्टी खोजने में मदद कर सकता हूँ। ${missing.join(" ")} ${copy.askSiteVisit}`,
-        speech: `मैं आपकी ${where} में प्रॉपर्टी खोजने में मदद कर सकता हूँ। ${missing.join(" ")} ${copy.askSiteVisit}`,
-        language,
-        intent: publicIntent(intent),
-        projects: [],
-        suggestions: [copy.suggestions.noida, copy.suggestions.ready, copy.suggestions.cheap],
-        meta: { total: 0, relaxed: false, provider: providerResult.provider },
-      };
-    }
-    return {
-      reply: `Main aapko ${where} mein property dhoondhne mein madad kar sakta hoon. ${missing.join(" ")} ${copy.askSiteVisit}`,
-      speech: `Main aapko ${where} mein property dhoondhne mein madad kar sakta hoon. ${missing.join(" ")} ${copy.askSiteVisit}`,
-      language,
-      intent: publicIntent(intent),
-      projects: [],
-      suggestions: [copy.suggestions.noida, copy.suggestions.ready, copy.suggestions.cheap],
-      meta: { total: 0, relaxed: false, provider: providerResult.provider },
-    };
-  }
-
   let projects = await queryProjects(intent, 4);
   let relaxed = false;
   if (projects.length === 0) {
@@ -993,6 +1167,7 @@ export async function getAssistantResponse(input: {
     language,
     intent: publicIntent(intent),
     projects: cards,
+    qualificationState: inputQualState.step === "idle" ? inputQualState : undefined,
     suggestions: Array.from(new Set(suggestions)).slice(0, 4),
     meta: { total: cards.length, relaxed, provider: providerResult.provider },
   };

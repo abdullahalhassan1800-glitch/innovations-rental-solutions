@@ -20,6 +20,21 @@ export type ComparisonTable = {
   rows: { label: string; values: string[] }[];
 };
 
+export type QualificationStep = "idle" | "awaiting_bhk" | "awaiting_budget" | "awaiting_site_visit";
+
+export type QualificationCollected = {
+  location?: string;
+  bhk?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  siteVisit?: boolean;
+};
+
+export type QualificationState = {
+  step: QualificationStep;
+  collected: QualificationCollected;
+};
+
 export type AssistantResponse = {
   reply: string;
   /** Optional shorter script for browser speech synthesis. */
@@ -39,6 +54,7 @@ export type AssistantResponse = {
   projects: ChatCard[];
   comparison?: ComparisonTable;
   suggestions: string[];
+  qualificationState?: QualificationState;
   meta: {
     total: number;
     relaxed: boolean;

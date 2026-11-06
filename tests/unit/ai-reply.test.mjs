@@ -12,15 +12,15 @@ process.env.DATABASE_URL = `file:${path.join(root, "prisma", "demo.db").replace(
 const { getAssistantResponse } = await lib("ai/assistant.ts");
 
 test("Hinglish replies no longer repeat sentence fragments", async () => {
-  const response = await getAssistantResponse({ message: "mujhe noida mein sasta 2 bhk chahiye" });
+  const response = await getAssistantResponse({ message: "mujhe noida mein flat chahiye" });
 
   assert.equal(response.language, "hinglish");
   assert.doesNotMatch(response.reply, /\bhoon hoon\b/i);
   assert.doesNotMatch(response.reply, /\bmein mein\b/i);
-  // Missing budget triggers clarification instead of immediate search
-  assert.match(response.reply, /budget kya hai/);
-  assert.match(response.reply, /site visit/);
+  // Missing BHK triggers qualification first
+  assert.match(response.reply, /Kiske BHK/);
   assert.equal(response.projects.length, 0);
+  assert.equal(response.qualificationState?.step, "awaiting_bhk");
 });
 
 test("English replies use correct plurals and word order", async () => {
@@ -29,9 +29,9 @@ test("English replies use correct plurals and word order", async () => {
   assert.equal(response.language, "en");
   assert.match(response.reply, /^Searching Noida for 2 BHK projects under ₹75 L\./);
   if (response.projects.length === 1) {
-    assert.match(response.reply, /Here is my top recommendation based on your brief\./);
+    assert.match(response.reply, /Here's my top pick for you\./);
   } else {
-    assert.match(response.reply, /Here are my top \d+ recommendations based on your brief\./);
+    assert.match(response.reply, /Here are my top \d+ picks/);
   }
   assert.doesNotMatch(response.reply, /I found \d+ projects/);
   assert.doesNotMatch(response.reply, /\s{2,}/);
@@ -111,8 +111,8 @@ test("consultant gives locality insight in recommendation", async () => {
 test("consultant greeting uses property consultant tone", async () => {
   const response = await getAssistantResponse({ message: "hello" });
 
-  assert.match(response.reply, /property consultant/);
-  assert.match(response.reply, /shortlist/);
+  assert.match(response.reply, /personal property consultant/);
+  assert.match(response.reply, /take care of the rest/);
 });
 
 test("hinglish consultant uses locality insight", async () => {
@@ -135,7 +135,7 @@ test("booking with all details books a site visit", async () => {
     message: "mere liye site visit book karo, mera naam Rahul hai, phone 9205908398, date 2026-12-25, time 14:00-16:00, project Meridian Edge",
   });
 
-  assert.match(response.reply, /book ho gayi hai|booked/);
+  assert.match(response.reply, /book hai|booked/);
   assert.match(response.reply, /Meridian Edge/);
   assert.match(response.reply, /9205908398/);
 });
@@ -145,7 +145,7 @@ test("english booking with all details", async () => {
     message: "book a site visit, my name is Sarah, phone 9876543210, date 2026-12-26, time 10:00-12:00, project Aurelia Grove",
   });
 
-  assert.match(response.reply, /booked for Aurelia Grove/);
+  assert.match(response.reply, /is booked on/);
   assert.match(response.reply, /9876543210/);
 });
 
@@ -160,4 +160,68 @@ test("invalid phone number is rejected in booking flow", async () => {
     message: "mere liye site visit book karo, mera naam Rahul hai, phone 123, date 2026-12-25, time 14:00-16:00, project Meridian Edge",
   });
   assert.match(response.reply, /mobile number/);
+});
+
+test("qualification asks one question at a time - BHK first", async () => {
+  const response = await getAssistantResponse({ message: "flat in Noida" });
+
+  assert.equal(response.language, "en");
+  assert.match(response.reply, /Which BHK/);
+  assert.equal(response.projects.length, 0);
+  assert.equal(response.qualificationState?.step, "awaiting_bhk");
+  assert.equal(response.qualificationState?.collected.location, "noida");
+});
+
+test("qualification continues - budget after BHK", async () => {
+  const first = await getAssistantResponse({ message: "flat in Noida" });
+  const bhkState = first.qualificationState;
+
+  if (!bhkState) throw new Error("Expected qualification state");
+
+  const second = await getAssistantResponse({
+    message: "2 BHK",
+    qualificationState: bhkState,
+  });
+
+  assert.equal(second.language, "en");
+  assert.match(second.reply, /budget range/);
+  assert.equal(second.qualificationState?.step, "awaiting_budget");
+  assert.equal(second.qualificationState?.collected.bhk, "2");
+});
+
+test("qualification completes - site visit after budget", async () => {
+  const first = await getAssistantResponse({ message: "flat in Noida" });
+  const second = await getAssistantResponse({
+    message: "2 BHK",
+    qualificationState: first.qualificationState ?? undefined,
+  });
+  const third = await getAssistantResponse({
+    message: "under 75 lakh",
+    qualificationState: second.qualificationState ?? undefined,
+  });
+
+  assert.equal(third.language, "en");
+  assert.match(third.reply, /site visit/);
+  assert.equal(third.qualificationState?.step, "awaiting_site_visit");
+  assert.equal(third.qualificationState?.collected.maxPrice, 7500000);
+});
+
+test("qualification finishes and searches after all answers", async () => {
+  const first = await getAssistantResponse({ message: "flat in Noida" });
+  const second = await getAssistantResponse({
+    message: "2 BHK",
+    qualificationState: first.qualificationState,
+  });
+  const third = await getAssistantResponse({
+    message: "under 75 lakh",
+    qualificationState: second.qualificationState,
+  });
+  const fourth = await getAssistantResponse({
+    message: "yes",
+    qualificationState: third.qualificationState,
+  });
+
+  assert.equal(fourth.language, "en");
+  assert.equal(fourth.qualificationState?.step, "idle");
+  assert.ok(fourth.projects.length > 0 || fourth.reply.includes("Searching"));
 });
