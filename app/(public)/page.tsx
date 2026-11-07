@@ -250,7 +250,7 @@ export default async function HomePage() {
             <div className="absolute inset-x-0 bottom-0 p-6">
               <p className="text-[0.56rem] font-semibold uppercase tracking-[0.2em] text-brass-soft">Who We Are</p>
               <h3 className="mt-2 max-w-xs font-display text-[1.3rem] leading-snug text-paper">
-                REHENTZ CONSULTING PRIVATE LIMITED
+                Housirentz Innovations Pvt. Ltd.
               </h3>
             </div>
           </div>
