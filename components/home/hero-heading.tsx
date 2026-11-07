@@ -9,8 +9,8 @@ import { HeroRotator } from "@/components/home/hero-rotator";
  * via a sr-only copy, so search engines and screen readers never see partial
  * text. Users who prefer reduced motion get the finished headline immediately.
  */
-const LINE_ONE = "Addresses with ambition.";
-const LINE_TWO = "Own Premium Property with Zero Investment.";
+const LINE_ONE = "Own Premium Property";
+const LINE_TWO = "with Zero Investment.";
 const TOTAL = LINE_ONE.length + LINE_TWO.length;
 
 const TYPE_DELAY_MS = 250;
@@ -51,8 +51,7 @@ export function HeroHeading() {
   return (
     <h1 className="hero-display mt-5 text-paper sm:mt-6">
       <span className="sr-only">
-        Addresses with ambition. Premium residential rental investment across Mangalore,
-        Bangalore, Bengaluru and Greater Noida West.
+        Own Premium Property with Zero Investment.
       </span>
       <span aria-hidden>
         {lineOne}
