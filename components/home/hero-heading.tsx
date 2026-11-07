@@ -53,8 +53,8 @@ export function HeroHeading() {
   return (
     <h1 className="hero-display mt-5 text-paper sm:mt-6">
       <span className="sr-only">
-        Addresses with ambition. Resort housing, serviced stays, commercial and residential
-        addresses across Delhi NCR and NOIDA.
+        Addresses with ambition. Premium residential rental investment across Mangalore,
+        Bangalore, Bengaluru and Greater Noida West.
       </span>
       <span aria-hidden>
         {lineOne}

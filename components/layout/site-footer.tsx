@@ -32,9 +32,8 @@ export function SiteFooter() {
           <div>
             <Logo invert />
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-paper/55">
-              Resort housing, commercial spaces, service apartments and residential properties —
-              presented with the detail needed to compare honestly. Delhi NCR and select Indian
-              destinations.
+              Own premium property with zero investment — verified residential projects
+              across Mangalore, Bangalore, Bengaluru and Greater Noida West.
             </p>
             <div className="mt-7 space-y-3 text-sm text-paper/70">
               <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 transition hover:text-paper">
@@ -76,15 +75,14 @@ export function SiteFooter() {
             <span>
               <strong className="font-semibold text-paper/85">A note on this demonstration.</strong>{" "}
               {SITE.demoDisclaimer} No RERA registration, approval, price, availability or developer
-              claim shown here is verified. Photography is sourced from Unsplash for demonstration.
-              Nothing on this site is a guarantee of returns.
+              claim shown here is verified. Nothing on this site is a guarantee of returns.
             </span>
           </p>
         </div>
 
         <div className="pointer-events-none mt-10 select-none overflow-hidden" aria-hidden>
           <p className="-mb-[0.18em] font-display text-[14vw] font-semibold leading-[0.8] tracking-[-0.05em] text-paper/[0.04]">
-            Innovations
+            Housirentz
           </p>
         </div>
 
