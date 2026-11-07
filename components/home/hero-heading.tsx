@@ -9,8 +9,8 @@ import { HeroRotator } from "@/components/home/hero-rotator";
  * via a sr-only copy, so search engines and screen readers never see partial
  * text. Users who prefer reduced motion get the finished headline immediately.
  */
-const LINE_ONE = "Own Premium Property";
-const LINE_TWO = "with Zero Investment.";
+const LINE_ONE = "Own Premium Property with";
+const LINE_TWO = "Zero Investment.";
 const TOTAL = LINE_ONE.length + LINE_TWO.length;
 
 const TYPE_DELAY_MS = 250;
@@ -57,7 +57,7 @@ export function HeroHeading() {
         {lineOne}
         {typed < LINE_ONE.length ? <span className="typing-caret" /> : null}
         <br />
-        {lineTwo}
+        <span className="text-brass-soft">{lineTwo}</span>
         {typed >= LINE_ONE.length && typed < TOTAL ? <span className="typing-caret" /> : null}
       </span>
       <HeroRotator />
