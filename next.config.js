@@ -5,7 +5,7 @@ const nextConfig = {
   // Ship the seeded SQLite snapshot with the serverless bundle; instrumentation
   // copies it to /tmp at runtime (see instrumentation.ts).
   outputFileTracingIncludes: {
-    "/**": ["./prisma/demo.db"],
+    "/**": ["./prisma/sample.db"],
   },
   images: {
     remotePatterns: [
