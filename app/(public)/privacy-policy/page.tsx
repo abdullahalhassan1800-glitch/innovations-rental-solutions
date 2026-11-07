@@ -1,167 +1,100 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
-import { SITE } from "@/lib/constants";
-
-export const metadata: Metadata = {
-  title: "Privacy policy",
+export const metadata = {
+  title: "Privacy Policy | Housirentz Innovations",
   description:
-    "How the Innovations demonstration platform collects, uses and protects account and inquiry information. Sample data only.",
+    "How Housirentz Innovations collects, uses, shares and protects your information when you use our website and services.",
   alternates: { canonical: "/privacy-policy" },
 };
 
-const UPDATED = "31 October 2026";
-
 export default function PrivacyPolicyPage() {
   return (
-    <>
-      <section className="border-b border-line bg-surface/60">
-        <div className="shell py-12 md:py-16">
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.55fr] lg:items-end">
-            <div>
-              <p className="eyebrow">Legal</p>
-              <h1 className="display-lg mt-4 balance">Privacy policy.</h1>
-              <p className="lede mt-4 max-w-xl">
-                A plain-language description of what this demonstration stores, why it stores it, and
-                how you can remove it. Last updated {UPDATED}.
-              </p>
-            </div>
-            <div className="rounded-[14px] border border-forest/20 bg-forest-soft/70 p-5">
-              <p className="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-night">
-                <ShieldCheck className="size-4" /> The short version
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-night/75">
-                This is a sample. Account details, saved projects, inquiries and site visits are stored in
-                a local development database and are not shared with a real sales team.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+    <section className="shell py-20 md:py-28 max-w-3xl mx-auto">
+      <p className="eyebrow">Legal</p>
+      <h1 className="display-lg mt-4 balance">Privacy Policy</h1>
+      <p className="lede mt-5 max-w-xl">
+        How Housirentz collects, uses, shares and protects your information when you use our website and Housirentz
+        services.
+      </p>
 
-      <section className="shell py-10 md:py-14">
-        <div className="prose-legal mx-auto max-w-3xl">
-          <div className="rounded-[14px] border border-brass/30 bg-brass-pale/50 p-5 text-[0.82rem] leading-relaxed text-ink-soft">
-            <strong className="text-ink">Demonstration notice.</strong> {SITE.demoDisclaimer} Innovations
-            is not a registered broker and does not sell property. Do not submit real confidential
-            information.
-          </div>
+      <div className="mt-12 space-y-8 leading-relaxed text-sm text-ink-soft">
+        <p>
+          This Privacy Policy explains how <strong>Housirentz Innovations Pvt. Ltd.</strong> (&ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;)
+          may collect, use, store and protect information when you visit the Housirentz website, enquire about our
+          services, or contact our team.
+        </p>
 
-          <h2>1. Who we are</h2>
-          <p>
-            Innovations is a demonstration real-estate discovery platform built for Noida, Greater Noida,
-            Noida Extension and Delhi NCR. References to “Innovations”, “we”, “us” or “our” mean this
-            demonstration project. You can contact the maintainers at{" "}
-            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
-          </p>
+        <p>This Privacy Policy applies to information collected through the Housirentz website and related services.</p>
 
-          <h2>2. Information we collect</h2>
-          <p>When you use the sample, we may store the following categories of information:</p>
-          <ul>
-            <li>
-              <strong>Account information:</strong> your name, email address, optional mobile number and
-              a bcrypt hash of your password. We never store the password itself.
-            </li>
-            <li>
-              <strong>Inquiry details:</strong> name, phone number, optional email, selected project,
-              inquiry type, message and the page or assistant source that generated the request.
-            </li>
-            <li>
-              <strong>Site-visit requests:</strong> name, phone number, optional email, preferred date and
-              time, and any message you add.
-            </li>
-            <li>
-              <strong>Usage information:</strong> saved projects, project view counters and basic
-              technical data needed to rate-limit abusive requests.
-            </li>
-            <li>
-              <strong>Assistant messages:</strong> the text you send to the assistant is processed to
-              extract search criteria. Project facts in replies are read from our database.
-            </li>
-          </ul>
+        <h2 className="mt-8 font-display text-xl text-paper">1. Information We Collect</h2>
+        <p>We may collect information that you provide directly, including:</p>
+        <ul className="mt-4 space-y-2 list-disc pl-6">
+          <li>Name, email address, phone number, and city</li>
+          <li>Investment interest, budget range, and preferred property</li>
+          <li>Messages submitted through contact or consultation forms</li>
+          <li>Any documents you later share during onboarding, if applicable</li>
+        </ul>
+        <p>We may also collect limited technical data such as browser type, device information, IP address, pages visited, and other website usage information.</p>
 
-          <h2>3. How we use it</h2>
-          <ul>
-            <li>To create and secure your account and keep you signed in.</li>
-            <li>To show your saved projects, inquiry history and site visits in your dashboard.</li>
-            <li>To demonstrate how a sales team would receive and manage leads.</li>
-            <li>To prevent spam, duplicate submissions and abusive traffic.</li>
-            <li>To improve the clarity and behaviour of the demonstration.</li>
-          </ul>
-          <p>
-            We do not sell personal information, run advertising profiles, or share your details with
-            third-party brokers as part of this sample.
-          </p>
+        <h2 className="mt-8 font-display text-xl text-paper">2. How We Use Your Information</h2>
+        <p>We may use your information for purposes including:</p>
+        <ul className="mt-4 space-y-2 list-disc pl-6">
+          <li>Responding to enquiries and arranging consultations or site visits</li>
+          <li>Sharing relevant property and Housirentz information</li>
+          <li>Providing information about rental investment opportunities and related services</li>
+          <li>Improving our website, services and user experience</li>
+          <li>Sending updates or communications that you have requested</li>
+          <li>Maintaining business and enquiry records</li>
+          <li>Meeting applicable legal, regulatory, compliance or record-keeping requirements</li>
+        </ul>
 
-          <h2>4. Cookies and sessions</h2>
-          <p>
-            Signing in sets a signed, HTTP-only session cookie. It is used only to identify your session
-            and is not readable by client-side JavaScript. The cookie is set with <code>SameSite=Lax</code>{" "}
-            and is marked <code>Secure</code> in production. Signing out clears it. We do not use
-            advertising cookies.
-          </p>
+        <h2 className="mt-8 font-display text-xl text-paper">3. Sharing of Information</h2>
+        <p>We do not sell your personal information.</p>
+        <p>We may share your information with trusted partners, service providers, property advisors, builder partners, or other parties where reasonably necessary to process your enquiry, provide requested services, operate our website, or support our business operations.</p>
+        <p>We may also disclose information where required or permitted by applicable law or legal process.</p>
 
-          <h2>5. Where data is stored</h2>
-          <p>
-            The sample uses a local SQLite database by default. If you deploy it, the database location is
-            controlled by the <code>DATABASE_URL</code> environment variable. Uploaded images may be
-            stored locally or in an S3-compatible bucket, depending on configuration. AI provider keys,
-            when configured, remain server-side and are never sent to the browser.
-          </p>
+        <h2 className="mt-8 font-display text-xl text-paper">4. Cookies and Similar Technologies</h2>
+        <p>This website may use cookies or similar technologies to remember preferences, understand website usage, measure traffic, and improve website performance.</p>
+        <p>You can control cookies through your browser settings. Disabling certain cookies may affect some website features.</p>
 
-          <h2>6. AI assistant and voice</h2>
-          <p>
-            With the default configuration, the assistant runs using deterministic rules on our server and
-            no external AI provider is contacted. If an OpenAI-compatible provider is configured, only the
-            scrubbed message is sent for intent extraction; project names, prices and availability always
-            come from our database. Voice input and spoken replies use your browser&apos;s Web Speech APIs.
-            Depending on the browser, audio may be processed by the browser vendor under its own terms.
-          </p>
+        <h2 className="mt-8 font-display text-xl text-paper">5. Data Security</h2>
+        <p>We take reasonable administrative, technical and organizational measures to help protect personal information against unauthorized access, misuse, alteration, disclosure or loss.</p>
+        <p>However, no method of transmission or storage over the internet can be guaranteed to be completely secure. Please exercise caution when sharing sensitive information online.</p>
 
-          <h2>7. Retention</h2>
-          <p>
-            Demonstration data is retained until the database is reset. You can ask for account and inquiry
-            data to be removed by contacting <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Running{" "}
-            <code>npm run db:reset</code> clears all local demonstration data.
-          </p>
+        <h2 className="mt-8 font-display text-xl text-paper">6. Data Retention</h2>
+        <p>We retain personal information only for as long as reasonably necessary for the purposes for which it was collected, to maintain business records, or as required by applicable law.</p>
+        <p>Enquiry and communication records may be retained so that we can respond to requests and provide appropriate follow-up.</p>
 
-          <h2>8. Your choices</h2>
-          <ul>
-            <li>You can update your name and phone number from the dashboard profile page.</li>
-            <li>You can change your password from the dashboard.</li>
-            <li>You can remove saved projects at any time.</li>
-            <li>You can request deletion of your account and associated sample data.</li>
-          </ul>
+        <h2 className="mt-8 font-display text-xl text-paper">7. Your Choices and Rights</h2>
+        <p>Subject to applicable law, you may request to:</p>
+        <ul className="mt-4 space-y-2 list-disc pl-6">
+          <li>Access or update the personal information we hold about you</li>
+          <li>Request deletion or restriction of certain processing</li>
+          <li>Withdraw consent where processing is based on consent</li>
+          <li>Ask questions regarding how your information is handled</li>
+        </ul>
+        <p>To make a request, contact us using the details provided below.</p>
 
-          <h2>9. Security</h2>
-          <p>
-            Passwords are hashed with bcrypt, sessions use signed HTTP-only cookies, server-side role
-            checks protect dashboard and admin routes, and all submitted data is validated. Uploads are
-            restricted by type, size and file signature. No system is perfectly secure; please do not
-            submit real confidential information to this demonstration.
-          </p>
+        <h2 className="mt-8 font-display text-xl text-paper">8. Children&rsquo;s Privacy</h2>
+        <p>This website is intended for adults interested in property and rental investment opportunities.</p>
+        <p>We do not knowingly collect personal information from children.</p>
 
-          <h2>10. Children</h2>
-          <p>
-            The platform is not directed at children under 18. Do not create an account or submit an
-            inquiry on behalf of a child.
-          </p>
+        <h2 className="mt-8 font-display text-xl text-paper">9. Changes to This Privacy Policy</h2>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices, services or applicable legal requirements.</p>
+        <p>We encourage visitors to review this page periodically for any changes.</p>
 
-          <h2>11. Changes</h2>
-          <p>
-            We may update this policy as the demonstration evolves. The “last updated” date at the top of
-            this page will reflect any change.
-          </p>
+        <h2 className="mt-8 font-display text-xl text-paper">10. Contact Us</h2>
+        <p>If you have any questions, concerns or requests regarding this Privacy Policy or the handling of your information, please contact:</p>
+        <ul className="mt-4 space-y-2 list-disc pl-6">
+          <li><strong>Housirentz Innovations Pvt. Ltd.</strong></li>
+          <li>Brand: Housirentz</li>
+          <li>Email: <a href="mailto:info@housirentzinnovations.com" className="text-brass hover:underline">info@housirentzinnovations.com</a></li>
+          <li>Phone: <a href="tel:+919310688426" className="text-brass hover:underline">+91 9310 688 426</a></li>
+          <li>Address: HSR Layout Bangalore, Karnataka - 560102</li>
+        </ul>
 
-          <h2>12. Contact</h2>
-          <p>
-            Questions about privacy can be sent to <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or by
-            using the <Link href="/contact">contact page</Link>. See also our{" "}
-            <Link href="/terms">terms and conditions</Link>.
-          </p>
-        </div>
-      </section>
-    </>
+        <p className="mt-8 text-xs text-ink-muted">
+          Housirentz Innovations Pvt. Ltd. is a company.
+        </p>
+      </div>
+    </section>
   );
 }
-

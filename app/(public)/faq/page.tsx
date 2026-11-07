@@ -1,116 +1,82 @@
-import Link from "next/link";
-import { ArrowRight, HelpCircle, MessageCircle } from "lucide-react";
-import { getPublishedFaqs } from "@/lib/queries";
-import { Accordion } from "@/components/ui/accordion";
+import { ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
-import { SITE } from "@/lib/constants";
+import { SectionHeading } from "@/components/ui/section-heading";
+
+const FAQS = [
+  {
+    question: "Can I own property without down payment?",
+    answer:
+      "Yes. The Housirentz model is designed so eligible buyers can begin their property journey without a traditional down payment. Final eligibility and ownership pathway depend on the selected project and agreement terms.",
+  },
+  {
+    question: "Is rental income guaranteed?",
+    answer:
+      "Rental income is structured as per the investment model and project agreement. While the model aims to provide regular rental returns, income is subject to the specific terms, project conditions, and applicable agreement—and should not be treated as an absolute guarantee.",
+  },
+  {
+    question: "How is rental yield calculated?",
+    answer:
+      "Rental yield is generally calculated as annual rental income divided by the investment value, expressed as a percentage. For example, if annual rent is ₹2,70,000 on a ₹45,00,000 value, the yield is 5%. Actual yield depends on project terms.",
+  },
+  {
+    question: "Is documentation transparent?",
+    answer:
+      "Yes. Housirentz focuses on clear, transparent documentation at every step—from property selection to agreements. Our team assists with paperwork so you understand the terms before you proceed.",
+  },
+  {
+    question: "Can NRIs invest?",
+    answer:
+      "Yes. NRIs can participate in eligible Housirentz opportunities, subject to applicable regulations and documentation. Our advisors assist with the required process, paperwork, and onboarding for NRI buyers.",
+  },
+  {
+    question: "Which cities are properties available in?",
+    answer:
+      "We currently offer curated projects across cities including Bangalore, Mangalore, Greater Noida West, and other locations through our builder partners. Visit the Properties page for the latest listings.",
+  },
+  {
+    question: "How do I get started?",
+    answer:
+      "Simply reach out via our Contact page or WhatsApp. An advisor will understand your goals, suggest suitable properties, and guide you through the next steps.",
+  },
+];
 
 export const metadata = {
-  title: "Frequently asked questions",
+  title: "FAQ | Housirentz Rental Investment",
   description:
-    "Answers about Innovations's sample projects, pricing, RERA verification, site visits, saved projects, the AI assistant and privacy.",
+    "Frequently asked questions about Housirentz rental investment — down payment, rental yield, NRI investment, documentation, and how to get started.",
   alternates: { canonical: "/faq" },
 };
 
-export default async function FaqPage() {
-  const faqs = await getPublishedFaqs();
-  const categories = Array.from(new Set(faqs.map((faq) => faq.category)));
-  const byCategory = categories.map((category) => ({
-    category,
-    items: faqs.filter((faq) => faq.category === category),
-  }));
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
-
+export default function FAQPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-
       <section className="border-b border-line bg-surface/60">
         <div className="shell py-12 md:py-16">
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.55fr] lg:items-end">
-            <div>
-              <p className="eyebrow">Help centre</p>
-              <h1 className="display-lg mt-4 balance">Questions,<br />answered plainly.</h1>
-              <p className="lede mt-4 max-w-xl">
-                Everything you need to know about the demonstration, the data, the assistant and how
-                your information is handled.
-              </p>
-            </div>
-            <div className="rounded-[14px] border border-line bg-surface p-5">
-              <p className="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-ink-muted">
-                <HelpCircle className="size-4 text-brass" /> Still unsure?
-              </p>
-              <p className="mt-2 text-sm text-ink-soft">Ask the assistant in the corner, or send the team a note.</p>
-              <ButtonLink href="/contact" size="sm" className="mt-4 w-full">Contact the team</ButtonLink>
-            </div>
+          <div className="max-w-3xl">
+            <p className="eyebrow">Support</p>
+            <h1 className="display-lg mt-4 balance">Frequently Asked Questions</h1>
+            <p className="lede mt-4 max-w-xl">
+              Clear answers to the questions investors ask most. Still have questions? Contact us for a free consultation.
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="shell py-10 md:py-14">
-        <div className="grid gap-10 lg:grid-cols-[210px_minmax(0,1fr)]">
-          <aside className="lg:sticky lg:top-24 lg:self-start">
-            <p className="eyebrow-plain">On this page</p>
-            <nav aria-label="FAQ categories" className="mt-4 space-y-1">
-              {byCategory.map((group) => (
-                <a
-                  key={group.category}
-                  href={`#${group.category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                  className="block border-b border-line py-2 text-[0.8rem] text-ink-soft transition hover:text-forest"
-                >
-                  {group.category} <span className="text-ink-muted">({group.items.length})</span>
-                </a>
-              ))}
-            </nav>
-          </aside>
-
-          <div className="space-y-10">
-            {byCategory.map((group) => (
-              <section key={group.category} id={group.category.toLowerCase().replace(/[^a-z0-9]+/g, "-")} className="scroll-mt-24">
-                <div className="flex items-center gap-3">
-                  <h2 className="font-display text-2xl">{group.category}</h2>
-                  <span className="h-px flex-1 bg-line" />
-                </div>
-                <Accordion items={group.items.map((faq) => ({ id: faq.id, question: faq.question, answer: faq.answer }))} className="mt-4" />
-              </section>
-            ))}
-
-            <div className="rounded-[14px] border border-line bg-night p-6 text-paper">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="flex items-center gap-2 text-[0.65rem] uppercase tracking-[0.14em] text-brass-soft">
-                    <MessageCircle className="size-4" /> A real conversation
-                  </p>
-                  <p className="mt-2 font-display text-xl">Can&apos;t find your answer?</p>
-                  <p className="mt-1 text-sm text-paper/55">Email {SITE.email} or call {SITE.phone}.</p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <ButtonLink href="/contact" variant="gold" size="sm">Contact us</ButtonLink>
-                  <ButtonLink href="/projects" variant="light" size="sm">Browse projects <ArrowRight className="size-3.5" /></ButtonLink>
-                </div>
-              </div>
+      <section className="shell py-20 md:py-28">
+        <div className="mt-12 space-y-4 max-w-3xl">
+          {FAQS.map((faq, index) => (
+            <div key={faq.question} className="rounded-[12px] border border-line bg-surface p-6 shadow-card">
+              <h3 className="font-medium text-paper">{faq.question}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-muted">{faq.answer}</p>
             </div>
-
-            <p className="text-[0.72rem] leading-relaxed text-ink-muted">
-              {SITE.demoDisclaimer} Read the{" "}
-              <Link href="/privacy-policy" className="underline underline-offset-2 hover:text-forest">privacy policy</Link>{" "}
-              and{" "}
-              <Link href="/terms" className="underline underline-offset-2 hover:text-forest">terms</Link>{" "}
-              for the full demonstration notice.
-            </p>
+          ))}
+          <div className="mt-10 text-center">
+            <ButtonLink href="/contact" variant="outline" size="lg" className="w-full md:w-auto">
+              Still Have Questions? <ArrowRight className="ml-2 size-4" />
+            </ButtonLink>
           </div>
         </div>
       </section>
     </>
   );
 }
-

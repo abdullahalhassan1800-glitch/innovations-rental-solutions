@@ -20,14 +20,22 @@ const nextConfig = {
     },
   },
   async redirects() {
-    // The listings index lives at /projects; keep common alternate URLs working.
+    // The listings index lives at /properties; keep common alternate URLs working.
     return [
-      { source: "/properties", destination: "/projects", permanent: true },
-      { source: "/properties/:slug", destination: "/projects/:slug", permanent: true },
-      { source: "/property/:slug", destination: "/projects/:slug", permanent: true },
-      { source: "/project", destination: "/projects", permanent: true },
-      { source: "/project/:slug", destination: "/projects/:slug", permanent: true },
-      { source: "/listings", destination: "/projects", permanent: true },
+      { source: "/properties", destination: "/properties", permanent: true },
+      { source: "/properties/:slug", destination: "/properties/:slug", permanent: true },
+      { source: "/project", destination: "/properties", permanent: true },
+      { source: "/project/:slug", destination: "/properties/:slug", permanent: true },
+      { source: "/listings", destination: "/properties", permanent: true },
+      { source: "/projects", destination: "/properties", permanent: true },
+      { source: "/projects/:slug", destination: "/properties/:slug", permanent: true },
+      { source: "/property/:slug", destination: "/properties/:slug", permanent: true },
+      { source: "/residential", destination: "/properties", permanent: true },
+      { source: "/commercial", destination: "/properties", permanent: true },
+      { source: "/resort-housing", destination: "/properties", permanent: true },
+      { source: "/service-apartments", destination: "/properties", permanent: true },
+      { source: "/rentofree", destination: "/properties", permanent: true },
+      { source: "/why-rentofree", destination: "/why-housirentz", permanent: true },
     ];
   },
   async headers() {

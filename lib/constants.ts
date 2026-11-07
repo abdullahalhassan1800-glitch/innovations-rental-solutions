@@ -1,9 +1,9 @@
 export const SITE = {
   name: "Housirentz Innovations",
   legalName: "Housirentz Innovations Pvt. Ltd.",
-  tagline: "High-Yield Rental Real Estate, Reimagined.",
+  tagline: "Own Premium Property with Zero Investment.",
   description:
-    "Housirentz Innovations Pvt. Ltd. is a premier real estate innovation firm specializing in the high-yield rental sector across India. We bridge the gap between property ownership and consistent wealth generation. Unlike traditional real estate firms, we don't just offer leisure homes — we deliver professionally managed rental solutions designed to generate steady income.",
+    "Housirentz Innovations Pvt. Ltd. helps you own premium property with zero investment — no down payment, rent paid in advance, and up to 5% rental yield. Verified residential projects across Mangalore, Bangalore, Bengaluru and Greater Noida West.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
   phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 9310 688 426",
   email: process.env.NEXT_PUBLIC_SALES_EMAIL || "info@housirentzinnovations.com",
@@ -11,59 +11,50 @@ export const SITE = {
   address: "HSR Layout Bangalore, Karnataka - 560102",
   hours: "Mon–Sat, 9:30am – 7:00pm IST",
   demoDisclaimer:
-    "Housirentz Innovations is a demonstration platform. All projects, developers, prices, images and references shown are sample data for illustration only and are not verified listings or offers.",
+    "Housirentz Innovations is a rental investment platform. All projects, developers, prices, images and references shown are for illustration only. Verify pricing, approvals and availability with our advisor before making any decision.",
 } as const;
 
 export type NavChild = { label: string; href: string; blurb?: string };
 export type NavLink = { label: string; href: string; children?: readonly NavChild[] };
 
 export const LOCATION_LINKS = [
-  { label: "Noida", href: "/location/noida", blurb: "Established addresses, sector by sector." },
-  { label: "Greater Noida", href: "/location/greater-noida", blurb: "Room to grow, close to the expressway." },
-  { label: "Noida Extension", href: "/location/noida-extension", blurb: "New launches and value-led living." },
-  { label: "Delhi NCR", href: "/location/delhi-ncr", blurb: "The wider capital-region corridor." },
+  { label: "Mangalore", href: "/location/mangalore", blurb: "Coastal Karnataka city with verified builder partnerships." },
+  { label: "Bangalore", href: "/location/bangalore", blurb: "IT city with strong rental demand and growth corridors." },
+  { label: "Bengaluru", href: "/location/bengaluru", blurb: "Premium residential market with Gravity Homes developments." },
+  { label: "Greater Noida West", href: "/location/greater-noida-west", blurb: "NCR destination with accessible entry from ₹85 Lacs." },
 ] as const;
 
-export const PROPERTY_TYPE_LINKS: readonly NavChild[] = [
-  { label: "Residential properties", href: "/residential", blurb: "Apartments, villas, penthouses and studios." },
-  { label: "Commercial spaces", href: "/commercial", blurb: "Offices, retail and SCO addresses." },
-  { label: "Resort housing", href: "/resort-housing", blurb: "Resort-led homes with a managed rental intent." },
-  { label: "Service apartments", href: "/service-apartments", blurb: "Furnished, professionally managed stays." },
-];
-
 export const MORE_LINKS: readonly NavChild[] = [
-  { label: "All projects", href: "/projects", blurb: "Filter the full demonstration inventory." },
-  { label: "Locations", href: "/location/noida", blurb: "Noida, Greater Noida, Noida Extension and NCR." },
-  { label: "Compare projects", href: "/compare", blurb: "Place up to three addresses side by side." },
-  { label: "FAQs", href: "/faq", blurb: "Data, RERA, site visits and how the assistant works." },
+  { label: "All properties", href: "/properties", blurb: "Curated rental investment properties." },
+  { label: "Locations", href: "/location/mangalore", blurb: "Mangalore, Bangalore, Bengaluru and Greater Noida West." },
+  { label: "FAQs", href: "/faq", blurb: "Rental yield, documentation and how the model works." },
 ];
 
 export const NAV_LINKS: readonly NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Resort housing", href: "/resort-housing" },
-  { label: "Commercial spaces", href: "/commercial" },
-  { label: "Service apartments", href: "/service-apartments" },
-  { label: "Residential properties", href: "/residential" },
-  { label: "Projects", href: "/projects", children: MORE_LINKS },
+  { label: "About Us", href: "/about" },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "Benefits", href: "/benefits" },
+  { label: "Properties", href: "/properties", children: MORE_LINKS },
+  { label: "Why Housirentz", href: "/why-housirentz" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const FOOTER_LINKS = {
   explore: [
-    { label: "All projects", href: "/projects" },
-    { label: "Resort housing", href: "/resort-housing" },
-    { label: "Commercial spaces", href: "/commercial" },
-    { label: "Service apartments", href: "/service-apartments" },
-    { label: "Residential properties", href: "/residential" },
-    { label: "Compare projects", href: "/compare" },
-    { label: "New launches", href: "/projects?status=NEW_LAUNCH" },
-    { label: "Ready to move", href: "/projects?status=READY_TO_MOVE" },
+    { label: "All properties", href: "/properties" },
+    { label: "How It Works", href: "/how-it-works" },
+    { label: "Benefits", href: "/benefits" },
+    { label: "Why Housirentz", href: "/why-housirentz" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Blog", href: "/blog" },
   ],
   company: [
-    { label: "About Innovations Rental Solutions", href: "/about" },
+    { label: "About Housirentz", href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "FAQs", href: "/faq" },
+    { label: "FAQ", href: "/faq" },
     { label: "Privacy policy", href: "/privacy-policy" },
     { label: "Terms & conditions", href: "/terms" },
   ],
@@ -116,7 +107,6 @@ export const INQUIRY_TYPES = [
   { value: "BROCHURE", label: "Download brochure" },
   { value: "CONTACT", label: "Contact sales" },
   { value: "GENERAL", label: "General inquiry" },
-  { value: "AI", label: "Innovations AI" },
 ] as const;
 
 export const INQUIRY_STATUSES = ["NEW", "CONTACTED", "QUALIFIED", "CLOSED", "SPAM"] as const;
