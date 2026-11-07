@@ -397,7 +397,7 @@ const testimonials = [
     name: "Priya Sharma",
     role: "Dubai · NRI Investor",
     quote:
-      "Documentation support made everything smooth. Rentofree helped me invest confidently as an NRI.",
+      "Documentation support made everything smooth. Housirentz helped me invest confidently as an NRI.",
     rating: 5,
     sortOrder: 2,
   },
@@ -405,7 +405,7 @@ const testimonials = [
     name: "Vikram Reddy",
     role: "Hyderabad · Investor",
     quote:
-      "I compared traditional buying with Rentofree and chose this model. The rental yield and support exceeded expectations.",
+      "I compared traditional buying with Housirentz and chose this model. The rental yield and support exceeded expectations.",
     rating: 5,
     sortOrder: 3,
   },

@@ -102,7 +102,7 @@ export default async function AboutPage() {
             <p className="eyebrow">Our Story</p>
             <h2 className="display-lg mt-4">Who We Are</h2>
             <p className="lede mt-4 max-w-xl">
-              REHENTZ CONSULTING PRIVATE LIMITED is focused on making rental investing more accessible, transparent and
+              Housirentz Innovations Pvt. Ltd. is focused on making rental investing more accessible, transparent and
               convenient for investors. We combine real-estate expertise with a modern digital experience to help
               investors participate in rental assets with greater clarity and confidence.
             </p>
