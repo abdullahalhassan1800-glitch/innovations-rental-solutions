@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MessageCircle, User, Mail, X, Send, Loader2 } from "lucide-react";
+import { MessageCircle, Mail, X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function ChatBot() {
@@ -161,21 +161,7 @@ export function ChatBot() {
                   <p className="text-rust text-xs font-medium">{error}</p>
                 )}
 
-                {step === "welcome" ? (
-                  <div className="pt-2">
-                    <p className="text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted mb-3">Quickly tell us:</p>
-                    <button
-                      onClick={() => setStep("details")}
-                      className="w-full text-left py-3 px-4 border border-line rounded-[12px] bg-surface/50 hover:bg-brass/10 hover:text-forest transition-all text-ink-soft"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <User className="size-4 text-brass" />
-                        <span>Share my details</span>
-                      </div>
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3 pt-2">
                     <div className="flex flex-col gap-1">
                       <label htmlFor="cb-name" className="text-[0.68rem] font-medium text-ink-muted">
                         Your name
@@ -244,7 +230,6 @@ export function ChatBot() {
                       )}
                     </Button>
                   </form>
-                )}
               </div>
             </div>
           </div>
