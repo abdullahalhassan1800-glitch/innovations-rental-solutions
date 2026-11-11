@@ -86,8 +86,8 @@ export default function PrivacyPolicyPage() {
         <ul className="mt-4 space-y-2 list-disc pl-6">
           <li><strong>Housirentz Innovations Pvt. Ltd.</strong></li>
           <li>Brand: Housirentz</li>
-          <li>Email: <a href="mailto:info@housirentzinnovations.com" className="text-brass hover:underline">info@housirentzinnovations.com</a></li>
-          <li>Phone: <a href="tel:+919310688426" className="text-brass hover:underline">+91 9310 688 426</a></li>
+          <li>Email: <a href="mailto:oliverking9205@gmail.com" className="text-brass hover:underline">oliverking9205@gmail.com</a></li>
+          <li>Phone: <a href="tel:+919205908398" className="text-brass hover:underline">+91 92059 08398</a></li>
           <li>Address: IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida, Uttar Pradesh – 201304</li>
         </ul>
 

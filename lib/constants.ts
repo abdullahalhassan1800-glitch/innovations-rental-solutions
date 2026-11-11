@@ -5,9 +5,9 @@ export const SITE = {
   description:
     "Housirentz Innovations Pvt. Ltd. helps you own premium property with zero investment — no down payment, rent paid in advance, and up to 5% rental yield. Verified residential projects across Mangalore, Bangalore, Bengaluru and Greater Noida West.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
-  phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 9310 688 426",
-  email: process.env.NEXT_PUBLIC_SALES_EMAIL || "info@housirentzinnovations.com",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919310688426",
+  phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 92059 08398",
+  email: process.env.NEXT_PUBLIC_SALES_EMAIL || "oliverking9205@gmail.com",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919205908398",
   address: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida, Uttar Pradesh – 201304",
   addressStreet: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132",
   addressLocality: "Noida",
