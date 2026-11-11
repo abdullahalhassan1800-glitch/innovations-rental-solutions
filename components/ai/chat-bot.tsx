@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { MessageCircle, Mail, X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function ChatBot() {
   const [open, setOpen] = useState(false);
@@ -116,11 +117,17 @@ export function ChatBot() {
       {/* Launcher button */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-[60] size-12 rounded-full bg-brass text-night shadow-float hover:bg-brass-soft hover:-translate-y-0.5 transition-all"
+        className={cn(
+          "fixed bottom-6 right-6 z-[60] size-14 rounded-full bg-brass text-night shadow-float flex items-center justify-center gap-1 px-3 py-2 min-w-[140px] transition-all duration-300",
+          "hover:bg-brass-soft hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(201,162,94,0.5)]",
+          "animate-pulse",
+        )}
         aria-label="Open chat"
         title="Chat with us"
       >
-        <MessageCircle className="size-5" />
+        <span className="size-5">💬</span>
+        <span className="text-[0.65rem] font-semibold tracking-tight uppercase">Chat</span>
+        <span className="absolute top-1 right-1 size-2 rounded-full bg-rust shadow-[0_0_0_2px_bg-brass] animate-ping opacity-80" aria-hidden="true" />
       </button>
 
       {/* Chat panel */}

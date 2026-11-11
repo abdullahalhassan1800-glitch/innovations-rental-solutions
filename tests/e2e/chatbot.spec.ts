@@ -5,7 +5,7 @@ test.describe("Chatbot popup", () => {
     await page.goto("/");
 
     // Chatbot should not be open initially
-    const chatbot = page.getByRole("dialog", { name: "Innovations Support" });
+    const chatbot = page.getByRole("dialog", { name: "Housirentz Support" });
     await expect(chatbot).toBeHidden();
 
     // Wait more than 2.3 seconds for auto-open
@@ -13,7 +13,7 @@ test.describe("Chatbot popup", () => {
 
     // Chatbot should now be open
     await expect(chatbot).toBeVisible();
-    await expect(page.getByText("Innovations Support")).toBeVisible();
+    await expect(page.getByText("Housirentz Support")).toBeVisible();
   });
 
   test("collects details and submits via chatbot form", async ({ page }) => {
@@ -22,12 +22,9 @@ test.describe("Chatbot popup", () => {
     // Wait for auto-open
     await page.waitForTimeout(2500);
 
-    const chatbot = page.getByRole("dialog", { name: "Innovations Support" });
+    const chatbot = page.getByRole("dialog", { name: "Housirentz Support" });
 
-    // Click "Share my details" to proceed to details step
-    await chatbot.getByRole("button", { name: "Share my details" }).click();
-
-    // Fill in the form (scoped within chatbot dialog)
+    // Form shows directly on open — fill it in (scoped within chatbot dialog)
     await chatbot.getByLabel("Your name").fill("Rahul Sharma");
     await chatbot.getByLabel("Phone number").fill("9205908398");
     await chatbot.getByLabel("Email (optional)").fill("rahul@example.com");
