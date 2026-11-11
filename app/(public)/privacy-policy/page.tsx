@@ -88,7 +88,7 @@ export default function PrivacyPolicyPage() {
           <li>Brand: Housirentz</li>
           <li>Email: <a href="mailto:info@housirentzinnovations.com" className="text-brass hover:underline">info@housirentzinnovations.com</a></li>
           <li>Phone: <a href="tel:+919310688426" className="text-brass hover:underline">+91 9310 688 426</a></li>
-          <li>Address: HSR Layout Bangalore, Karnataka - 560102</li>
+          <li>Address: IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida, Uttar Pradesh – 201304</li>
         </ul>
 
         <p className="mt-8 text-xs text-ink-muted">

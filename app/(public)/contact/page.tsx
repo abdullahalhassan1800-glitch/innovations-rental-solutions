@@ -87,7 +87,7 @@ export default async function ContactPage() {
             <p className="eyebrow text-brass-soft">Our Office Location</p>
             <h2 className="display-md mt-4 text-paper">Find Us</h2>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-paper/60">
-              Visit us at Dwarka, South West Delhi.
+              Visit us at Urbtech Trade Center, Sector 132, Noida.
             </p>
             <div className="mt-6 rounded-[14px] border border-line bg-surface p-6">
               <p className="text-sm text-paper/70">{SITE.address}</p>

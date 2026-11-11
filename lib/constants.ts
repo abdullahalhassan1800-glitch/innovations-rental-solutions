@@ -8,7 +8,11 @@ export const SITE = {
   phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 9310 688 426",
   email: process.env.NEXT_PUBLIC_SALES_EMAIL || "info@housirentzinnovations.com",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919310688426",
-  address: "HSR Layout Bangalore, Karnataka - 560102",
+  address: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida, Uttar Pradesh – 201304",
+  addressStreet: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132",
+  addressLocality: "Noida",
+  addressRegion: "Uttar Pradesh",
+  postalCode: "201304",
   hours: "Mon–Sat, 9:30am – 7:00pm IST",
   demoDisclaimer:
     "Housirentz Innovations is a rental investment platform. All projects, developers, prices, images and references shown are for illustration only. Verify pricing, approvals and availability with our advisor before making any decision.",

@@ -83,9 +83,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               telephone: SITE.phone,
               address: {
                 "@type": "PostalAddress",
-                streetAddress: SITE.address,
-                addressLocality: "Noida",
-                addressRegion: "Uttar Pradesh",
+                streetAddress: SITE.addressStreet,
+                addressLocality: SITE.addressLocality,
+                addressRegion: SITE.addressRegion,
+                postalCode: SITE.postalCode,
                 addressCountry: "IN",
               },
               description: SITE.description,

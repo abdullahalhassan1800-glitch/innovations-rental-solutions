@@ -10,7 +10,7 @@ import { SITE } from "@/lib/constants";
  * artwork so they line up with the page gutter.
  */
 const LOGOS = {
-  dark: { src: "/images/logo-dark.png", width: 1200, height: 744 },
+  dark: { src: "/images/logo-dark.png", width: 1774, height: 887 },
   light: { src: "/images/logo-light.png", width: 1200, height: 744 },
 } as const;
 
