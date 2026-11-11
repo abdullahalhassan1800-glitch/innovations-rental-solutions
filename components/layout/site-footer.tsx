@@ -33,7 +33,7 @@ export function SiteFooter() {
             <Logo invert />
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-paper/55">
               Own premium property with zero investment — verified residential projects
-              across Mangalore, Bangalore, Bengaluru and Greater Noida West.
+              across Noida, Delhi and NCR.
             </p>
             <div className="mt-7 space-y-3 text-sm text-paper/70">
               <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 transition hover:text-paper">

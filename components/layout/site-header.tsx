@@ -50,7 +50,7 @@ export function SiteHeader({ user }: { user: HeaderUser }) {
     <header className="sticky top-0 z-50">
       <div className="hidden border-b border-paper/10 bg-night text-paper md:block">
         <div className="shell flex h-9 items-center justify-between text-[0.62rem] uppercase tracking-[0.20em] text-paper/50">
-          <p>Mangalore · Bangalore · Bengaluru · NCR</p>
+          <p>Noida · Delhi · NCR</p>
           <div className="flex items-center gap-6">
             <span className="text-brass-soft/90">Rental Investment Properties</span>
             <a href={`mailto:${SITE.email}`} className="hidden items-center gap-1.5 hover:text-paper lg:flex">
