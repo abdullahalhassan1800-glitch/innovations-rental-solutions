@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Clock, User } from "lucide-react";
-import { SectionHeading } from "@/components/ui/section-heading";
 
 const BLOG_POSTS = [
   {

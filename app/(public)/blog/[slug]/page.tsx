@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Clock, User } from "lucide-react";
 import { notFound } from "next/navigation";
-import { SectionHeading } from "@/components/ui/section-heading";
 
 const BLOG_POSTS: Record<string, {
   title: string;
