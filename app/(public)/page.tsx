@@ -61,29 +61,6 @@ const TRUST = [
   },
 ];
 
-const HOW_WORKS = [
-  {
-    step: "01",
-    title: "Choose Your Property",
-    copy: "Browse premium residential projects curated for location, quality, and long-term value. Our team helps you shortlist options that match your goals.",
-  },
-  {
-    step: "02",
-    title: "Complete Documentation",
-    copy: "Our experts handle the legal process so your paperwork stays clear, compliant, and hassle-free—from agreements to registrations.",
-  },
-  {
-    step: "03",
-    title: "Receive Rental Income",
-    copy: "Start earning rental returns as per the investment model, with transparent scheduled payouts and professional rental management.",
-  },
-  {
-    step: "04",
-    title: "Build Wealth",
-    copy: "Enjoy rental income while your property appreciates—creating lasting long-term wealth and a clear ownership pathway.",
-  },
-];
-
 const WHY_CARDS = [
   {
     title: "Zero Investment",
@@ -202,10 +179,6 @@ export default async function HomePage() {
 
             <div className="mt-8 flex items-start gap-2 text-[0.65rem] text-paper/45">
               <div className="flex items-center gap-1.5">
-                <TrendingUp className="size-3.5 text-brass-soft" />
-                <span>Up to 5% Rental Yield</span>
-              </div>
-              <div className="flex items-center gap-1.5">
                 <X className="size-3.5 text-brass-soft" />
                 <span>No Down Payment</span>
               </div>
@@ -290,52 +263,6 @@ export default async function HomePage() {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="border-y border-line bg-surface/50 py-20 md:py-28">
-        <div className="shell">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-xl">
-              <p className="eyebrow">Path Way Model</p>
-              <h2 className="display-lg mt-4 balance">A simple 4-step process to start earning and building long-term wealth.</h2>
-            </div>
-            <p className="max-w-xs text-[0.72rem] leading-relaxed text-ink-muted">
-              Talk to our advisors and explore properties that fit your goals.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {HOW_WORKS.map((item, index) => (
-              <Reveal key={item.step} delay={index * 80}>
-                <div className="flex flex-col gap-4 rounded-[16px] border border-line bg-surface p-6 shadow-card">
-                  <span className="font-display text-[2rem] leading-none text-brass-soft/20">{item.step}</span>
-                  <h3 className="font-display text-xl leading-tight text-paper">{item.title}</h3>
-                  <p className="text-sm leading-relaxed text-ink-muted">{item.copy}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {[
-              { title: "Expert Guidance", copy: "Dedicated advisors support you at every stage of the journey." },
-              { title: "Verified Process", copy: "Every step is documented with clear terms and legal compliance." },
-              { title: "Faster Onboarding", copy: "Move from interest to investment without long waiting periods." },
-            ].map((item) => (
-              <div key={item.title} className="rounded-[12px] border border-line bg-surface p-5 shadow-card">
-                <h3 className="font-medium text-paper">{item.title}</h3>
-                <p className="mt-1 text-sm text-ink-muted">{item.copy}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 flex flex-col gap-3">
-            <ButtonLink href="/contact" variant="primary" size="lg" className="w-full md:w-auto">
-              Get Free Consultation <ArrowRight className="ml-2 size-4" />
-            </ButtonLink>
           </div>
         </div>
       </section>

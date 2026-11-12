@@ -36,6 +36,9 @@ const nextConfig = {
       { source: "/service-apartments", destination: "/properties", permanent: true },
       { source: "/rentofree", destination: "/properties", permanent: true },
       { source: "/why-rentofree", destination: "/why-housirentz", permanent: true },
+      { source: "/how-it-works", destination: "/properties", permanent: true },
+      { source: "/faq", destination: "/blog", permanent: true },
+      { source: "/why-housirentz", destination: "/about", permanent: true },
     ];
   },
   async headers() {

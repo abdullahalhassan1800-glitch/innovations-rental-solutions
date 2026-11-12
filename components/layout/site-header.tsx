@@ -142,14 +142,8 @@ export function SiteHeader({ user }: { user: HeaderUser }) {
                 <span className="max-w-[8rem] truncate">{user.name.split(" ")[0]}</span>
               </Link>
             ) : (
-              <Link
-                href="/login"
-                className="text-[0.62rem] font-medium uppercase tracking-[0.14em] text-paper/60 transition hover:text-brass-soft"
-              >
-                Sign in
-              </Link>
+              <LeadModal label="Enquire" size="sm" source="header" className="px-5" />
             )}
-            <LeadModal label="Enquire" size="sm" source="header" className="px-5" />
           </div>
 
           <button
@@ -206,7 +200,7 @@ export function SiteHeader({ user }: { user: HeaderUser }) {
                 <span aria-hidden className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.2em] text-brass">
                   0{NAV_LINKS.length + 1}
                 </span>
-                {user ? "Dashboard" : "Sign in"}
+                {user ? "Dashboard" : "Contact"}
               </Link>
             </nav>
 

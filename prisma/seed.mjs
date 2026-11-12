@@ -390,7 +390,7 @@ const testimonials = [
     role: "Bangalore · Investor",
     quote:
       "The process was clear from day one. I started receiving rental income without the usual down payment stress.",
-    rating: 5,
+    rating: 3,
     sortOrder: 1,
   },
   {
@@ -398,7 +398,7 @@ const testimonials = [
     role: "Dubai · NRI Investor",
     quote:
       "Documentation support made everything smooth. Housirentz helped me invest confidently as an NRI.",
-    rating: 5,
+    rating: 4,
     sortOrder: 2,
   },
   {

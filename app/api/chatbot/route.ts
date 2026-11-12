@@ -12,7 +12,7 @@ const chatSchema = z.object({
   message: z.string().trim().min(1, "Message is required").max(1000),
 });
 
-const EMAIL_TO = process.env.CHATBOT_EMAIL_TO || "oliverking9205@gmail.com";
+const EMAIL_TO = process.env.CHATBOT_EMAIL_TO || "irs@innovationsrentalsolutions.com";
 
 function createTransport() {
   const user = process.env.EMAIL_USER;

@@ -4,11 +4,6 @@ import { SectionHeading } from "@/components/ui/section-heading";
 
 const BENEFITS = [
   {
-    title: "Up to 5% Rental Yield",
-    copy: "Enjoy regular passive income through structured rental returns.",
-    icon: TrendingUp,
-  },
-  {
     title: "Zero Initial Investment",
     copy: "Own property without blocking your savings in heavy upfront capital.",
     icon: X,
@@ -38,7 +33,7 @@ const BENEFITS = [
 export const metadata = {
   title: "Benefits | Rental Investment with Housirentz",
   description:
-    "Why investors love the Housirentz model — up to 5% rental yield, zero investment, no down payment, wealth appreciation, secure investment and professional support.",
+    "Why investors love the Housirentz model — zero investment, no down payment, wealth appreciation, secure investment and professional support.",
   alternates: { canonical: "/benefits" },
 };
 

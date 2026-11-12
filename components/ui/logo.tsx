@@ -39,7 +39,7 @@ export function Logo({
         priority
         className={cn(
           "w-auto shrink-0 transition-transform duration-500 group-hover:-translate-y-0.5",
-          compact ? "h-8" : invert ? "h-12" : "h-10",
+          compact ? "h-10" : invert ? "h-14" : "h-12",
         )}
       />
     </Link>

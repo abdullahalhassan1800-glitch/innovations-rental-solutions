@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Clock, User } from "lucide-react";
+import { ButtonLink } from "@/components/ui/button";
 
 const BLOG_POSTS = [
   {
@@ -160,6 +161,63 @@ export default function BlogPage() {
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="shell py-20 md:py-28 border-t border-line">
+        <div className="max-w-3xl mx-auto">
+          <p className="eyebrow text-brass-soft">Frequently Asked Questions</p>
+          <h2 className="display-lg mt-4 balance text-paper">Clear answers to the questions investors ask most.</h2>
+          <div className="mt-12 space-y-4">
+            {[
+              {
+                question: "Can I own property without down payment?",
+                answer:
+                  "Yes. The Housirentz model is designed so eligible buyers can begin their property journey without a traditional down payment. Final eligibility and ownership pathway depend on the selected project and agreement terms.",
+              },
+              {
+                question: "Is rental income guaranteed?",
+                answer:
+                  "Rental income is structured as per the investment model and project agreement. While the model aims to provide regular rental returns, income is subject to the specific terms, project conditions, and applicable agreement—and should not be treated as an absolute guarantee.",
+              },
+              {
+                question: "How is rental yield calculated?",
+                answer:
+                  "Rental yield is generally calculated as annual rental income divided by the investment value, expressed as a percentage. For example, if annual rent is ₹2,70,000 on a ₹45,00,000 value, the yield is 5%. Actual yield depends on project terms.",
+              },
+              {
+                question: "Is documentation transparent?",
+                answer:
+                  "Yes. Housirentz focuses on clear, transparent documentation at every step—from property selection to agreements. Our team assists with paperwork so you understand the terms before you proceed.",
+              },
+              {
+                question: "Can NRIs invest?",
+                answer:
+                  "Yes. NRIs can participate in eligible Housirentz opportunities, subject to applicable regulations and documentation. Our advisors assist with the required process, paperwork, and onboarding for NRI buyers.",
+              },
+              {
+                question: "Which cities are properties available in?",
+                answer:
+                  "We currently offer curated projects across Noida, Delhi and NCR through our builder partners. Visit the Properties page for the latest listings.",
+              },
+              {
+                question: "How do I get started?",
+                answer:
+                  "Simply reach out via our Contact page or WhatsApp. An advisor will understand your goals, suggest suitable properties, and guide you through the next steps.",
+              },
+            ].map((faq, index) => (
+              <div key={faq.question} className="rounded-[12px] border border-line bg-surface p-6 shadow-card">
+                <h3 className="font-medium text-paper">{faq.question}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-muted">{faq.answer}</p>
+              </div>
+            ))}
+            <div className="mt-10 text-center">
+              <ButtonLink href="/contact" variant="outline" size="lg" className="w-full md:w-auto">
+                Still Have Questions? <ArrowRight className="ml-2 size-4" />
+              </ButtonLink>
+            </div>
+          </div>
         </div>
       </section>
     </>

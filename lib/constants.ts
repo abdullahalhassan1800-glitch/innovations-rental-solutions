@@ -6,7 +6,7 @@ export const SITE = {
     "Housirentz Innovations Pvt. Ltd. helps you own premium property with zero investment — no down payment, rent paid in advance, and up to 5% rental yield. Verified residential projects across Mangalore, Bangalore, Bengaluru and Greater Noida West.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
   phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 92059 08398",
-  email: process.env.NEXT_PUBLIC_SALES_EMAIL || "oliverking9205@gmail.com",
+  email: process.env.NEXT_PUBLIC_SALES_EMAIL || "irs@innovationsrentalsolutions.com",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919205908398",
   address: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida, Uttar Pradesh – 201304",
   addressStreet: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132",
@@ -37,11 +37,8 @@ export const MORE_LINKS: readonly NavChild[] = [
 export const NAV_LINKS: readonly NavLink[] = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "How It Works", href: "/how-it-works" },
   { label: "Benefits", href: "/benefits" },
   { label: "Properties", href: "/properties", children: MORE_LINKS },
-  { label: "Why Housirentz", href: "/why-housirentz" },
-  { label: "FAQ", href: "/faq" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
@@ -49,16 +46,12 @@ export const NAV_LINKS: readonly NavLink[] = [
 export const FOOTER_LINKS = {
   explore: [
     { label: "All properties", href: "/properties" },
-    { label: "How It Works", href: "/how-it-works" },
     { label: "Benefits", href: "/benefits" },
-    { label: "Why Housirentz", href: "/why-housirentz" },
-    { label: "FAQ", href: "/faq" },
     { label: "Blog", href: "/blog" },
   ],
   company: [
     { label: "About Housirentz", href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "FAQ", href: "/faq" },
     { label: "Privacy policy", href: "/privacy-policy" },
     { label: "Terms & conditions", href: "/terms" },
   ],
