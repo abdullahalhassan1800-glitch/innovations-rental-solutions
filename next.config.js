@@ -22,8 +22,6 @@ const nextConfig = {
   async redirects() {
     // The listings index lives at /properties; keep common alternate URLs working.
     return [
-      { source: "/properties", destination: "/properties", permanent: true },
-      { source: "/properties/:slug", destination: "/properties/:slug", permanent: true },
       { source: "/project", destination: "/properties", permanent: true },
       { source: "/project/:slug", destination: "/properties/:slug", permanent: true },
       { source: "/listings", destination: "/properties", permanent: true },
