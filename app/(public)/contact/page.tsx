@@ -81,7 +81,7 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <section className="border-t border-line bg-night text-paper py-20 md:py-28">
+      <section className="border-t border-line bg-night gradient-purple-b text-paper py-20 md:py-28">
         <div className="shell grid gap-14 lg:grid-cols-[1fr_1fr]">
           <div>
             <p className="eyebrow text-brass-soft">Our Office Location</p>

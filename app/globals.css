@@ -3,28 +3,30 @@
 @tailwind utilities;
 
 /*
- * Dark, cinematic theme tokens. Keep these in sync with tailwind.config.js.
- * "ink" is the light foreground; "paper" is the light edge/highlight colour;
- * "surface", "sand" and "night" are the background steps. The base is a
- * midnight navy that matches the logo, with a brass-gold accent.
+ * Premium dark charcoal + deep purple theme tokens. Keep these in sync with
+ * tailwind.config.js. "ink" is the light foreground; "paper" is the light
+ * edge/highlight colour; "surface", "sand" and "night" are the background
+ * steps. Base is dark charcoal (#1C1B20) with a deep purple gradient accent
+ * (#30234F) and a violet accent (#A78BFA).
  */
 :root {
-  --color-ink: #f4f1e9;
-  --color-ink-soft: #b9c3d0;
-  --color-ink-muted: #8a95a6;
-  --color-cream: #080d16;
-  --color-paper: #f4f1e9;
-  --color-surface: #0d1521;
-  --color-night: #050810;
-  --color-sand: #101a28;
-  --color-sand-deep: #182337;
-  --color-line: #202d40;
-  --color-forest: #c9a25e;
-  --color-forest-deep: #a07c3c;
-  --color-forest-soft: #eadfc6;
-  --color-brass: #c9a25e;
-  --color-brass-soft: #e6cf9e;
-  --color-brass-pale: #16130b;
+  --color-ink: #ffffff;
+  --color-ink-soft: #b8b3c5;
+  --color-ink-muted: #8e88a5;
+  --color-cream: #1c1b20;
+  --color-paper: #ffffff;
+  --color-surface: #252130;
+  --color-night: #141319;
+  --color-sand: #2a2438;
+  --color-sand-deep: #30234f;
+  --color-violet-deep: #352860;
+  --color-line: #343240;
+  --color-forest: #a78bfa;
+  --color-forest-deep: #8b72f2;
+  --color-forest-soft: #d9ceff;
+  --color-brass: #a78bfa;
+  --color-brass-soft: #c9bcff;
+  --color-brass-pale: #241b38;
   --color-rust: #e07a55;
 
   --font-sans: var(--font-poppins), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -65,7 +67,6 @@
     outline: 2px solid var(--color-brass);
     outline-offset: 3px;
   }
-
   h1,
   h2,
   h3,
@@ -198,10 +199,20 @@
   }
 
   .glass {
-    background-color: rgba(13, 21, 33, 0.58);
-    border: 1px solid rgba(244, 241, 233, 0.14);
+    background-color: rgba(28, 27, 32, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
+  }
+
+  /* Smooth charcoal-to-purple gradient used on the hero and selected
+     dark sections. */
+  .gradient-purple {
+    background-image: linear-gradient(135deg, #1c1b20 0%, #252130 42%, #30234f 78%, #352860 100%);
+  }
+
+  .gradient-purple-b {
+    background-image: linear-gradient(180deg, #141319 0%, #252130 40%, #30234f 80%, #352860 100%);
   }
 
   .field {
@@ -222,12 +233,12 @@
   .field:focus {
     outline: none;
     border-color: var(--color-brass);
-    box-shadow: 0 0 0 3px rgba(201, 162, 94, 0.18);
-    background-color: #0a1322;
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.22);
+    background-color: #211d2e;
   }
 
   .field::placeholder {
-    color: #7c8698;
+    color: #837d97;
   }
 
   .field-label {
@@ -254,8 +265,8 @@
   }
 
   .surface-soft {
-    background-color: rgba(244, 241, 233, 0.035);
-    border: 1px solid rgba(244, 241, 233, 0.09);
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: var(--radius-panel);
   }
 
@@ -265,7 +276,7 @@
 
   .surface-hover:hover {
     transform: translateY(-3px);
-    border-color: rgba(201, 162, 94, 0.45);
+    border-color: rgba(167, 139, 250, 0.5);
     box-shadow: var(--shadow-lift);
   }
 
@@ -401,12 +412,12 @@
     text-align: left;
     padding: 0.85rem 1rem;
     border-bottom: 1px solid var(--color-line);
-    background: rgba(244, 241, 233, 0.035);
+    background: rgba(255, 255, 255, 0.04);
   }
 
   .table-clean td {
     padding: 0.9rem 1rem;
-    border-bottom: 1px solid rgba(32, 45, 64, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     font-size: 0.88rem;
     color: var(--color-ink-soft);
     vertical-align: middle;
@@ -417,7 +428,7 @@
   }
 
   .skeleton {
-    background: linear-gradient(90deg, #0f1927 25%, #17233a 50%, #0f1927 75%);
+    background: linear-gradient(90deg, #26232f 25%, #322d42 50%, #26232f 75%);
     background-size: 200% 100%;
     animation: shimmer 1.6s infinite;
   }
@@ -485,13 +496,13 @@
 
 @keyframes pulse-ring {
   0% {
-    box-shadow: 0 0 0 0 rgba(201, 162, 94, 0.45);
+    box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.45);
   }
   70% {
-    box-shadow: 0 0 0 12px rgba(201, 162, 94, 0);
+    box-shadow: 0 0 0 12px rgba(167, 139, 250, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(201, 162, 94, 0);
+    box-shadow: 0 0 0 0 rgba(167, 139, 250, 0);
   }
 }
 

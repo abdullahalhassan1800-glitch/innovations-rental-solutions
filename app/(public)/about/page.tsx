@@ -94,7 +94,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-night text-paper py-20 md:py-28">
+      <section className="bg-night gradient-purple-b text-paper py-20 md:py-28">
         <div className="shell">
           <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
             <div>

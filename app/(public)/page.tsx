@@ -331,7 +331,7 @@ export default async function HomePage() {
       </section>
 
       {/* Traditional vs Housirentz */}
-      <section className="bg-night text-paper py-20 md:py-28">
+      <section className="bg-night gradient-purple-b text-paper py-20 md:py-28">
         <div className="shell">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-xl">
@@ -418,7 +418,7 @@ export default async function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-night text-paper py-20 md:py-28">
+      <section className="bg-night gradient-purple-b text-paper py-20 md:py-28">
         <div className="shell">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-xl">

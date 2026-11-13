@@ -9,25 +9,30 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Dark cinematic palette. "ink" is the light foreground, "paper" the
-        // light edge/highlight colour, and surface/night are the backgrounds.
-        // Keep these in sync with app/globals.css.
-        ink: "#f4f1e9",
-        "ink-soft": "#b9c3d0",
-        "ink-muted": "#8a95a6",
-        cream: "#080d16",
-        paper: "#f4f1e9",
-        surface: "#0d1521",
-        night: "#050810",
-        sand: "#101a28",
-        "sand-deep": "#182337",
-        line: "#202d40",
-        forest: "#c9a25e",
-        "forest-deep": "#a07c3c",
-        "forest-soft": "#eadfc6",
-        brass: "#c9a25e",
-        "brass-soft": "#e6cf9e",
-        "brass-pale": "#16130b",
+        // Premium dark charcoal + deep purple palette. "ink" is the light
+        // foreground, "paper" the light edge/highlight colour, and
+        // surface/night are the backgrounds. Keep these in sync with
+        // app/globals.css.
+        // Primary bg #1C1B20 · Secondary bg #252130 · Gradient accent #30234F
+        // Purple highlight #352860 · Accent #A78BFA · Text #FFFFFF/#B8B3C5
+        // Borders rgba(255,255,255,0.10)
+        ink: "#ffffff",
+        "ink-soft": "#b8b3c5",
+        "ink-muted": "#8e88a5",
+        cream: "#1c1b20",
+        paper: "#ffffff",
+        surface: "#252130",
+        night: "#141319",
+        sand: "#2a2438",
+        "sand-deep": "#30234f",
+        "violet-deep": "#352860",
+        line: "#343240",
+        forest: "#a78bfa",
+        "forest-deep": "#8b72f2",
+        "forest-soft": "#d9ceff",
+        brass: "#a78bfa",
+        "brass-soft": "#c9bcff",
+        "brass-pale": "#241b38",
         rust: "#e07a55",
       },
       fontFamily: {

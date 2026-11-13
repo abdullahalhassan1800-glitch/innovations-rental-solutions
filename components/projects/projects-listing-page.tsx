@@ -109,7 +109,7 @@ export async function ProjectsListingPage({
     <>
       {!hideHeader && (
         <section className="relative overflow-hidden border-b border-line bg-surface">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_-10%,rgba(177,132,73,0.12),transparent_55%)]" aria-hidden />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_-10%,rgba(167,139,250,0.14),transparent_55%)]" aria-hidden />
           <div className="shell relative py-12 md:py-16">
             <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1.5 text-[0.7rem] text-ink-muted">
               <Link href="/" className="transition hover:text-brass">Home</Link>

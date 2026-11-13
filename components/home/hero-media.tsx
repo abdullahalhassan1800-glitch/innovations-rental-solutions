@@ -24,8 +24,9 @@ export function HeroMedia({
       >
         <source src={src} type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-r from-night via-night/80 to-night/25" />
-      <div className="absolute inset-0 bg-gradient-to-t from-night via-night/25 to-night/55" />
+      {/* Smooth charcoal-to-purple gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-r from-night via-sand-deep/70 to-sand-deep/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-night via-sand-deep/20 to-violet-deep/55" />
       <div className="grain absolute inset-0" />
     </div>
   );

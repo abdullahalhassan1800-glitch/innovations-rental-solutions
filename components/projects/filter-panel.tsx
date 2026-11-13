@@ -184,7 +184,7 @@ export function FilterPanel({
 
         <button
           type="submit"
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-forest text-[0.8rem] font-semibold text-night shadow-[0_16px_30px_-22px_rgba(12,53,39,0.9)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest-deep"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-forest text-[0.8rem] font-semibold text-night shadow-[0_16px_30px_-22px_rgba(53,40,96,0.9)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest-deep"
         >
           Apply filters
         </button>

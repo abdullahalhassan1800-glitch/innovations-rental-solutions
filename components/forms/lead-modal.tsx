@@ -148,7 +148,7 @@ export function LeadModal({
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          "group inline-flex items-center justify-center gap-2 rounded-full border border-brass bg-brass font-semibold tracking-[0.02em] text-night shadow-[0_18px_40px_-24px_rgba(201,162,94,0.85)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brass-soft hover:bg-brass-soft active:translate-y-0",
+          "group inline-flex items-center justify-center gap-2 rounded-full border border-brass bg-brass font-semibold tracking-[0.02em] text-night shadow-[0_18px_40px_-24px_rgba(167,139,250,0.85)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brass-soft hover:bg-brass-soft active:translate-y-0",
           size === "sm" && "h-9 px-4 text-[0.74rem]",
           size === "md" && "h-11 px-6 text-[0.8rem]",
           size === "lg" && "h-12 px-7 text-[0.84rem]",
