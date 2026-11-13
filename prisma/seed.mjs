@@ -177,7 +177,7 @@ const projects = [
       "Site visit and advisor assistance",
     ],
     amenities: ["Clubhouse", "Landscaped Gardens", "Security", "Parking", "Power backup", "Community spaces"],
-    images: ["1.webp", "hero-building.webp", "property-interior.webp", "property-amenities.webp"],
+    images: ["https://img.etimg.com/thumb/width-1200%2Cheight-1200%2Cimgsize-278771%2Cresizemode-75%2Cmsid-78322565/news/economy/finance/adb-approves-usd-570-million-loans-for-urban-projects-in-rajasthan-madhya-pradesh.jpg", "hero-building.webp", "property-interior.webp", "property-amenities.webp"],
     floorPlans: [
       { name: "2 BHK · Type A", bhk: "2", areaSqft: 1240, price: 15000000, imageUrl: "/images/floorplan-2bhk.svg" },
       { name: "3 BHK · Type B", bhk: "3", areaSqft: 1685, price: 30000000, imageUrl: "/images/floorplan-3bhk.svg" },
@@ -215,7 +215,7 @@ const projects = [
       "Advisor-led onboarding",
     ],
     amenities: ["Gym", "Swimming pool", "Kids play area", "Security", "Parking", "Clubhouse"],
-    images: ["2.webp", "property-parth-gardenia.webp", "property-interior.webp", "property-amenities.webp"],
+    images: ["https://www.desaihomes.com/uploads/media/Global%20kingdom%20progress%20status%20image6969bcc1d826e.jpeg", "property-parth-gardenia.webp", "property-interior.webp", "property-amenities.webp"],
     floorPlans: [
       { name: "2 BHK", bhk: "2", areaSqft: 1100, price: 13000000, imageUrl: "/images/floorplan-2bhk.svg" },
       { name: "3 BHK", bhk: "3", areaSqft: 1450, price: 26000000, imageUrl: "/images/floorplan-3bhk.svg" },
@@ -252,7 +252,7 @@ const projects = [
       "Consultation and site visit support",
     ],
     amenities: ["Landscaped campus", "Club facilities", "Security", "Parking", "Power backup", "Open spaces"],
-    images: ["3.webp", "hero-building.webp", "property-interior.webp", "property-amenities.webp"],
+    images: ["https://omconstructions.org/assets/images/anjani-exotica-2.jpg", "hero-building.webp", "property-interior.webp", "property-amenities.webp"],
     floorPlans: [
       { name: "3 BHK · Premium", bhk: "3", areaSqft: 1800, price: 35000000, imageUrl: "/images/floorplan-3bhk.svg" },
       { name: "4 BHK · Premium", bhk: "4", areaSqft: 2400, price: 35000000, imageUrl: "/images/floorplan-4bhk.svg" },
@@ -289,7 +289,7 @@ const projects = [
       "Transparent listing support",
     ],
     amenities: ["Park", "Security", "Parking", "Community hall", "Power backup", "Play area"],
-    images: ["4.webp", "property-lakeview.webp", "property-interior.webp", "property-amenities.webp"],
+    images: ["https://www.tathastu.co/images/construction/mar26/tower1.webp", "property-lakeview.webp", "property-interior.webp", "property-amenities.webp"],
     floorPlans: [
       { name: "2 BHK", bhk: "2", areaSqft: 950, price: 8500000, imageUrl: "/images/floorplan-2bhk.svg" },
       { name: "3 BHK", bhk: "3", areaSqft: 1200, price: 8500000, imageUrl: "/images/floorplan-3bhk.svg" },
@@ -326,7 +326,7 @@ const projects = [
       "Site visit on request",
     ],
     amenities: ["Gardens", "Clubhouse", "Security", "Parking", "Walking tracks", "Community spaces"],
-    images: ["Project_smera_banner.webp", "property-interior.webp", "property-amenities.webp"],
+    images: ["https://www.tarc.in/tarc-tripundra/images/DSC_01.jpg", "property-interior.webp", "property-amenities.webp"],
     floorPlans: [
       { name: "2 BHK · Garden-facing", bhk: "2", areaSqft: 1100, price: 23000000, imageUrl: "/images/floorplan-2bhk.svg" },
       { name: "3 BHK · Garden-facing", bhk: "3", areaSqft: 1400, price: 23000000, imageUrl: "/images/floorplan-3bhk.svg" },
