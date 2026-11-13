@@ -50,8 +50,8 @@ export default function GlobalError({
             style={{
               marginTop: "20px",
               padding: "10px 20px",
-              border: "1px solid #a78bfa",
-              background: "#a78bfa",
+              border: "1px solid #7c5ce8",
+              background: "#7c5ce8",
               color: "#141319",
               borderRadius: "3px",
               fontWeight: 600,

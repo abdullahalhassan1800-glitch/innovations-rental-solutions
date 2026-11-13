@@ -119,7 +119,7 @@ export function ChatBot() {
         onClick={() => setOpen(true)}
         className={cn(
           "fixed bottom-6 right-6 z-[60] size-14 rounded-full bg-brass text-night shadow-float flex items-center justify-center gap-1 px-3 py-2 min-w-[140px] transition-all duration-300",
-          "hover:bg-brass-soft hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(167,139,250,0.5)]",
+          "hover:bg-brass-soft hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(124,92,232,0.6)]",
           "animate-pulse",
         )}
         aria-label="Open chat"
