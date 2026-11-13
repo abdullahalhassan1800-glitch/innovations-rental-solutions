@@ -179,19 +179,38 @@ export function SiteHeader({ user }: { user: HeaderUser }) {
 
             <nav aria-label="Mobile" className="mt-2">
               {NAV_LINKS.map((link, index) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "flex items-baseline gap-4 border-b border-paper/[0.08] py-4 font-display text-[1.5rem] tracking-[-0.02em]",
-                    isActive(link.href) ? "text-brass-soft" : "text-paper",
+                <div key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "flex items-baseline gap-4 border-b border-paper/[0.08] py-4 font-display text-[1.5rem] tracking-[-0.02em]",
+                      isActive(link.href) || link.children?.some((child) => isActive(child.href))
+                        ? "text-brass-soft"
+                        : "text-paper",
+                    )}
+                  >
+                    <span aria-hidden className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.2em] text-brass">
+                      0{index + 1}
+                    </span>
+                    {link.label}
+                  </Link>
+                  {link.children && (
+                    <div className="-mt-1 space-y-0.5 border-b border-paper/[0.08] pb-3 pl-14">
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={cn(
+                            "block py-2 text-[0.92rem] font-medium transition-colors hover:text-brass-soft",
+                            isActive(child.href) ? "text-brass-soft" : "text-paper/65",
+                          )}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
                   )}
-                >
-                  <span aria-hidden className="font-sans text-[0.58rem] font-semibold uppercase tracking-[0.2em] text-brass">
-                    0{index + 1}
-                  </span>
-                  {link.label}
-                </Link>
+                </div>
               ))}
               <Link
                 href={user ? dashboardHref : "/login"}
@@ -203,21 +222,6 @@ export function SiteHeader({ user }: { user: HeaderUser }) {
                 {user ? "Dashboard" : "Contact"}
               </Link>
             </nav>
-
-            <div className="mt-6">
-              <p className="eyebrow-plain mb-3">Explore</p>
-              <div className="grid grid-cols-2 gap-2">
-                {NAV_LINKS.flatMap((link) => link.children ?? []).map((child) => (
-                  <Link
-                    key={child.href}
-                    href={child.href}
-                    className="rounded-xl border border-paper/10 bg-surface px-3 py-3 text-[0.74rem] font-medium leading-tight text-paper transition hover:border-brass/45"
-                  >
-                    {child.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
 
             <div className="mt-8 flex flex-col gap-3">
               <LeadModal label="Start a private enquiry" source="mobile-menu" className="w-full" />
