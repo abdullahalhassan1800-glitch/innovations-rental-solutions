@@ -72,7 +72,7 @@ export type ProjectStatus =
 export const PROJECT_STATUSES: { value: ProjectStatus; label: string; description: string }[] = [
   { value: "NEW_LAUNCH", label: "New launch", description: "Recently introduced to the market" },
   { value: "UNDER_CONSTRUCTION", label: "Under construction", description: "Work has commenced on site" },
-  { value: "READY_TO_MOVE", label: "Ready to move", description: "Possession available now" },
+  { value: "READY_TO_MOVE", label: "Under construction", description: "Work has commenced on site" },
   { value: "UPCOMING", label: "Upcoming", description: "Announced, sales opening soon" },
 ];
 
@@ -122,7 +122,7 @@ export const BUDGET_OPTIONS = [
 ] as const;
 
 export const POSSESSION_OPTIONS = [
-  { label: "Ready now", value: "READY_TO_MOVE" },
+  { label: "Under construction", value: "READY_TO_MOVE" },
   { label: "By 2026", value: "2026" },
   { label: "By 2027", value: "2027" },
   { label: "2028 or later", value: "2028+" },

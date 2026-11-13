@@ -295,19 +295,19 @@ const STATUS_WORDS: Record<ChatLanguage, Record<string, string>> = {
   en: {
     NEW_LAUNCH: "new launch",
     UNDER_CONSTRUCTION: "under construction",
-    READY_TO_MOVE: "ready to move",
+    READY_TO_MOVE: "under construction",
     UPCOMING: "upcoming",
   },
   hinglish: {
     NEW_LAUNCH: "new launch",
     UNDER_CONSTRUCTION: "under construction",
-    READY_TO_MOVE: "ready-to-move",
+    READY_TO_MOVE: "under construction",
     UPCOMING: "upcoming",
   },
   hi: {
     NEW_LAUNCH: "नया लॉन्च",
     UNDER_CONSTRUCTION: "निर्माणाधीन",
-    READY_TO_MOVE: "रेडी-टू-मूव",
+    READY_TO_MOVE: "निर्माणाधीन",
     UPCOMING: "आगामी",
   },
 };

@@ -23,7 +23,7 @@ type BrochureProject = {
 const STATUS: Record<string, string> = {
   NEW_LAUNCH: "New launch",
   UNDER_CONSTRUCTION: "Under construction",
-  READY_TO_MOVE: "Ready to move",
+  READY_TO_MOVE: "Under construction",
   UPCOMING: "Upcoming",
 };
 

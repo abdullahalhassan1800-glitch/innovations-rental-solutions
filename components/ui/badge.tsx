@@ -3,8 +3,8 @@ import { STATUS_LABELS } from "@/lib/constants";
 
 const statusStyles: Record<string, string> = {
   NEW_LAUNCH: "border-brass/30 bg-brass-pale text-brass-soft",
-  UNDER_CONSTRUCTION: "border-ink/15 bg-night/[0.06] text-ink-soft",
-  READY_TO_MOVE: "border-forest/25 bg-forest-soft text-night",
+  READY_TO_MOVE: "border-ink/15 bg-night/[0.06] text-ink-soft",
+  UNDER_CONSTRUCTION: "border-forest/25 bg-forest-soft text-night",
   UPCOMING: "border-line bg-cream text-ink-muted",
 };
 
