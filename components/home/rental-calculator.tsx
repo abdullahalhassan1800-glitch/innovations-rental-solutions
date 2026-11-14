@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Calendar, Percent, TrendingUp } from "lucide-react";
-import { ButtonLink } from "@/components/ui/button";
+import { ArrowRight, Calendar, Percent } from "lucide-react";
 
 export function RentalCalculator() {
   const [investment, setInvestment] = useState("");

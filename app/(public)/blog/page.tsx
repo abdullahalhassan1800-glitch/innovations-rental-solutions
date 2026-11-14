@@ -206,7 +206,7 @@ export default function BlogPage() {
                 answer:
                   "Simply reach out via our Contact page or WhatsApp. An advisor will understand your goals, suggest suitable properties, and guide you through the next steps.",
               },
-            ].map((faq, index) => (
+            ].map((faq) => (
               <div key={faq.question} className="rounded-[12px] border border-line bg-surface p-6 shadow-card">
                 <h3 className="font-medium text-paper">{faq.question}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-muted">{faq.answer}</p>

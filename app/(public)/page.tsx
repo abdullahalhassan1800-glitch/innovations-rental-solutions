@@ -4,9 +4,6 @@ import {
   ArrowRight,
   CalendarClock,
   Compass,
-  Home,
-  MapPin,
-  ShieldCheck,
   Sparkles,
   TrendingUp,
   X,
@@ -14,26 +11,18 @@ import {
 import { ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ProjectCard } from "@/components/projects/project-card";
-import { Accordion } from "@/components/ui/accordion";
 import { Stars } from "@/components/ui/stars";
 import { Reveal } from "@/components/ui/reveal";
-import { LeadForm } from "@/components/forms/lead-form";
 import { LeadModal } from "@/components/forms/lead-modal";
 import { HeroMedia } from "@/components/home/hero-media";
 import { HeroHeading } from "@/components/home/hero-heading";
 import { RentalCalculator } from "@/components/home/rental-calculator";
 import {
-  getAllLocations,
   getFeaturedProjects,
-  getProjectCounts,
-  getPublishedFaqs,
   getPublishedTestimonials,
   getSavedProjectIds,
 } from "@/lib/queries";
-import type { ProjectCardData } from "@/lib/queries";
 import { getCurrentUser } from "@/lib/auth";
-import { BUDGET_OPTIONS, LOCATION_LINKS, SITE } from "@/lib/constants";
-import { formatPriceShort } from "@/lib/utils";
 
 export const metadata = {
   title: "Housirentz Innovations — Own Premium Property with Zero Investment",
@@ -107,37 +96,10 @@ const FAQ_ITEMS = [
   },
 ];
 
-const TESTIMONIALS_DATA = [
-  {
-    name: "Rahul Mehta",
-    role: "Bangalore · Investor",
-    quote:
-      "The process was clear from day one. I started receiving rental income without the usual down payment stress.",
-    rating: 5,
-  },
-  {
-    name: "Priya Sharma",
-    role: "Dubai · NRI Investor",
-    quote:
-      "Documentation support made everything smooth. Housirentz helped me invest confidently as an NRI.",
-    rating: 5,
-  },
-  {
-    name: "Vikram Reddy",
-    role: "Hyderabad · Investor",
-    quote:
-      "I compared traditional buying with Housirentz and chose this model. The rental yield and support exceeded expectations.",
-    rating: 5,
-  },
-];
-
 export default async function HomePage() {
-  const [featured, locations, counts, testimonials, faqs, user] = await Promise.all([
+  const [featured, testimonials, user] = await Promise.all([
     getFeaturedProjects(5),
-    getAllLocations(),
-    getProjectCounts(),
     getPublishedTestimonials(3),
-    getPublishedFaqs(4),
     getCurrentUser(),
   ]);
 
@@ -197,7 +159,7 @@ export default async function HomePage() {
           <p className="eyebrow text-center">Confidence First</p>
           <h2 className="display-md mt-4 text-center balance">Trusted by Investors</h2>
           <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {TRUST.map((item, index) => (
+            {TRUST.map((item) => (
               <div key={item.title} className="rounded-[14px] border border-line bg-surface p-6 text-center shadow-card">
                 <h3 className="font-display text-lg mt-2 text-paper">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-muted">{item.copy}</p>

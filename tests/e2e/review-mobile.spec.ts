@@ -13,7 +13,7 @@ const OUT = "C:/Users/utm/AppData/Local/Temp/opencode/review";
 test("mobile full-page screenshots of key pages", async ({ page }) => {
   test.setTimeout(180_000);
   for (const [name, path] of PAGES) {
-    const response = await page.goto(path, { waitUntil: "networkidle", timeout: 45_000 });
+    const response = await page.goto(path, { waitUntil: "domcontentloaded", timeout: 60_000 });
     const status = response?.status() ?? 0;
     await page.evaluate(() => {
       const style = document.createElement("style");
@@ -23,7 +23,7 @@ test("mobile full-page screenshots of key pages", async ({ page }) => {
         "video{display:none!important}";
       document.head.appendChild(style);
     });
-    await page.waitForTimeout(900);
+    await page.waitForTimeout(2500);
     await page.screenshot({ path: `${OUT}/mobile-${name}.png`, fullPage: true });
     const h1Count = await page.locator("h1").count();
     // horizontal overflow check

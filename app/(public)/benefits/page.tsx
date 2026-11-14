@@ -1,6 +1,5 @@
 import { ArrowRight, CalendarClock, Compass, ShieldCheck, TrendingUp, X } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
-import { SectionHeading } from "@/components/ui/section-heading";
 
 const BENEFITS = [
   {
@@ -54,7 +53,7 @@ export default function BenefitsPage() {
 
       <section className="shell py-20 md:py-28">
         <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {BENEFITS.map((benefit, index) => (
+          {BENEFITS.map((benefit) => (
             <div key={benefit.title} className="rounded-[14px] border border-line bg-surface p-6 shadow-card">
               <benefit.icon className="mb-4 size-6 text-brass" />
               <h3 className="font-display text-lg leading-tight text-paper">{benefit.title}</h3>
