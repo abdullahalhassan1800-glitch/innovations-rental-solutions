@@ -65,7 +65,7 @@ test.describe("authentication and account area", () => {
 
       await page.goto("/dashboard/saved");
       await expect(page.getByRole("heading", { name: "Saved projects." })).toBeVisible();
-      await expect(page.getByRole("link", { name: /aurelia grove/i }).first()).toBeVisible();
+      await expect(page.getByRole("link", { name: /signature/i }).first()).toBeVisible();
     } finally {
       await db.savedProject.deleteMany({
         where: { userId: buyer!.id, project: { slug: DEMO.projectSlug } },

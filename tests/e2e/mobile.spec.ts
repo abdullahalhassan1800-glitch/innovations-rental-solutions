@@ -1,5 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { DEMO } from "./helpers";
+import { DEMO, dismissChatWidget } from "./helpers";
+
+/** Global CSS uses smooth scrolling, which makes Playwright's auto-scroll
+ *  never report a stable position; force instant scrolling in tests. */
+async function disableSmoothScroll(page: import("@playwright/test").Page) {
+  await page.addStyleTag({ content: "html{scroll-behavior:auto!important}" });
+}
 
 async function expectNoHorizontalOverflow(page: import("@playwright/test").Page) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -20,16 +26,16 @@ test.describe("mobile experience", () => {
     }).toPass({ timeout: 15_000 });
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
 
-    await menu.getByRole("link", { name: "Projects", exact: true }).click();
-    await expect(page).toHaveURL(/\/projects$/);
+    await menu.getByRole("link", { name: "All properties", exact: true }).click();
+    await expect(page).toHaveURL(/\/properties$/);
     await expect(menu).toBeHidden();
   });
 
   test("listing filters are usable from the mobile disclosure", async ({ page }) => {
-    await page.goto("/projects");
+    await page.goto("/properties");
     await page.locator("summary").filter({ hasText: "Filters & sorting" }).click();
 
-    const form = page.locator("details form[action='/projects']");
+    const form = page.locator("details form[action='/properties']");
     await expect(form).toBeVisible();
     await form.getByLabel("Configuration").selectOption("2");
     await form.getByRole("button", { name: "Apply filters" }).click();
@@ -40,10 +46,15 @@ test.describe("mobile experience", () => {
   });
 
   test("project detail shows the sticky booking bar and stackable forms", async ({ page }) => {
-    await page.goto(`/projects/${DEMO.projectSlug}`);
+    // Remote construction photos can hold the load event open; only the DOM is needed.
+    await page.goto(`/projects/${DEMO.projectSlug}`, { waitUntil: "domcontentloaded" });
+    // The chat widget auto-opens over the page and the sticky bar link needs
+    // instant scrolling; both are test-environment concerns only.
+    await dismissChatWidget(page);
+    await disableSmoothScroll(page);
 
-    await expect(page.getByRole("link", { name: /Book a visit/i })).toBeVisible();
-    await page.getByRole("link", { name: /Book a visit/i }).click();
+    await expect(page.getByRole("link", { name: /Book a visit/i }).first()).toBeVisible();
+    await page.getByRole("link", { name: /Book a visit/i }).first().click();
     await expect(page).toHaveURL(/#site-visit$/);
     await expect(page.getByRole("heading", { name: "Schedule a site visit" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Request a callback" })).toBeVisible();
@@ -51,21 +62,21 @@ test.describe("mobile experience", () => {
   });
 
   test("key pages fit a phone viewport without horizontal scrolling", async ({ page }) => {
-    for (const path of ["/", "/projects", `/projects/${DEMO.projectSlug}`, "/contact", "/login"]) {
+    for (const path of ["/", "/properties", `/projects/${DEMO.projectSlug}`, "/contact", "/login"]) {
       await page.goto(path);
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
+      await page.waitForTimeout(800);
       await expectNoHorizontalOverflow(page);
     }
   });
 
-  test("AI launcher remains reachable on small screens", async ({ page }) => {
+  test("chat launcher remains reachable on small screens", async ({ page }) => {
     await page.goto("/");
-    const launcher = page.getByRole("button", { name: /AI/ });
-    await expect(launcher).toBeVisible();
+    const launcher = page.getByRole("button", { name: "Open chat" });
+    await expect(launcher).toBeVisible({ timeout: 15_000 });
     await launcher.click();
-    await expect(page.getByRole("dialog", { name: "Innovations AI assistant" })).toBeVisible();
-    await expect(page.locator("#ai-input")).toBeVisible();
-    await page.getByRole("button", { name: "Close assistant" }).click();
-    await expect(page.getByRole("dialog", { name: "Innovations AI assistant" })).toBeHidden();
+    await expect(page.getByRole("dialog", { name: "Housirentz Support" })).toBeVisible();
+    await page.getByLabel("Close").last().click();
+    await expect(page.getByRole("dialog", { name: "Housirentz Support" })).toBeHidden();
   });
 });

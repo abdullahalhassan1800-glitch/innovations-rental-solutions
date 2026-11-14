@@ -118,7 +118,7 @@ export function ChatBot() {
       <button
         onClick={() => setOpen(true)}
         className={cn(
-          "accent-gradient fixed bottom-6 right-6 z-[60] size-14 rounded-full text-night shadow-float flex items-center justify-center gap-1 px-3 py-2 min-w-[140px] transition-all duration-300",
+          "accent-gradient fixed bottom-24 right-4 z-[60] size-14 rounded-full text-night shadow-float flex items-center justify-center gap-1 px-3 py-2 min-w-[140px] transition-all duration-300 md:bottom-6 md:right-6",
           "hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(124,92,232,0.6)]",
           "animate-pulse",
         )}
@@ -136,7 +136,7 @@ export function ChatBot() {
           role="dialog"
           aria-modal="true"
           aria-label="Housirentz Support"
-          className="fixed bottom-[calc(5rem+1rem)] right-6 z-[60] w-[400px] max-w-[92vw] flex flex-col"
+          className="fixed bottom-[calc(8rem+1rem)] right-4 z-[60] w-[400px] max-w-[92vw] flex flex-col md:bottom-[calc(5rem+1rem)] md:right-6"
         >
           <div className="surface rounded-[24px] border border-line shadow-2xl flex flex-col overflow-hidden mt-4">
             <header className="accent-gradient text-night px-5 py-4 flex items-center justify-between gap-3">

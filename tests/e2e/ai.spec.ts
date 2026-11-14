@@ -1,8 +1,19 @@
 import { expect, test } from "@playwright/test";
 
+// The standalone AIAssistant (voice + database fact-table assistant) is not
+// mounted anywhere in the app right now — the redesigned ChatBot replaced it
+// as the AI surface (see components/ai/chat-bot.tsx, covered by chatbot.spec).
+// Re-enable this suite if the assistant ships again.
+test.skip(true, "AIAssistant component is not mounted; ChatBot (chatbot.spec.ts) is the active AI surface.");
+
 async function openAssistant(page: import("@playwright/test").Page) {
   await page.goto("/");
-  await page.getByRole("button", { name: /Ask Innovations AI/ }).click();
+  // The floating launcher fades in only after the hero scrolls out of view
+  // (see ai-assistant.tsx heroInView logic).
+  await page.evaluate(() => window.scrollTo(0, 1200));
+  const launcher = page.getByRole("button", { name: /Ask Innovations AI/ });
+  await expect(launcher).toBeVisible({ timeout: 15_000 });
+  await launcher.click();
   const dialog = page.getByRole("dialog", { name: "Innovations AI assistant" });
   await expect(dialog).toBeVisible();
   return dialog;
@@ -19,7 +30,7 @@ test.describe("AI assistant", () => {
     const dialog = await openAssistant(page);
     await expect(dialog.getByText(/I never invent projects or prices/i)).toBeVisible();
 
-    await ask(dialog, "2 BHK in Noida Extension under 80 lakh");
+    await ask(dialog, "2 BHK in Greater Noida West under 90 lakh");
 
     await expect(dialog.getByText(/I found \d+ project|closest options from our database/i).last()).toBeVisible();
     await expect(dialog.getByRole("button", { name: "Compare" }).first()).toBeVisible();
@@ -29,19 +40,19 @@ test.describe("AI assistant", () => {
 
   test("compares two named projects in a fact table", async ({ page }) => {
     const dialog = await openAssistant(page);
-    await ask(dialog, "Compare Aurelia Grove and The Meridian");
+    await ask(dialog, "Compare Signature and Vrinda Gardens");
 
     await expect(dialog.getByText(/side-by-side comparison/i)).toBeVisible();
     const table = dialog.locator("table");
     await expect(table).toBeVisible();
-    await expect(table.getByRole("columnheader", { name: "Aurelia Grove" })).toBeVisible();
-    await expect(table.getByRole("columnheader", { name: "The Meridian" })).toBeVisible();
+    await expect(table.getByRole("columnheader", { name: "Signature" })).toBeVisible();
+    await expect(table.getByRole("columnheader", { name: "Vrinda Gardens" })).toBeVisible();
     await expect(table.getByRole("cell", { name: "Starting price" })).toBeVisible();
   });
 
   test("answers a Hindi question in Devanagari, using database projects", async ({ page }) => {
     const dialog = await openAssistant(page);
-    await ask(dialog, "मुझे नोएडा में 2 बीएचके फ्लैट चाहिए");
+    await ask(dialog, "मुझे ग्रेटर नोएडा में 2 बीएचके फ्लैट चाहिए");
 
     const reply = dialog.locator(".animate-chat-in").last();
     await expect(reply).toContainText(/[\u0900-\u097F]/);
@@ -111,7 +122,7 @@ test.describe("AI assistant", () => {
           (window as unknown as { __lastRecognition?: FakeRecognition }).__lastRecognition = this;
           this.onresult?.({
             resultIndex: 0,
-            results: [[{ transcript: "mujhe noida extension mein sasta 2 bhk chahiye", isFinal: true }]],
+            results: [[{ transcript: "mujhe greater noida west mein sasta 2 bhk chahiye", isFinal: true }]],
           });
           this.onend?.();
         }
@@ -132,7 +143,7 @@ test.describe("AI assistant", () => {
     await mic.click();
 
     // The final transcript is submitted automatically and the composer clears.
-    await expect(dialog.getByText("mujhe noida extension mein sasta 2 bhk chahiye")).toBeVisible();
+    await expect(dialog.getByText("mujhe greater noida west mein sasta 2 bhk chahiye")).toBeVisible();
     await expect(dialog.locator("#ai-input")).toHaveValue("");
     await expect
       .poll(() =>
@@ -159,7 +170,7 @@ test.describe("AI assistant", () => {
         start() {
           this.onresult?.({
             resultIndex: 0,
-            results: [[{ transcript: "2 bhk in noida under 75 lakh", isFinal: true }]],
+            results: [[{ transcript: "2 bhk in greater noida west under 90 lakh", isFinal: true }]],
           });
           this.onend?.();
         }

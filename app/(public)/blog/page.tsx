@@ -165,7 +165,7 @@ export default function BlogPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="shell py-20 md:py-28 border-t border-line">
+      <section id="faqs" className="shell py-20 md:py-28 border-t border-line">
         <div className="max-w-3xl mx-auto">
           <p className="eyebrow text-brass-soft">Frequently Asked Questions</p>
           <h2 className="display-lg mt-4 balance text-paper">Clear answers to the questions investors ask most.</h2>

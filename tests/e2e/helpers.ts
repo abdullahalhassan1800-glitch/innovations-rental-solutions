@@ -6,8 +6,8 @@ export const db = new PrismaClient();
 
 export const DEMO = {
   admin: { email: "admin@innovations.demo", password: "Admin@12345" },
-  buyer: { email: "demo@innovations.demo", password: "Demo@12345" },
-  projectSlug: "aurelia-grove",
+  buyer: { email: "demo@housirentz.demo", password: "Demo@12345" },
+  projectSlug: "signature",
 };
 
 let phoneCounter = 0;
@@ -43,4 +43,23 @@ export async function cleanupUser(email: string) {
   await db.inquiry.updateMany({ where: { assignedToId: user.id }, data: { assignedToId: null } });
   await db.leadNote.deleteMany({ where: { authorId: user.id } });
   await db.user.delete({ where: { id: user.id } });
+}
+
+/**
+ * The chat widget auto-opens ~2.3s after load as a fixed bottom panel that
+ * overlays the page; dismiss it (and wait for that auto-open to have happened)
+ * before interacting with page content underneath.
+ */
+export async function dismissChatWidget(page: import("@playwright/test").Page) {
+  const dialog = page.getByRole("dialog", { name: "Housirentz Support" });
+  try {
+    await dialog.waitFor({ state: "visible", timeout: 4_500 });
+  } catch {
+    // Auto-open may have been prevented; nothing to dismiss.
+  }
+  const close = page.locator('[aria-label="Close"]').first();
+  if (await close.isVisible().catch(() => false)) {
+    await close.click();
+    await page.waitForTimeout(250);
+  }
 }

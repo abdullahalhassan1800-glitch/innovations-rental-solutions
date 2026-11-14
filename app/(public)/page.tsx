@@ -362,7 +362,7 @@ export default async function HomePage() {
           eyebrow="Support"
           title={<>Frequently Asked Questions</>}
           description="Clear answers to the questions investors ask most."
-          action={{ label: "Read All FAQs", href: "/faq" }}
+          action={{ label: "Read All FAQs", href: "/blog#faqs" }}
         />
         <div className="mt-12 space-y-4 max-w-3xl">
           {FAQ_ITEMS.map((faq) => (
@@ -372,7 +372,7 @@ export default async function HomePage() {
             </div>
           ))}
           <div className="mt-8 text-center">
-            <ButtonLink href="/faq" variant="outline">
+            <ButtonLink href="/blog#faqs" variant="outline">
               Still Have Questions? <ArrowRight className="ml-2 size-4" />
             </ButtonLink>
           </div>

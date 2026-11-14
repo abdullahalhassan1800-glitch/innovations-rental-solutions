@@ -1,31 +1,32 @@
 import { expect, test } from "@playwright/test";
-import { cleanupPhone, DEMO, tomorrow, uniquePhone } from "./helpers";
+import { cleanupPhone, DEMO, dismissChatWidget, tomorrow, uniquePhone } from "./helpers";
 
 test.describe("public browsing", () => {
   test("home page presents the brand, navigation and demo disclosure", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Addresses with");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(/own premium property/i);
     await expect(page.getByRole("navigation", { name: "Primary" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Projects", exact: true }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: "Properties", exact: true }).first()).toBeVisible();
     await expect(page.getByText(/demonstration|demo/i).first()).toBeVisible();
     await expect(page.locator("article").first()).toBeVisible();
   });
 
   test("every required public route renders exactly one h1", async ({ page }) => {
     const routes: [string, RegExp][] = [
-      ["/", /Addresses with/i],
-      ["/projects", /Every address, in one place/i],
+      ["/", /own premium property/i],
+      ["/properties", /curated, verified assets/i],
       ["/residential", /home|residential/i],
       ["/commercial", /footprint|commercial/i],
       ["/resort-housing", /resort/i],
       ["/service-apartments", /furnished|serviced|service/i],
-      ["/location/noida", /noida/i],
-      ["/location/greater-noida", /greater noida/i],
-      ["/location/noida-extension", /noida extension/i],
-      ["/about", /quieter|property|about/i],
-      ["/contact", /conversation|contact|talk/i],
-      ["/faq", /question|faq/i],
+      ["/location/mangalore", /mangalore/i],
+      ["/location/bangalore", /bangalore/i],
+      ["/location/bengaluru", /bengaluru/i],
+      ["/location/greater-noida-west", /greater noida west/i],
+      ["/about", /rental investing|about/i],
+      ["/contact", /get in touch|conversation|contact/i],
+      ["/blog", /blog|insights|question/i],
       ["/compare", /compare/i],
       ["/privacy-policy", /privacy/i],
       ["/terms", /terms/i],
@@ -50,41 +51,47 @@ test.describe("public browsing", () => {
     for (const [route, label] of pages) {
       const response = await page.goto(route);
       expect(response?.status(), `${route} should respond with 200`).toBe(200);
-      await expect(page.getByRole("link", { name: label }).first()).toBeVisible();
-      await expect(page.locator("article").first(), `${route} should list projects`).toBeVisible();
+      await expect(page.getByText(label).first()).toBeVisible();
       // The category pages lock the property type, so the shared type select is not rendered.
       await expect(page.locator("aside form select[name='propertyType']")).toHaveCount(0);
+      // Current demo inventory has no resort/service-apartment projects: show the
+      // scoped empty state with a recovery action instead of unrelated listings.
+      await expect(
+        page.getByRole("heading", { name: /No projects match those filters|Curated, verified assets/i }).first(),
+      ).toBeVisible();
+      await expect(page.getByRole("link", { name: /Browse|Reset|Explore/i }).first()).toBeVisible();
     }
   });
 
   test("listing filters, sorting and clearing work through the URL", async ({ page }) => {
-    await page.goto("/projects");
-    await expect(page.getByRole("heading", { name: "Every address, in one place." })).toBeVisible();
+    await page.goto("/properties");
+    await expect(page.getByRole("heading", { name: "Curated, verified assets ready for investment." })).toBeVisible();
 
-    const filterForm = page.locator("aside form[action='/projects']");
-    await filterForm.getByLabel("Location").selectOption("noida");
+    const filterForm = page.locator("aside form[action='/properties']");
+    await filterForm.getByLabel("Location").selectOption("mangalore");
     await filterForm.getByLabel("Configuration").selectOption("3");
     await filterForm.getByLabel("Sort by").selectOption("price-asc");
     await filterForm.getByRole("button", { name: "Apply filters" }).click();
 
-    await expect(page).toHaveURL(/location=noida/);
+    await expect(page).toHaveURL(/location=mangalore/);
     await expect(page).toHaveURL(/bhk=3/);
     await expect(page).toHaveURL(/sort=price-asc/);
     await expect(page.getByRole("link", { name: "Clear all" }).first()).toBeVisible();
     await expect(page.getByRole("link", { name: /^3 BHK/ }).first()).toBeVisible();
 
     // Let the filtered result tree settle so the link is not detached mid-render.
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForTimeout(1_000);
     await expect(async () => {
       if (new URL(page.url()).search) {
         await page.getByRole("link", { name: "Clear all" }).first().click({ timeout: 5_000 });
       }
-      await expect(page).toHaveURL(/\/projects$/, { timeout: 5_000 });
+      await expect(page).toHaveURL(/\/properties$/, { timeout: 5_000 });
     }).toPass({ timeout: 20_000 });
   });
 
   test("search with no matches shows an empty state and recovery action", async ({ page }) => {
-    await page.goto("/projects?q=zzzz-no-such-project");
+    await page.goto("/properties?q=zzzz-no-such-project");
 
     await expect(page.getByRole("heading", { name: /No projects match those filters/i })).toBeVisible();
     await expect(page.getByRole("link", { name: /Clear|Reset|Browse/i }).first()).toBeVisible();
@@ -94,7 +101,7 @@ test.describe("public browsing", () => {
     await page.goto(`/projects/${DEMO.projectSlug}`);
 
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.getByText("Demo gallery")).toBeVisible();
+    await expect(page.getByText(/(Demo|Sample) gallery/)).toBeVisible();
     await expect(page.getByRole("heading", { name: /An overview, without the noise/i })).toBeVisible();
     await expect(page.getByRole("heading", { name: /Configurations & sample pricing/i })).toBeVisible();
     await expect(page.getByRole("heading", { name: /The everyday, considered/i })).toBeVisible();
@@ -123,6 +130,7 @@ test.describe("public browsing", () => {
     const phone = uniquePhone();
     try {
       await page.goto(`/projects/${DEMO.projectSlug}#site-visit`);
+      await dismissChatWidget(page);
       const form = page
         .locator("form")
         .filter({ has: page.getByRole("heading", { name: "Request a callback" }) });
@@ -147,6 +155,7 @@ test.describe("public browsing", () => {
     const phone = uniquePhone();
     try {
       await page.goto(`/projects/${DEMO.projectSlug}#site-visit`);
+      await dismissChatWidget(page);
       const form = page
         .locator("form")
         .filter({ has: page.getByRole("heading", { name: "Schedule a site visit" }) });

@@ -98,7 +98,7 @@ export default async function ContactPage() {
             <ul className="mt-4 space-y-3 text-sm text-paper/70">
               <li><Link href="/properties" className="hover:text-brass transition">Properties</Link></li>
               <li><Link href="/blog" className="hover:text-brass transition">Blog</Link></li>
-              <li><Link href="/faq" className="hover:text-brass transition">FAQ</Link></li>
+              <li><Link href="/blog#faqs" className="hover:text-brass transition">FAQ</Link></li>
               <li><Link href="/contact" className="hover:text-brass transition">Contact</Link></li>
             </ul>
           </div>

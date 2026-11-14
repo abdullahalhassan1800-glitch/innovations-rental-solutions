@@ -31,7 +31,7 @@ export const LOCATION_LINKS = [
 export const MORE_LINKS: readonly NavChild[] = [
   { label: "All properties", href: "/properties", blurb: "Curated rental investment properties." },
   { label: "Locations", href: "/location/mangalore", blurb: "Mangalore, Bangalore, Bengaluru and Greater Noida West." },
-  { label: "FAQs", href: "/faq", blurb: "Rental yield, documentation and how the model works." },
+  { label: "FAQs", href: "/blog#faqs", blurb: "Rental yield, documentation and how the model works." },
 ];
 
 export const NAV_LINKS: readonly NavLink[] = [

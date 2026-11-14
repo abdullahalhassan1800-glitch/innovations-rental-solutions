@@ -91,7 +91,7 @@ export function SiteFooter() {
           <div className="flex flex-wrap gap-5">
             <Link href="/privacy-policy" className="transition hover:text-paper/80">Privacy</Link>
             <Link href="/terms" className="transition hover:text-paper/80">Terms</Link>
-            <Link href="/faq" className="transition hover:text-paper/80">FAQs</Link>
+            <Link href="/blog#faqs" className="transition hover:text-paper/80">FAQs</Link>
             <Link href="/admin" className="transition hover:text-paper/80">Admin</Link>
             <Link href="/contact" className="inline-flex items-center gap-1 transition hover:text-paper/80">
               Contact <ArrowUpRight className="size-3" />
