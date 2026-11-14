@@ -16,6 +16,7 @@ const nextConfig = {
       { protocol: "https", hostname: "omconstructions.org" },
       { protocol: "https", hostname: "www.tathastu.co" },
       { protocol: "https", hostname: "www.tarc.in" },
+      { pathname: "/images/Who We Are.png" },
     ],
     formats: ["image/avif", "image/webp"],
   },
