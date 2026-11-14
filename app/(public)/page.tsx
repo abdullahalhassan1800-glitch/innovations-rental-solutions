@@ -321,7 +321,7 @@ export default async function HomePage() {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((project, index) => (
               <Reveal key={project.id} delay={index * 80}>
-                <Link href={`/properties/${project.slug}`} className="group block">
+                <Link href={`/projects/${project.slug}`} className="group block">
                   <ProjectCard project={project} saved={savedIds.has(project.id)} />
                 </Link>
               </Reveal>

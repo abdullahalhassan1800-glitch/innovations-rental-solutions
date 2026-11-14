@@ -51,7 +51,7 @@ export function FilterPanel({
         <h2 className="flex items-center gap-2 font-display text-lg">
           <SlidersHorizontal className="size-4 text-brass" /> Refine
           {activeCount > 0 && (
-            <span className="flex size-5 items-center justify-center rounded-full bg-forest text-[0.62rem] text-night">
+            <span className="accent-gradient flex size-5 items-center justify-center rounded-full text-[0.62rem] text-night">
               {activeCount}
             </span>
           )}
@@ -184,7 +184,7 @@ export function FilterPanel({
 
         <button
           type="submit"
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-forest text-[0.8rem] font-semibold text-night shadow-[0_16px_30px_-22px_rgba(53,40,96,0.9)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest-deep"
+          className="accent-gradient flex h-11 w-full items-center justify-center gap-2 rounded-full border border-forest text-[0.8rem] font-semibold text-night shadow-[0_16px_30px_-22px_rgba(53,40,96,0.9)] transition-all duration-300 hover:-translate-y-0.5"
         >
           Apply filters
         </button>

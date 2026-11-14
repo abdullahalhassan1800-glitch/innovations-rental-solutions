@@ -64,7 +64,7 @@ export function ChatBot() {
         <div className="surface rounded-[24px] border border-line p-6 shadow-2xl w-[440px] max-w-[90vw] flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-full bg-brass text-night">
+              <div className="accent-gradient flex size-10 items-center justify-center rounded-full text-night">
                 <Mail className="size-5" />
               </div>
               <div>
@@ -118,8 +118,8 @@ export function ChatBot() {
       <button
         onClick={() => setOpen(true)}
         className={cn(
-          "fixed bottom-6 right-6 z-[60] size-14 rounded-full bg-brass text-night shadow-float flex items-center justify-center gap-1 px-3 py-2 min-w-[140px] transition-all duration-300",
-          "hover:bg-brass-soft hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(124,92,232,0.6)]",
+          "accent-gradient fixed bottom-6 right-6 z-[60] size-14 rounded-full text-night shadow-float flex items-center justify-center gap-1 px-3 py-2 min-w-[140px] transition-all duration-300",
+          "hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(124,92,232,0.6)]",
           "animate-pulse",
         )}
         aria-label="Open chat"
@@ -139,7 +139,7 @@ export function ChatBot() {
           className="fixed bottom-[calc(5rem+1rem)] right-6 z-[60] w-[400px] max-w-[92vw] flex flex-col"
         >
           <div className="surface rounded-[24px] border border-line shadow-2xl flex flex-col overflow-hidden mt-4">
-            <header className="bg-brass text-night px-5 py-4 flex items-center justify-between gap-3">
+            <header className="accent-gradient text-night px-5 py-4 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="flex size-10 items-center justify-center rounded-full bg-night text-brass">
                   <MessageCircle className="size-5" />
@@ -222,7 +222,7 @@ export function ChatBot() {
                     <Button
                       type="submit"
                       disabled={submitting}
-                      className="w-full bg-brass text-night font-semibold py-3 rounded-[12px] hover:bg-brass-soft transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="accent-gradient w-full border border-forest text-night font-semibold py-3 rounded-[12px] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                       {submitting ? (
                         <>

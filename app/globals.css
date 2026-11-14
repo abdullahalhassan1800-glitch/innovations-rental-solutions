@@ -287,6 +287,16 @@
     background: var(--color-brass);
   }
 
+  /* Deep-violet gradient for primary CTA surfaces (buttons, launcher, send). */
+  .accent-gradient {
+    background-color: var(--color-forest);
+    background-image: linear-gradient(135deg, #6a48db 0%, #7c5ce8 52%, #9d7ef2 100%);
+  }
+
+  .accent-gradient:hover {
+    background-image: linear-gradient(135deg, #5b3fd0 0%, #6a48db 52%, #8b6bee 100%);
+  }
+
   .hairline {
     height: 1px;
     width: 100%;

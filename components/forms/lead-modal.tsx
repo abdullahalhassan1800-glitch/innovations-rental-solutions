@@ -148,7 +148,7 @@ export function LeadModal({
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          "group inline-flex items-center justify-center gap-2 rounded-full border border-brass bg-brass font-semibold tracking-[0.02em] text-night shadow-[0_18px_40px_-24px_rgba(124,92,232,0.85)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brass-soft hover:bg-brass-soft active:translate-y-0",
+          "accent-gradient group inline-flex items-center justify-center gap-2 rounded-full border border-forest font-semibold tracking-[0.02em] text-night shadow-[0_18px_40px_-24px_rgba(124,92,232,0.85)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brass-soft active:translate-y-0",
           size === "sm" && "h-9 px-4 text-[0.74rem]",
           size === "md" && "h-11 px-6 text-[0.8rem]",
           size === "lg" && "h-12 px-7 text-[0.84rem]",
@@ -279,7 +279,7 @@ export function LeadModal({
                       <button
                         type="button"
                         onClick={goToStepTwo}
-                        className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-brass bg-brass text-[0.82rem] font-semibold text-night transition hover:bg-brass-soft"
+                        className="accent-gradient group inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-forest text-[0.82rem] font-semibold text-night transition"
                       >
                         Continue <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                       </button>
@@ -360,7 +360,7 @@ export function LeadModal({
                         <button
                           type="submit"
                           disabled={status === "loading"}
-                          className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-brass bg-brass text-[0.82rem] font-semibold text-night transition hover:bg-brass-soft disabled:cursor-not-allowed disabled:opacity-60"
+                          className="accent-gradient inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-forest text-[0.82rem] font-semibold text-night transition disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           {status === "loading" ? "Sending…" : "Request a callback"}
                           {status !== "loading" && <ArrowRight className="size-4" />}

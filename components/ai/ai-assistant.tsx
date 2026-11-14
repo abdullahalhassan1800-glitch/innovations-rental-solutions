@@ -821,7 +821,7 @@ export function AIAssistant() {
           >
             <header className="flex items-center justify-between gap-4 border-b border-line bg-night px-5 py-4 text-paper">
               <div className="flex items-center gap-3">
-                <span className="flex size-9 items-center justify-center rounded-full bg-brass text-night">
+                <span className="accent-gradient flex size-9 items-center justify-center rounded-full text-night">
                   <Headset className="size-5" />
                 </span>
                 <div>
@@ -885,7 +885,7 @@ export function AIAssistant() {
                       className={cn(
                         "animate-chat-in rounded-lg px-4 py-3 text-sm leading-relaxed",
                         message.role === "user"
-                          ? "rounded-br-sm bg-forest text-night"
+                          ? "rounded-br-sm accent-gradient text-night"
                           : "rounded-bl-sm border border-line bg-surface text-ink-soft",
                       )}
                     >
@@ -975,7 +975,7 @@ export function AIAssistant() {
                           <button
                             type="button"
                             onClick={compareSelected}
-                            className="inline-flex w-full items-center justify-center gap-1.5 rounded border border-forest bg-forest px-3 py-2 text-[0.72rem] font-semibold text-night hover:bg-forest-deep"
+                            className="accent-gradient inline-flex w-full items-center justify-center gap-1.5 rounded border border-forest px-3 py-2 text-[0.72rem] font-semibold text-night"
                           >
                             <Scale className="size-3.5" /> Compare {selected.length} selected
                           </button>
@@ -1079,7 +1079,7 @@ export function AIAssistant() {
                 <button
                   type="submit"
                   disabled={!input.trim() || loading}
-                  className="flex size-10 shrink-0 items-center justify-center rounded-full bg-forest text-night transition hover:bg-forest-deep disabled:cursor-not-allowed disabled:opacity-40"
+                  className="accent-gradient flex size-10 shrink-0 items-center justify-center rounded-full text-night transition disabled:cursor-not-allowed disabled:opacity-40"
                   aria-label="Send message"
                 >
                   {loading ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}

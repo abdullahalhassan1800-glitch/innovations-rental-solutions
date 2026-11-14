@@ -25,14 +25,14 @@ const nextConfig = {
     },
   },
   async redirects() {
-    // The listings index lives at /properties; keep common alternate URLs working.
+    // The listings index lives at /properties; project detail pages live at
+    // /projects/[slug]. Alternate URLs must not shadow those real routes.
     return [
       { source: "/project", destination: "/properties", permanent: true },
-      { source: "/project/:slug", destination: "/properties/:slug", permanent: true },
+      { source: "/project/:slug", destination: "/projects/:slug", permanent: true },
       { source: "/listings", destination: "/properties", permanent: true },
       { source: "/projects", destination: "/properties", permanent: true },
-      { source: "/projects/:slug", destination: "/properties/:slug", permanent: true },
-      { source: "/property/:slug", destination: "/properties/:slug", permanent: true },
+      { source: "/property/:slug", destination: "/projects/:slug", permanent: true },
       { source: "/residential", destination: "/properties", permanent: true },
       { source: "/commercial", destination: "/properties", permanent: true },
       { source: "/resort-housing", destination: "/properties", permanent: true },

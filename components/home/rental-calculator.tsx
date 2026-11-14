@@ -74,7 +74,7 @@ export function RentalCalculator() {
 
             <button
               type="submit"
-              className="flex w-full md:w-auto items-center justify-center gap-2 rounded-full bg-brass text-night px-7 py-3 text-[0.8rem] font-semibold tracking-[0.02em] transition-all hover:bg-brass-soft"
+              className="accent-gradient flex w-full md:w-auto items-center justify-center gap-2 rounded-full border border-forest text-night px-7 py-3 text-[0.8rem] font-semibold tracking-[0.02em] transition-all"
             >
               Calculate Income <ArrowRight className="ml-2 size-4" />
             </button>

@@ -9,6 +9,11 @@ if (process.env.NODE_ENV === "production" && process.env.ALLOW_SEED_RESET !== "t
 
 const json = (value) => JSON.stringify(value);
 
+// External (https) construction photos are stored as-is; bundled assets get the
+// /images/rentofree/ prefix. Never prefix a remote URL or it will 404.
+const imageSrc = (value) =>
+  /^https?:\/\//i.test(value) ? value : `/images/rentofree/${value}`;
+
 const mapUrl = (lat, lng, spread = 0.018) =>
   `https://www.openstreetmap.org/export/embed.html?bbox=${lng - spread}%2C${lat - spread}%2C${lng + spread}%2C${lng + spread}&layer=mapnik&marker=${lat}%2C${lng}`;
 
@@ -19,7 +24,7 @@ const developers = [
     description:
       "Reputed builder partner behind Signature in Mangalore, known for quality residential developments in coastal Karnataka.",
     establishedYear: 2010,
-    website: "https://www.rentofree.com",
+    website: "https://innovations-rental-solutions.vercel.app",
   },
   {
     name: "Parth Group",
@@ -27,7 +32,7 @@ const developers = [
     description:
       "Bangalore-based developer delivering residential apartments with strong rental demand in the city's growth corridors.",
     establishedYear: 2008,
-    website: "https://www.rentofree.com",
+    website: "https://innovations-rental-solutions.vercel.app",
   },
   {
     name: "Gravity Homes",
@@ -35,7 +40,7 @@ const developers = [
     description:
       "Karnataka developer focused on premium residential and garden-oriented homes with verified rental yield potential.",
     establishedYear: 2012,
-    website: "https://www.rentofree.com",
+    website: "https://innovations-rental-solutions.vercel.app",
   },
   {
     name: "Aqua Gardens",
@@ -43,7 +48,7 @@ const developers = [
     description:
       "Developer behind Vrinda Gardens in Greater Noida West, offering accessible NCR entry points with rental yield upside.",
     establishedYear: 2014,
-    website: "https://www.rentofree.com",
+    website: "https://innovations-rental-solutions.vercel.app",
   },
 ];
 
@@ -56,7 +61,7 @@ const locations = [
     sortOrder: 1,
     imageUrl: "/images/rentofree/1.webp",
     description:
-      "Coastal Karnataka city with a growing residential market, verified builder partnerships and rental yield opportunities under the Rentofree model.",
+      "Coastal Karnataka city with a growing residential market, verified builder partnerships and rental yield opportunities under the Housirentz model.",
     highlights: [
       "Coastal Karnataka location",
       "Premium residential investment",
@@ -169,7 +174,7 @@ const projects = [
     lat: 12.9141,
     lng: 74.856,
     description:
-      "Signature by Westline is a premium residential investment in Mangalore, curated for the Rentofree model with verified documentation and rental yield potential. A quality development from a reputed builder partner, screened for legal and rental fit.",
+      "Signature by Westline is a premium residential investment in Mangalore, curated for the Housirentz model with verified documentation and rental yield potential. A quality development from a reputed builder partner, screened for legal and rental fit.",
     highlights: [
       "Title & legal verification support",
       "Structured rental yield model",
@@ -281,7 +286,7 @@ const projects = [
     lat: 28.4749,
     lng: 77.5121,
     description:
-      "Vrinda Gardens in Greater Noida West is listed for investors who want a lower entry ticket in the NCR region. Starting from ₹85 Lacs with 5% rental yield potential under the Rentofree model.",
+      "Vrinda Gardens in Greater Noida West is listed for investors who want a lower entry ticket in the NCR region. Starting from ₹85 Lacs with 5% rental yield potential under the Housirentz model.",
     highlights: [
       "Starting from ₹85 Lacs",
       "NCR / Greater Noida West location",
@@ -318,7 +323,7 @@ const projects = [
     lat: 12.9716,
     lng: 77.5946,
     description:
-      "Gravity Smera Gardens is a Karnataka residential project from Gravity Homes, listed for Rentofree investors at 2.3 Cr. Combines residential living with garden-oriented planning.",
+      "Gravity Smera Gardens is a Karnataka residential project from Gravity Homes, listed for Housirentz investors at 2.3 Cr. Combines residential living with garden-oriented planning.",
     highlights: [
       "Gravity Homes project",
       "Starting at 2.3 Cr",
@@ -326,7 +331,7 @@ const projects = [
       "Site visit on request",
     ],
     amenities: ["Gardens", "Clubhouse", "Security", "Parking", "Walking tracks", "Community spaces"],
-    images: ["https://www.tarc.in/tarc-tripundra/images/DSC_01.jpg", "property-interior.webp", "property-amenities.webp"],
+    images: ["https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1600&q=80", "property-interior.webp", "property-amenities.webp"],
     floorPlans: [
       { name: "2 BHK · Garden-facing", bhk: "2", areaSqft: 1100, price: 23000000, imageUrl: "/images/floorplan-2bhk.svg" },
       { name: "3 BHK · Garden-facing", bhk: "3", areaSqft: 1400, price: 23000000, imageUrl: "/images/floorplan-3bhk.svg" },
@@ -341,9 +346,9 @@ const projects = [
 
 const faqs = [
   {
-    question: "What is the Rentofree model?",
+    question: "What is the Housirentz model?",
     answer:
-      "The Rentofree model lets you own premium property with zero investment — no down payment, rent paid in advance, and up to 5% rental yield. It's designed to make rental investing accessible and transparent.",
+      "The Housirentz model lets you own premium property with zero investment — no down payment, rent paid in advance, and up to 5% rental yield. It's designed to make rental investing accessible and transparent.",
     category: "Model",
     sortOrder: 1,
   },
@@ -357,7 +362,7 @@ const faqs = [
   {
     question: "Can NRIs invest?",
     answer:
-      "Yes. NRIs can participate in eligible Rentofree opportunities, subject to applicable regulations and documentation. Our advisors assist with the required process, paperwork and onboarding.",
+      "Yes. NRIs can participate in eligible Housirentz opportunities, subject to applicable regulations and documentation. Our advisors assist with the required process, paperwork and onboarding.",
     category: "NRI",
     sortOrder: 3,
   },
@@ -522,13 +527,13 @@ async function main() {
         mapLng: p.lng,
         nearbyPlaces: json(p.nearby),
         brochureUrl: `/api/projects/${p.slug}/brochure`,
-        heroImage: `/images/rentofree/${cover}`,
+        heroImage: imageSrc(cover),
         featured: p.featured,
         published: true,
         isDemo: false,
         images: {
           create: p.images.map((img, index) => ({
-            url: `/images/rentofree/${img}`,
+            url: imageSrc(img),
             alt: `${p.name} — image ${index + 1}`,
             sortOrder: index,
             isCover: index === 0,

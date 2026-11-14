@@ -33,14 +33,17 @@ export default function NotFound() {
               </ButtonLink>
             </div>
             <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-[0.8rem] font-medium text-ink-muted">
-              <Link href="/location/noida" className="inline-flex items-center gap-1.5 hover:text-forest">
-                <Compass className="size-3.5" /> Noida
+              <Link href="/location/mangalore" className="inline-flex items-center gap-1.5 hover:text-forest">
+                <Compass className="size-3.5" /> Mangalore
               </Link>
-              <Link href="/location/greater-noida" className="inline-flex items-center gap-1.5 hover:text-forest">
-                <Compass className="size-3.5" /> Greater Noida
+              <Link href="/location/bangalore" className="inline-flex items-center gap-1.5 hover:text-forest">
+                <Compass className="size-3.5" /> Bangalore
               </Link>
-              <Link href="/location/noida-extension" className="inline-flex items-center gap-1.5 hover:text-forest">
-                <Compass className="size-3.5" /> Noida Extension
+              <Link href="/location/bengaluru" className="inline-flex items-center gap-1.5 hover:text-forest">
+                <Compass className="size-3.5" /> Bengaluru
+              </Link>
+              <Link href="/location/greater-noida-west" className="inline-flex items-center gap-1.5 hover:text-forest">
+                <Compass className="size-3.5" /> Greater Noida West
               </Link>
             </div>
           </div>
