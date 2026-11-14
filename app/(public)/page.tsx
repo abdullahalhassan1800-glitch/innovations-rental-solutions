@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -25,9 +25,9 @@ import {
 import { getCurrentUser } from "@/lib/auth";
 
 export const metadata = {
-  title: "Housirentz Innovations — Own Premium Property with Zero Investment",
+  title: "Housirentz Innovations â€” Own Premium Property with Zero Investment",
   description:
-    "Own premium property with zero investment — no down payment, rent paid in advance, and up to 5% rental yield. Verified residential projects across Mangalore, Bangalore, Bengaluru and Greater Noida West.",
+    "Own premium property with zero investment â€” no down payment, rent paid in advance, and up to 5% rental yield. Verified residential projects across Mangalore, Bangalore, Bengaluru and Greater Noida West.",
   alternates: { canonical: "/" },
 };
 
@@ -82,17 +82,17 @@ const FAQ_ITEMS = [
   {
     question: "Is rental income guaranteed?",
     answer:
-      "Rental income is structured as per the investment model and project agreement. While the model aims to provide regular rental returns, income is subject to the specific terms, project conditions, and applicable agreement—and should not be treated as an absolute guarantee.",
+      "Rental income is structured as per the investment model and project agreement. While the model aims to provide regular rental returns, income is subject to the specific terms, project conditions, and applicable agreementâ€”and should not be treated as an absolute guarantee.",
   },
   {
     question: "How is rental yield calculated?",
     answer:
-      "Rental yield is generally calculated as annual rental income divided by the investment value, expressed as a percentage. For example, if annual rent is ₹2,70,000 on a ₹45,00,000 value, the yield is 5%. Actual yield depends on project terms.",
+      "Rental yield is generally calculated as annual rental income divided by the investment value, expressed as a percentage. For example, if annual rent is â‚¹2,70,000 on a â‚¹45,00,000 value, the yield is 5%. Actual yield depends on project terms.",
   },
   {
     question: "Is documentation transparent?",
     answer:
-      "Yes. Housirentz focuses on clear, transparent documentation at every step—from property selection to agreements. Our team assists with paperwork so you understand the terms before you proceed.",
+      "Yes. Housirentz focuses on clear, transparent documentation at every stepâ€”from property selection to agreements. Our team assists with paperwork so you understand the terms before you proceed.",
   },
 ];
 
@@ -185,6 +185,18 @@ export default async function HomePage() {
             <div className="absolute inset-x-0 bottom-0 p-6">
               <p className="text-[0.56rem] font-semibold uppercase tracking-[0.2em] text-brass-soft">Who We Are</p>
               <h3 className="mt-2 max-w-xs font-display text-[1.3rem] leading-snug text-paper">
+                Housrentz Innovations Pvt. Ltd.
+              </h3>
+              <Image
+                src="https://www.shutterstock.com/search/indian-office-colleagues?utm_source=chatgpt.com"
+                alt="Indian office colleagues"
+                width={800}
+                height={600}
+                className="mt-4 rounded-md border border-line/80"
+                priority
+              />
+            <div>
+              <h3 className="mt-2 max-w-xs font-display text-[1.3rem] leading-snug text-paper">
                 Housirentz Innovations Pvt. Ltd.
               </h3>
             </div>
@@ -236,7 +248,7 @@ export default async function HomePage() {
             <p className="eyebrow">Benefits</p>
             <h2 className="display-lg mt-4 balance">Why Investors Love This Model</h2>
             <p className="lede mt-4 max-w-xl">
-              A smarter way to earn rental income and build long-term wealth—without heavy upfront capital.
+              A smarter way to earn rental income and build long-term wealthâ€”without heavy upfront capital.
             </p>
           </div>
           <div className="flex gap-3">
@@ -395,7 +407,7 @@ export default async function HomePage() {
                 <figure className="flex h-full flex-col rounded-[16px] border border-paper/10 bg-paper/[0.035] p-6 transition duration-500 hover:border-brass/30 hover:bg-paper/[0.06]">
                   <Stars rating={testimonial.rating} />
                   <blockquote className="mt-4 flex-1 font-display text-[1.08rem] leading-relaxed text-paper/85">
-                    “{testimonial.quote}”
+                    â€œ{testimonial.quote}â€
                   </blockquote>
                   <figcaption className="mt-5 border-t border-paper/10 pt-4">
                     <p className="text-sm font-semibold">{testimonial.name}</p>
@@ -418,3 +430,7 @@ export default async function HomePage() {
     </>
   );
 }
+
+
+
+
