@@ -1,6 +1,6 @@
-/**
+﻿/**
  * Database-agnostic natural language intent parser for the Innovations
- * assistant. Pure functions only — no network, no database, easy to test.
+ * assistant. Pure functions only â€” no network, no database, easy to test.
  */
 
 export type ChatLanguage = "en" | "hi" | "hinglish";
@@ -45,49 +45,49 @@ const LOCATIONS: { slug: string; label: string; pattern: RegExp }[] = [
     slug: "noida-extension",
     label: "Noida Extension",
     pattern:
-      /noida\s*(?:extension|extn|ext\b|west)|greater\s*noida\s*west|g\.?\s*noida\s*west|extension|noida\s*ext|नोएडा\s*(?:एक्सटेंशन|एक्स्टेंशन|वेस्ट)|ग्रेटर\s*नोएडा\s*वेस्ट/i,
+      /noida\s*(?:extension|extn|ext\b|west)|greater\s*noida\s*west|g\.?\s*noida\s*west|extension|noida\s*ext|à¤¨à¥‹à¤à¤¡à¤¾\s*(?:à¤à¤•à¥à¤¸à¤Ÿà¥‡à¤‚à¤¶à¤¨|à¤à¤•à¥à¤¸à¥à¤Ÿà¥‡à¤‚à¤¶à¤¨|à¤µà¥‡à¤¸à¥à¤Ÿ)|à¤—à¥à¤°à¥‡à¤Ÿà¤°\s*à¤¨à¥‹à¤à¤¡à¤¾\s*à¤µà¥‡à¤¸à¥à¤Ÿ/i,
   },
   {
     slug: "greater-noida",
     label: "Greater Noida",
     pattern:
-      /greater\s*noida|gr\.?\s*noida|greaternoida|greater noida west|yamuna\s*expressway|jewar|knowledge\s*park|tech\s*zone|ग्रेटर\s*नोएडा/i,
+      /greater\s*noida|gr\.?\s*noida|greaternoida|greater noida west|yamuna\s*expressway|jewar|knowledge\s*park|tech\s*zone|à¤—à¥à¤°à¥‡à¤Ÿà¤°\s*à¤¨à¥‹à¤à¤¡à¤¾/i,
   },
   {
     slug: "delhi-ncr",
     label: "Delhi NCR",
     pattern:
-      /delhi\s*ncr|\bdelhi\b|\bncr\b|gurugram|gurgaon|faridabad|ghaziabad|dwarka|rohini|indirapuram|vaishali|kaushambi|दिल्ली|गुरुग्राम|गुड़गांव|फरीदाबाद|गाजियाबाद|एनसीआर/i,
+      /delhi\s*ncr|\bdelhi\b|\bncr\b|gurugram|gurgaon|faridabad|ghaziabad|dwarka|rohini|indirapuram|vaishali|kaushambi|à¤¦à¤¿à¤²à¥à¤²à¥€|à¤—à¥à¤°à¥à¤—à¥à¤°à¤¾à¤®|à¤—à¥à¤¡à¤¼à¤—à¤¾à¤‚à¤µ|à¤«à¤°à¥€à¤¦à¤¾à¤¬à¤¾à¤¦|à¤—à¤¾à¤œà¤¿à¤¯à¤¾à¤¬à¤¾à¤¦|à¤à¤¨à¤¸à¥€à¤†à¤°/i,
   },
   {
     slug: "noida",
     label: "Noida",
-    pattern: /\bnoida\b|नोएडा|नॉएडा/i,
+    pattern: /\bnoida\b|à¤¨à¥‹à¤à¤¡à¤¾|à¤¨à¥‰à¤à¤¡à¤¾/i,
   },
 ];
 
 const AMENITIES: { name: string; pattern: RegExp }[] = [
-  { name: "Swimming Pool", pattern: /swimming|swim\s*pool|\bpool\b|तैराकी|स्विमिंग|पूल/i },
-  { name: "Gymnasium", pattern: /gym(nasium)?|fitness|workout|जिम|व्यायाम/i },
-  { name: "Clubhouse", pattern: /club\s*house|clubhouse|क्लब\s*हाउस|क्लब/i },
+  { name: "Swimming Pool", pattern: /swimming|swim\s*pool|\bpool\b|à¤¤à¥ˆà¤°à¤¾à¤•à¥€|à¤¸à¥à¤µà¤¿à¤®à¤¿à¤‚à¤—|à¤ªà¥‚à¤²/i },
+  { name: "Gymnasium", pattern: /gym(nasium)?|fitness|workout|à¤œà¤¿à¤®|à¤µà¥à¤¯à¤¾à¤¯à¤¾à¤®/i },
+  { name: "Clubhouse", pattern: /club\s*house|clubhouse|à¤•à¥à¤²à¤¬\s*à¤¹à¤¾à¤‰à¤¸|à¤•à¥à¤²à¤¬/i },
   {
     name: "Landscaped Gardens",
-    pattern: /garden|greenery|green\s*space|landscap|\bparks?\b|बगीचा|बग़ीचा|हरियाली/i,
+    pattern: /garden|greenery|green\s*space|landscap|\bparks?\b|à¤¬à¤—à¥€à¤šà¤¾|à¤¬à¤—à¤¼à¥€à¤šà¤¾|à¤¹à¤°à¤¿à¤¯à¤¾à¤²à¥€/i,
   },
-  { name: "Kids' Play Area", pattern: /kids?|children|play\s*area|बच्चों|बच्चे/i },
-  { name: "24x7 Security", pattern: /security|gated|cctv|guards?|सुरक्षा|सीसीटीवी|गार्ड/i },
-  { name: "Power Backup", pattern: /power\s*backup|backup|generator|inverter|बिजली|जनरेटर/i },
-  { name: "Covered Parking", pattern: /parking|car\s*park|पार्किंग/i },
-  { name: "Sports Court", pattern: /sports?|tennis|badminton|basketball|खेल|टेनिस|बैडमिंटन/i },
-  { name: "Yoga Deck", pattern: /yoga|meditation|योग|ध्यान/i },
-  { name: "Co-working Lounge", pattern: /co.?working|workspace|work\s*from\s*home|वर्कस्पेस/i },
-  { name: "Retail Arcade", pattern: /retail arcade|high\s*street|shops?|market|दुकान|बाज़ार/i },
-  { name: "Concierge", pattern: /concierge|हॉस्पिटैलिटी/i },
-  { name: "EV Charging", pattern: /ev\s*charg|electric vehicle|ईवी|चार्जिंग/i },
-  { name: "Amphitheatre", pattern: /amphitheatre|amphitheater|एम्फीथिएटर/i },
-  { name: "Jogging Track", pattern: /jogging|running track|दौड़|जॉगिंग/i },
-  { name: "Spa", pattern: /\bspa\b|स्पा/i },
-  { name: "Rooftop Lounge", pattern: /rooftop|sky lounge|छत/i },
+  { name: "Kids' Play Area", pattern: /kids?|children|play\s*area|à¤¬à¤šà¥à¤šà¥‹à¤‚|à¤¬à¤šà¥à¤šà¥‡/i },
+  { name: "24x7 Security", pattern: /security|gated|cctv|guards?|à¤¸à¥à¤°à¤•à¥à¤·à¤¾|à¤¸à¥€à¤¸à¥€à¤Ÿà¥€à¤µà¥€|à¤—à¤¾à¤°à¥à¤¡/i },
+  { name: "Power Backup", pattern: /power\s*backup|backup|generator|inverter|à¤¬à¤¿à¤œà¤²à¥€|à¤œà¤¨à¤°à¥‡à¤Ÿà¤°/i },
+  { name: "Covered Parking", pattern: /parking|car\s*park|à¤ªà¤¾à¤°à¥à¤•à¤¿à¤‚à¤—/i },
+  { name: "Sports Court", pattern: /sports?|tennis|badminton|basketball|à¤–à¥‡à¤²|à¤Ÿà¥‡à¤¨à¤¿à¤¸|à¤¬à¥ˆà¤¡à¤®à¤¿à¤‚à¤Ÿà¤¨/i },
+  { name: "Yoga Deck", pattern: /yoga|meditation|à¤¯à¥‹à¤—|à¤§à¥à¤¯à¤¾à¤¨/i },
+  { name: "Co-working Lounge", pattern: /co.?working|workspace|work\s*from\s*home|à¤µà¤°à¥à¤•à¤¸à¥à¤ªà¥‡à¤¸/i },
+  { name: "Retail Arcade", pattern: /retail arcade|high\s*street|shops?|market|à¤¦à¥à¤•à¤¾à¤¨|à¤¬à¤¾à¤œà¤¼à¤¾à¤°/i },
+  { name: "Concierge", pattern: /concierge|à¤¹à¥‰à¤¸à¥à¤ªà¤¿à¤Ÿà¥ˆà¤²à¤¿à¤Ÿà¥€/i },
+  { name: "EV Charging", pattern: /ev\s*charg|electric vehicle|à¤ˆà¤µà¥€|à¤šà¤¾à¤°à¥à¤œà¤¿à¤‚à¤—/i },
+  { name: "Amphitheatre", pattern: /amphitheatre|amphitheater|à¤à¤®à¥à¤«à¥€à¤¥à¤¿à¤à¤Ÿà¤°/i },
+  { name: "Jogging Track", pattern: /jogging|running track|à¤¦à¥Œà¤¡à¤¼|à¤œà¥‰à¤—à¤¿à¤‚à¤—/i },
+  { name: "Spa", pattern: /\bspa\b|à¤¸à¥à¤ªà¤¾/i },
+  { name: "Rooftop Lounge", pattern: /rooftop|sky lounge|à¤›à¤¤/i },
 ];
 
 export function detectLanguage(message: string): ChatLanguage {
@@ -105,8 +105,8 @@ function escapeRegExp(value: string) {
 
 function amountToRupees(amount: number, unit: string) {
   const u = unit.toLowerCase();
-  if (u.startsWith("cr") || u.includes("करोड़")) return Math.round(amount * 10_000_000);
-  if (u.startsWith("l") || u.includes("लाख") || u === "lac" || u === "lacs") {
+  if (u.startsWith("cr") || u.includes("à¤•à¤°à¥‹à¤¡à¤¼")) return Math.round(amount * 10_000_000);
+  if (u.startsWith("l") || u.includes("à¤²à¤¾à¤–") || u === "lac" || u === "lacs") {
     return Math.round(amount * 100_000);
   }
   return Math.round(amount);
@@ -115,7 +115,7 @@ function amountToRupees(amount: number, unit: string) {
 /**
  * Speech recognition often returns spoken numbers instead of digits, especially
  * for Hindi and Hinglish. These word lists let the rules engine understand
- * phrases such as "seventy five lakh", "pachattar lakh" and "पचहत्तर लाख".
+ * phrases such as "seventy five lakh", "pachattar lakh" and "à¤ªà¤šà¤¹à¤¤à¥à¤¤à¤° à¤²à¤¾à¤–".
  */
 const SPOKEN_NUMBERS: Record<string, number> = {
   zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9,
@@ -127,23 +127,23 @@ const SPOKEN_NUMBERS: Record<string, number> = {
   saath: 60, sattar: 70, assi: 80, nabbe: 90, sau: 100,
   pachees: 25, pachchis: 25, paintees: 35, paintalis: 45, pachpan: 55, painsath: 65,
   pachattar: 75, pachasi: 85, panchanbe: 95,
-  "एक": 1, "दो": 2, "तीन": 3, "चार": 4, "पांच": 5, "पाँच": 5, "छह": 6, "सात": 7,
-  "आठ": 8, "नौ": 9, "दस": 10, "बीस": 20, "तीस": 30, "चालीस": 40, "पचास": 50,
-  "साठ": 60, "सत्तर": 70, "अस्सी": 80, "नब्बे": 90, "सौ": 100,
-  "पच्चीस": 25, "पैंतीस": 35, "पैंतालीस": 45, "पचपन": 55, "पैंसठ": 65,
-  "पचहत्तर": 75, "पचासी": 85, "पंचानबे": 95,
+  "à¤à¤•": 1, "à¤¦à¥‹": 2, "à¤¤à¥€à¤¨": 3, "à¤šà¤¾à¤°": 4, "à¤ªà¤¾à¤‚à¤š": 5, "à¤ªà¤¾à¤à¤š": 5, "à¤›à¤¹": 6, "à¤¸à¤¾à¤¤": 7,
+  "à¤†à¤ ": 8, "à¤¨à¥Œ": 9, "à¤¦à¤¸": 10, "à¤¬à¥€à¤¸": 20, "à¤¤à¥€à¤¸": 30, "à¤šà¤¾à¤²à¥€à¤¸": 40, "à¤ªà¤šà¤¾à¤¸": 50,
+  "à¤¸à¤¾à¤ ": 60, "à¤¸à¤¤à¥à¤¤à¤°": 70, "à¤…à¤¸à¥à¤¸à¥€": 80, "à¤¨à¤¬à¥à¤¬à¥‡": 90, "à¤¸à¥Œ": 100,
+  "à¤ªà¤šà¥à¤šà¥€à¤¸": 25, "à¤ªà¥ˆà¤‚à¤¤à¥€à¤¸": 35, "à¤ªà¥ˆà¤‚à¤¤à¤¾à¤²à¥€à¤¸": 45, "à¤ªà¤šà¤ªà¤¨": 55, "à¤ªà¥ˆà¤‚à¤¸à¤ ": 65,
+  "à¤ªà¤šà¤¹à¤¤à¥à¤¤à¤°": 75, "à¤ªà¤šà¤¾à¤¸à¥€": 85, "à¤ªà¤‚à¤šà¤¾à¤¨à¤¬à¥‡": 95,
 };
 
 const SPOKEN_FRACTIONS: Record<string, number> = {
-  dedh: 1.5, "डेढ़": 1.5, dhai: 2.5, "ढाई": 2.5, sava: 1.25, sawa: 1.25, "सवा": 1.25,
-  aadha: 0.5, "आधा": 0.5,
+  dedh: 1.5, "à¤¡à¥‡à¤¢à¤¼": 1.5, dhai: 2.5, "à¤¢à¤¾à¤ˆ": 2.5, sava: 1.25, sawa: 1.25, "à¤¸à¤µà¤¾": 1.25,
+  aadha: 0.5, "à¤†à¤§à¤¾": 0.5,
 };
 
 export function parseSpokenNumberPhrase(phrase: string): number | null {
   const tokens = phrase
     .toLowerCase()
     // Keep \p{M}: Devanagari vowel signs are combining marks, and stripping
-    // them would mangle words such as "पचहत्तर" and "डेढ़".
+    // them would mangle words such as "à¤ªà¤šà¤¹à¤¤à¥à¤¤à¤°" and "à¤¡à¥‡à¤¢à¤¼".
     .replace(/[^\p{L}\p{M}\p{N}\s.-]/gu, " ")
     .replace(/-/g, " ")
     .trim()
@@ -153,11 +153,11 @@ export function parseSpokenNumberPhrase(phrase: string): number | null {
 
   for (let size = Math.min(3, tokens.length); size >= 1; size -= 1) {
     const slice = tokens.slice(-size);
-    if (slice.length === 2 && (slice[0] === "paune" || slice[0] === "पौने")) {
+    if (slice.length === 2 && (slice[0] === "paune" || slice[0] === "à¤ªà¥Œà¤¨à¥‡")) {
       const base = SPOKEN_NUMBERS[slice[1]];
       if (base) return base - 0.25;
     }
-    if (slice.length === 2 && (slice[0] === "sava" || slice[0] === "सवा")) {
+    if (slice.length === 2 && (slice[0] === "sava" || slice[0] === "à¤¸à¤µà¤¾")) {
       const base = SPOKEN_NUMBERS[slice[1]];
       if (base) return base + 0.25;
     }
@@ -175,8 +175,8 @@ export function parseSpokenNumberPhrase(phrase: string): number | null {
 function normaliseSpokenAmounts(text: string) {
   return text.replace(
     // Start on a letter (or Devanagari mark) so the match never eats the space
-    // after a digit — otherwise "3 ... seventy five lakh" became "375 lakh".
-    /([\p{L}\p{M}][\p{L}\p{M}\s.-]{1,39}?)\s*(crores?|crore|cr\b|lakhs?|lacs?|lac\b|करोड़|लाख)/giu,
+    // after a digit â€” otherwise "3 ... seventy five lakh" became "375 lakh".
+    /([\p{L}\p{M}][\p{L}\p{M}\s.-]{1,39}?)\s*(crores?|crore|cr\b|lakhs?|lacs?|lac\b|à¤•à¤°à¥‹à¤¡à¤¼|à¤²à¤¾à¤–)/giu,
     (match, prefix: string, unit: string) => {
       const value = parseSpokenNumberPhrase(prefix);
       return value == null ? match : `${value} ${unit}`;
@@ -187,7 +187,7 @@ function normaliseSpokenAmounts(text: string) {
 function extractBudget(message: string): { minPrice?: number; maxPrice?: number } {
   const text = normaliseSpokenAmounts(message).replace(/,/g, "").toLowerCase();
   const tokens: { value: number; index: number }[] = [];
-  const regex = /(\d+(?:\.\d+)?)\s*(crores?|cr\b|crore|करोड़|लाख|lakhs?|lacs?|lac\b|l\b)/gi;
+  const regex = /(\d+(?:\.\d+)?)\s*(crores?|cr\b|crore|à¤•à¤°à¥‹à¤¡à¤¼|à¤²à¤¾à¤–|lakhs?|lacs?|lac\b|l\b)/gi;
   let match: RegExpExecArray | null;
   while ((match = regex.exec(text))) {
     tokens.push({ value: amountToRupees(Number(match[1]), match[2]), index: match.index });
@@ -195,7 +195,7 @@ function extractBudget(message: string): { minPrice?: number; maxPrice?: number 
 
   if (tokens.length === 0) {
     // Plain rupee amounts, e.g. "budget 7500000"
-    const plain = text.match(/(?:₹|rs\.?|inr)\s*(\d{5,})/i) || text.match(/\b(\d{6,})\b/);
+    const plain = text.match(/(?:â‚¹|rs\.?|inr)\s*(\d{5,})/i) || text.match(/\b(\d{6,})\b/);
     if (plain) {
       const value = Number(plain[1]);
       if (value >= 100_000) return { maxPrice: value };
@@ -210,24 +210,24 @@ function extractBudget(message: string): { minPrice?: number; maxPrice?: number 
 
   const value = tokens[0].value;
   const context = text.slice(Math.max(0, tokens[0].index - 40), tokens[0].index + 30);
-  if (/(above|over|minimum|starting|se zyada|se upar|plus|zyada|ऊपर|अधिक)/i.test(context)) {
+  if (/(above|over|minimum|starting|se zyada|se upar|plus|zyada|à¤Šà¤ªà¤°|à¤…à¤§à¤¿à¤•)/i.test(context)) {
     return { minPrice: value };
   }
   return { maxPrice: value };
 }
 
 function extractBhk(message: string): string | undefined {
-  const numeric = message.match(/(\d)\s*(?:bhk|b\.h\.k\.?|bedrooms?|bed\b|कमरे|बीएचके)/i);
+  const numeric = message.match(/(\d)\s*(?:bhk|b\.h\.k\.?|bedrooms?|bed\b|à¤•à¤®à¤°à¥‡|à¤¬à¥€à¤à¤šà¤•à¥‡)/i);
   if (numeric) return numeric[1] === "5" ? "5+" : numeric[1];
 
   const words: Record<string, string> = {
     ek: "1", do: "2", teen: "3", char: "4", chaar: "4", paanch: "5+", panch: "5+",
-    एक: "1", दो: "2", तीन: "3", चार: "4", पांच: "5+", "पाँच": "5+",
+    à¤à¤•: "1", à¤¦à¥‹: "2", à¤¤à¥€à¤¨: "3", à¤šà¤¾à¤°: "4", à¤ªà¤¾à¤‚à¤š: "5+", "à¤ªà¤¾à¤à¤š": "5+",
   };
   for (const [word, value] of Object.entries(words)) {
-    // Unicode-aware boundaries so Devanagari words such as "दो बीएचके" match.
+    // Unicode-aware boundaries so Devanagari words such as "à¤¦à¥‹ à¤¬à¥€à¤à¤šà¤•à¥‡" match.
     const pattern = new RegExp(
-      `(?:^|[^\\p{L}])${escapeRegExp(word)}(?:[^\\p{L}]|$)\\s*(?:bhk|bedroom|kamre|कमरे|बीएचके)`,
+      `(?:^|[^\\p{L}])${escapeRegExp(word)}(?:[^\\p{L}]|$)\\s*(?:bhk|bedroom|kamre|à¤•à¤®à¤°à¥‡|à¤¬à¥€à¤à¤šà¤•à¥‡)`,
       "iu",
     );
     if (pattern.test(message)) return value;
@@ -237,34 +237,34 @@ function extractBhk(message: string): string | undefined {
 
 function extractProperty(message: string): { propertyType?: "RESIDENTIAL" | "COMMERCIAL"; category?: string } {
   const m = message.toLowerCase();
-  if (/\b(serviced?\s+apartment|service\s+apartment|serviced?\s+suite|managed\s+suite|रेसीडेंसी|सर्विस अपार्टमेंट)\b/.test(m)) {
+  if (/\b(serviced?\s+apartment|service\s+apartment|serviced?\s+suite|managed\s+suite|à¤°à¥‡à¤¸à¥€à¤¡à¥‡à¤‚à¤¸à¥€|à¤¸à¤°à¥à¤µà¤¿à¤¸ à¤…à¤ªà¤¾à¤°à¥à¤Ÿà¤®à¥‡à¤‚à¤Ÿ)\b/.test(m)) {
     return { propertyType: "RESIDENTIAL", category: "Serviced apartment" };
   }
-  if (/\b(resort|villa\s+resort|resort\s+home|रिज़ॉर्ट|रिजॉर्ट)\b/.test(m)) {
+  if (/\b(resort|villa\s+resort|resort\s+home|à¤°à¤¿à¤œà¤¼à¥‰à¤°à¥à¤Ÿ|à¤°à¤¿à¤œà¥‰à¤°à¥à¤Ÿ)\b/.test(m)) {
     return { propertyType: "RESIDENTIAL", category: "Resort" };
   }
-  if (/\b(shop|showroom|retail|high\s*street|dukaan|दुकान|sco)\b/.test(m)) {
+  if (/\b(shop|showroom|retail|high\s*street|dukaan|à¤¦à¥à¤•à¤¾à¤¨|sco)\b/.test(m)) {
     return { propertyType: "COMMERCIAL", category: /sco/.test(m) ? "SCO" : "Retail" };
   }
-  if (/\b(office|workplace|co.?working|corporate|coworking|ऑफिस)\b/.test(m)) {
+  if (/\b(office|workplace|co.?working|corporate|coworking|à¤‘à¤«à¤¿à¤¸)\b/.test(m)) {
     return { propertyType: "COMMERCIAL", category: "Office" };
   }
-  if (/\b(commercial|investment property|व्यावसायिक)\b/.test(m)) {
+  if (/\b(commercial|investment property|à¤µà¥à¤¯à¤¾à¤µà¤¸à¤¾à¤¯à¤¿à¤•)\b/.test(m)) {
     return { propertyType: "COMMERCIAL" };
   }
-  if (/\b(plot|land|zameen|ज़मीन|जमीन)\b/.test(m)) {
+  if (/\b(plot|land|zameen|à¤œà¤¼à¤®à¥€à¤¨|à¤œà¤®à¥€à¤¨)\b/.test(m)) {
     return { propertyType: "RESIDENTIAL", category: "Plot" };
   }
-  if (/\b(villa|kothi|bungalow|विला)\b/.test(m)) {
+  if (/\b(villa|kothi|bungalow|à¤µà¤¿à¤²à¤¾)\b/.test(m)) {
     return { propertyType: "RESIDENTIAL", category: "Villa" };
   }
   if (/\b(penthouse|pent\s*house)\b/.test(m)) {
     return { propertyType: "RESIDENTIAL", category: "Penthouse" };
   }
-  if (/\b(studio|1\s*rk|एक कमरा)\b/.test(m)) {
+  if (/\b(studio|1\s*rk|à¤à¤• à¤•à¤®à¤°à¤¾)\b/.test(m)) {
     return { propertyType: "RESIDENTIAL", category: "Studio" };
   }
-  if (/\b(flat|apartment|residential|ghar|घर|फ्लैट)\b/.test(m)) {
+  if (/\b(flat|apartment|residential|ghar|à¤˜à¤°|à¤«à¥à¤²à¥ˆà¤Ÿ)\b/.test(m)) {
     return { propertyType: "RESIDENTIAL" };
   }
   return {};
@@ -273,22 +273,22 @@ function extractProperty(message: string): { propertyType?: "RESIDENTIAL" | "COM
 function extractStatus(message: string): string | undefined {
   const m = message.toLowerCase();
   if (
-    /ready\s*to\s*(move|shift)|ready possession|possession ready|immediate possession|completed project|turant|shift ho sakte|ready hai|रहने के लिए तैयार|तैयार है|तुरंत/.test(
+    /ready\s*to\s*(move|shift)|ready possession|possession ready|immediate possession|completed project|turant|shift ho sakte|ready hai|à¤°à¤¹à¤¨à¥‡ à¤•à¥‡ à¤²à¤¿à¤ à¤¤à¥ˆà¤¯à¤¾à¤°|à¤¤à¥ˆà¤¯à¤¾à¤° à¤¹à¥ˆ|à¤¤à¥à¤°à¤‚à¤¤/.test(
       m,
     )
   ) {
     return "READY_TO_MOVE";
   }
-  if (/new\s*launch|newly launched|naya launch|nayi launch|नया लॉन्च|नई लॉन्चिंग/.test(m)) return "NEW_LAUNCH";
-  if (/under\s*construction|construction|ban raha|निर्माणाधीन|बन रहा/.test(m)) return "UNDER_CONSTRUCTION";
-  if (/upcoming|aane wala|आने वाला/.test(m)) return "UPCOMING";
+  if (/new\s*launch|newly launched|naya launch|nayi launch|à¤¨à¤¯à¤¾ à¤²à¥‰à¤¨à¥à¤š|à¤¨à¤ˆ à¤²à¥‰à¤¨à¥à¤šà¤¿à¤‚à¤—/.test(m)) return "NEW_LAUNCH";
+  if (/under\s*construction|construction|ban raha|à¤¨à¤¿à¤°à¥à¤®à¤¾à¤£à¤¾à¤§à¥€à¤¨|à¤¬à¤¨ à¤°à¤¹à¤¾/.test(m)) return "UNDER_CONSTRUCTION";
+  if (/upcoming|aane wala|à¤†à¤¨à¥‡ à¤µà¤¾à¤²à¤¾/.test(m)) return "UPCOMING";
   return undefined;
 }
 
 function extractPossessionYear(message: string): number | undefined {
   const match = message.match(/\b(20[2-4]\d)\b/);
   if (!match) return undefined;
-  if (/possession|by|tak|ready|मिलेगा|कब/i.test(message)) return Number(match[1]);
+  if (/possession|by|tak|ready|à¤®à¤¿à¤²à¥‡à¤—à¤¾|à¤•à¤¬/i.test(message)) return Number(match[1]);
   return undefined;
 }
 
@@ -301,7 +301,7 @@ export function parseIntent(message: string): SearchIntent {
   const property = extractProperty(text);
   const amenities = AMENITIES.filter((a) => a.pattern.test(text)).map((a) => a.name);
   const greeting =
-    /^(hi+|hii+|hello+|hey+|hlo+|namaste(?:\s*ji)?|namaskar|ram\s*ram|salaam|sat\s*sri\s*akal|good\s*(morning|evening|afternoon)|नमस्ते|नमस्कार|हाय|हैलो|राम\s*राम)[\s!,.]*$/i.test(
+    /^(hi+|hii+|hello+|hey+|hlo+|namaste(?:\s*ji)?|namaskar|ram\s*ram|salaam|sat\s*sri\s*akal|good\s*(morning|evening|afternoon)|à¤¨à¤®à¤¸à¥à¤¤à¥‡|à¤¨à¤®à¤¸à¥à¤•à¤¾à¤°|à¤¹à¤¾à¤¯|à¤¹à¥ˆà¤²à¥‹|à¤°à¤¾à¤®\s*à¤°à¤¾à¤®)[\s!,.]*$/i.test(
       text,
     );
 
@@ -314,7 +314,7 @@ export function parseIntent(message: string): SearchIntent {
     /\b(site\s*visit|site\s*dekh\w*|visit|tour|dekhne\s+aana|property\s+dekh\w*)\b/i.test(
       text,
     ) ||
-    /(?:साइट\s*विज़िट|साइट\s*विजिट|विज़िट|देखने\s+आना|प्रॉपर्टी\s+देखनी)/u.test(text);
+    /(?:à¤¸à¤¾à¤‡à¤Ÿ\s*à¤µà¤¿à¤œà¤¼à¤¿à¤Ÿ|à¤¸à¤¾à¤‡à¤Ÿ\s*à¤µà¤¿à¤œà¤¿à¤Ÿ|à¤µà¤¿à¤œà¤¼à¤¿à¤Ÿ|à¤¦à¥‡à¤–à¤¨à¥‡\s+à¤†à¤¨à¤¾|à¤ªà¥à¤°à¥‰à¤ªà¤°à¥à¤Ÿà¥€\s+à¤¦à¥‡à¤–à¤¨à¥€)/u.test(text);
 
   return {
     location,
@@ -334,30 +334,30 @@ export function parseIntent(message: string): SearchIntent {
 }
 
 function extractSort(message: string): SearchSort | undefined {
-  // `\b` is ASCII-only in JavaScript, so Devanagari words such as "सस्ता"
+  // `\b` is ASCII-only in JavaScript, so Devanagari words such as "à¤¸à¤¸à¥à¤¤à¤¾"
   // never matched. Use Unicode-aware boundaries for the Latin alternatives and
   // plain matches for the Devanagari ones.
   const cheapest =
     /(?:^|[^\p{L}])(?:cheap(?:est)?|affordable|budget[-\s]?friendly|lowest\s*price|low\s*price|sasta|sasti)(?:[^\p{L}]|$)/iu.test(
       message,
-    ) || /(?:कम\s*बजट|सस्ता|सस्ती|किफायती)/u.test(message);
+    ) || /(?:à¤•à¤®\s*à¤¬à¤œà¤Ÿ|à¤¸à¤¸à¥à¤¤à¤¾|à¤¸à¤¸à¥à¤¤à¥€|à¤•à¤¿à¤«à¤¾à¤¯à¤¤à¥€)/u.test(message);
   if (cheapest) return "price-asc";
 
   const expensive =
     /(?:^|[^\p{L}])(?:luxur(?:y|ious)|premium|high[-\s]?end|expensive|mehnga|mehangi)(?:[^\p{L}]|$)/iu.test(
       message,
-    ) || /(?:लक्ज़री|लक्जरी|प्रीमियम|महंगा|महँगा|महंगी)/u.test(message);
+    ) || /(?:à¤²à¤•à¥à¤œà¤¼à¤°à¥€|à¤²à¤•à¥à¤œà¤°à¥€|à¤ªà¥à¤°à¥€à¤®à¤¿à¤¯à¤®|à¤®à¤¹à¤‚à¤—à¤¾|à¤®à¤¹à¤à¤—à¤¾|à¤®à¤¹à¤‚à¤—à¥€)/u.test(message);
   if (expensive) return "price-desc";
 
   const newest =
     /(?:^|[^\p{L}])(?:latest|newest|naye\s+projects?)(?:[^\p{L}]|$)/iu.test(message) ||
-    /(?:नए\s*प्रोजेक्ट्स?|नई\s*लॉन्चिंग)/u.test(message);
+    /(?:à¤¨à¤\s*à¤ªà¥à¤°à¥‹à¤œà¥‡à¤•à¥à¤Ÿà¥à¤¸?|à¤¨à¤ˆ\s*à¤²à¥‰à¤¨à¥à¤šà¤¿à¤‚à¤—)/u.test(message);
   if (newest) return "newest";
 
   if (
     /(?:earliest|soonest|jaldi(?:se)?)\s+possession/i.test(message) ||
     /possession\s+(?:soon|earliest|jaldi)/i.test(message) ||
-    /(?:जल्दी|जल्द\s*से)\s*पज़ेशन|पज़ेशन\s*(?:जल्दी|जल्द)/u.test(message)
+    /(?:à¤œà¤²à¥à¤¦à¥€|à¤œà¤²à¥à¤¦\s*à¤¸à¥‡)\s*à¤ªà¤œà¤¼à¥‡à¤¶à¤¨|à¤ªà¤œà¤¼à¥‡à¤¶à¤¨\s*(?:à¤œà¤²à¥à¤¦à¥€|à¤œà¤²à¥à¤¦)/u.test(message)
   ) {
     return "possession";
   }
@@ -456,3 +456,4 @@ export function sanitiseExternalIntent(input: unknown): Partial<SearchIntent> | 
   if (raw.siteVisit === true) out.siteVisit = true;
   return out;
 }
+

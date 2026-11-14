@@ -1,19 +1,19 @@
-export const SITE = {
+﻿export const SITE = {
   name: "Housirentz Innovations",
   legalName: "Housirentz Innovations Pvt. Ltd.",
   tagline: "Own Premium Property with Zero Investment.",
   description:
-    "Housirentz Innovations Pvt. Ltd. helps you own premium property with zero investment — no down payment, rent paid in advance, and up to 5% rental yield. Verified residential projects across Mangalore, Bangalore, Bengaluru and Greater Noida West.",
+    "Housirentz Innovations Pvt. Ltd. helps you own premium property with zero investment â€” no down payment, rent paid in advance, and up to 5% rental yield. Verified residential projects across Hyderabad, Mumbai, Mangalore, Bangalore, Bengaluru and Greater Noida West.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
   phone: process.env.NEXT_PUBLIC_SALES_PHONE || "+91 92059 08398",
   email: process.env.NEXT_PUBLIC_SALES_EMAIL || "irs@innovationsrentalsolutions.com",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919205908398",
-  address: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida, Uttar Pradesh – 201304",
+  address: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132, Noida, Uttar Pradesh â€“ 201304",
   addressStreet: "IS-11, 1101, 1st Floor, Urbtech Trade Center, Sector 132",
   addressLocality: "Noida",
   addressRegion: "Uttar Pradesh",
   postalCode: "201304",
-  hours: "Mon–Sat, 9:30am – 7:00pm IST",
+  hours: "Monâ€“Sat, 9:30am â€“ 7:00pm IST",
   demoDisclaimer:
     "Housirentz Innovations is a rental investment platform. All projects, developers, prices, images and references shown are for illustration only. Verify pricing, approvals and availability with our advisor before making any decision.",
 } as const;
@@ -25,12 +25,12 @@ export const LOCATION_LINKS = [
   { label: "Mangalore", href: "/location/mangalore", blurb: "Coastal Karnataka city with verified builder partnerships." },
   { label: "Bangalore", href: "/location/bangalore", blurb: "IT city with strong rental demand and growth corridors." },
   { label: "Bengaluru", href: "/location/bengaluru", blurb: "Premium residential market with Gravity Homes developments." },
-  { label: "Greater Noida West", href: "/location/greater-noida-west", blurb: "NCR destination with accessible entry from ₹85 Lacs." },
+  { label: "Greater Noida West", href: "/location/greater-noida-west", blurb: "NCR destination with accessible entry from â‚¹85 Lacs." },
 ] as const;
 
 export const MORE_LINKS: readonly NavChild[] = [
   { label: "All properties", href: "/properties", blurb: "Curated rental investment properties." },
-  { label: "Locations", href: "/location/mangalore", blurb: "Mangalore, Bangalore, Bengaluru and Greater Noida West." },
+  { label: "Locations", href: "/location/hyderabad", blurb: "Hyderabad, Mumbai, Mangalore, Bangalore, Bengaluru and Greater Noida West." },
   { label: "FAQs", href: "/blog#faqs", blurb: "Rental yield, documentation and how the model works." },
 ];
 
@@ -113,12 +113,12 @@ export const USER_ROLES = ["USER", "AGENT", "ADMIN"] as const;
 export const BHK_OPTIONS = ["1", "2", "3", "4", "5+"] as const;
 
 export const BUDGET_OPTIONS = [
-  { label: "Under ₹50 L", min: "0", max: "5000000" },
-  { label: "₹50 L – ₹75 L", min: "5000000", max: "7500000" },
-  { label: "₹75 L – ₹1 Cr", min: "7500000", max: "10000000" },
-  { label: "₹1 Cr – ₹1.5 Cr", min: "10000000", max: "15000000" },
-  { label: "₹1.5 Cr – ₹2.5 Cr", min: "15000000", max: "25000000" },
-  { label: "₹2.5 Cr +", min: "25000000", max: "" },
+  { label: "Under â‚¹50 L", min: "0", max: "5000000" },
+  { label: "â‚¹50 L â€“ â‚¹75 L", min: "5000000", max: "7500000" },
+  { label: "â‚¹75 L â€“ â‚¹1 Cr", min: "7500000", max: "10000000" },
+  { label: "â‚¹1 Cr â€“ â‚¹1.5 Cr", min: "10000000", max: "15000000" },
+  { label: "â‚¹1.5 Cr â€“ â‚¹2.5 Cr", min: "15000000", max: "25000000" },
+  { label: "â‚¹2.5 Cr +", min: "25000000", max: "" },
 ] as const;
 
 export const POSSESSION_OPTIONS = [
@@ -140,3 +140,5 @@ export const PAGE_SIZE = 9;
 
 export const DEMO_IMAGE_CREDITS =
   "Photography sourced from Unsplash for demonstration purposes.";
+
+
