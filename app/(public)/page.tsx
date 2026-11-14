@@ -188,8 +188,8 @@ export default async function HomePage() {
                 Housrentz Innovations Pvt. Ltd.
               </h3>
               <Image
-                src="https://www.shutterstock.com/search/indian-office-colleagues?utm_source=chatgpt.com"
-                alt="Indian office colleagues"
+                src="/images/Who We Are.png"
+                alt="Who We Are"
                 width={800}
                 height={600}
                 className="mt-4 rounded-md border border-line/80"
@@ -430,6 +430,8 @@ export default async function HomePage() {
     </>
   );
 }
+
+
 
 
 
